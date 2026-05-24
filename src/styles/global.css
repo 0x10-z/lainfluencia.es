@@ -5,31 +5,31 @@
 @tailwind utilities;
 
 /* ─────────────────────────────────────────────
-   TOKENS — papel archival, tinta oscura
+   TOKENS — papel archival, alto contraste
 ───────────────────────────────────────────── */
 :root {
-  --bg:      #f5f1ea;
-  --bg2:     #ede9e1;
-  --bg3:     #e5e0d7;
-  --bg4:     #ddd8ce;
-  --card:    #faf8f4;
+  --bg:      #f2edE4;
+  --bg2:     #e8e2d8;
+  --bg3:     #ddd7cc;
+  --bg4:     #d2ccc0;
+  --card:    #f9f7f2;
 
-  --txt:     #18160f;
-  --txt2:    #4a4538;
-  --txt3:    #9a9080;
+  --txt:     #0f0e09;
+  --txt2:    #363025;
+  --txt3:    #7a7264;
 
-  --line:    #d8d2c6;
-  --line2:   #c8c2b4;
+  --line:    #c8c2b2;
+  --line2:   #b4ad9d;
 
-  --red:     #a82318;
-  --red2:    #7a1710;
-  --red-bg:  rgba(168,35,24,0.07);
-  --gold:    #7d6008;
-  --gold-bg: rgba(125,96,8,0.07);
-  --green:   #1a5c32;
-  --blue:    #1a4070;
-  --blue2:   #2a6aab;
-  --blue-bg: rgba(26,64,112,0.07);
+  --red:     #9c1f10;
+  --red2:    #6e1509;
+  --red-bg:  rgba(156,31,16,0.08);
+  --gold:    #6b5006;
+  --gold-bg: rgba(107,80,6,0.08);
+  --green:   #134a28;
+  --blue:    #143460;
+  --blue2:   #1e5490;
+  --blue-bg: rgba(20,52,96,0.08);
 
   --ft: 'Playfair Display', Georgia, serif;
   --fm: 'IBM Plex Mono', 'Courier New', monospace;
@@ -96,7 +96,7 @@ body::before {
   right: 0;
   z-index: 500;
   height: 52px;
-  background: rgba(245,241,234,0.95);
+  background: rgba(242,237,228,0.96);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--line);
@@ -289,7 +289,7 @@ body::before {
   top: calc(100% + 0px);
   right: 0;
   width: 440px;
-  background: rgba(245,241,234,0.98);
+  background: rgba(242,237,228,0.98);
   border: 1px solid var(--line2);
   border-top: none;
   backdrop-filter: blur(20px);
