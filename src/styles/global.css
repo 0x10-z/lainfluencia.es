@@ -1,91 +1,117 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --bg:    #f9f6f1;
-  --bg2:   #ffffff;
-  --bg3:   #f2ede6;
-  --txt:   #1a1714;
-  --txt2:  #4a453f;
-  --txt3:  #9a9186;
-  --red:   #b02a1e;
-  --red2:  #f5e8e6;
-  --ink:   #2c2825;
-  --line:  #ddd8d0;
-  --line2: #ebe6de;
-  --gold:  #8a6d00;
-  --green: #1e6e3a;
-  --blue:  #1a5f9e;
+  --sidebar-w: 220px;
+
+  --bg:      #ffffff;
+  --bg2:     #f5f5f4;
+  --bg3:     #eeeeec;
+  --txt:     #111111;
+  --txt2:    #555550;
+  --txt3:    #999993;
+  --red:     #c0392b;
+  --red-bg:  #fdf1f0;
+  --gold:    #92700a;
+  --gold-bg: #fdf8ec;
+  --green:   #1a6b3a;
+  --blue:    #1a4f8a;
+  --blue-bg: #eef3fb;
+  --line:    #e5e5e2;
+  --line2:   #efefed;
 }
 
 * { box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
 
 body {
   background: var(--bg);
   color: var(--txt);
-  font-family: 'Source Serif 4', Georgia, serif;
-  font-size: 17px;
-  line-height: 1.65;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
 }
 
+/* ── Layout principal ─────────────────────────── */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--bg2);
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+}
+
+.main-content {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── Tipografía ───────────────────────────────── */
 h1, h2, h3, h4 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 1.2;
   margin: 0;
-  color: var(--ink);
+  color: var(--txt);
+  letter-spacing: -0.02em;
 }
 
 code, .mono {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.82em;
+  font-size: 0.8em;
 }
 
-a {
-  color: var(--red);
-  text-decoration: none;
+a { color: inherit; text-decoration: none; }
+
+/* ── Contenedor interior ──────────────────────── */
+.container {
+  max-width: 900px;
+  padding: 0 2rem;
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
-/* Barra lateral por caso */
-.case-z    { border-left: 3px solid var(--red); }
-.case-k    { border-left: 3px solid var(--blue); }
-.case-both { border-left: 3px solid var(--gold); }
-
-/* Badges tipo fuente */
+/* ── Badges de fuente ─────────────────────────── */
 .badge {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 0.62rem;
   font-weight: 500;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   padding: 2px 6px;
   display: inline-block;
+  border-radius: 3px;
 }
 
-.badge-jud     { background: #fdecea; color: var(--red);  border: 1px solid #f5c6c0; }
-.badge-udef    { background: #e8f0fb; color: #1a5f9e;     border: 1px solid #b8d0f0; }
-.badge-uco     { background: #e8f4fb; color: #1a6e9e;     border: 1px solid #b0d8f0; }
-.badge-press   { background: var(--bg3); color: var(--txt2); border: 1px solid var(--line); }
-.badge-official{ background: #fdf8e8; color: var(--gold); border: 1px solid #e8d888; }
-.badge-ref     { background: var(--bg3); color: var(--txt3); border: 1px solid var(--line); }
+.badge-jud      { background: var(--red-bg);  color: var(--red);   border: 1px solid #f0c4c0; }
+.badge-udef     { background: var(--blue-bg); color: var(--blue);  border: 1px solid #c0d4f0; }
+.badge-uco      { background: var(--blue-bg); color: var(--blue);  border: 1px solid #c0d4f0; }
+.badge-press    { background: var(--bg3);     color: var(--txt2);  border: 1px solid var(--line); }
+.badge-official { background: var(--gold-bg); color: var(--gold);  border: 1px solid #e0d090; }
+.badge-ref      { background: var(--bg3);     color: var(--txt3);  border: 1px solid var(--line); }
 
-/* Estado procesal */
+/* ── Status pill ──────────────────────────────── */
 .status-pill {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.66rem;
-  padding: 2px 8px;
+  font-size: 0.6rem;
+  padding: 2px 7px;
   border-radius: 999px;
   font-weight: 500;
   text-transform: uppercase;
@@ -93,70 +119,49 @@ a:hover {
   display: inline-block;
 }
 
-/* Separadores */
-hr.separator {
+/* ── Barra lateral de caso ────────────────────── */
+.case-z    { border-left: 3px solid var(--red); }
+.case-k    { border-left: 3px solid var(--blue); }
+.case-both { border-left: 3px solid var(--gold); }
+
+/* ── Impact bar ───────────────────────────────── */
+.impact-bar { display: flex; gap: 2px; align-items: center; }
+.impact-bar span {
+  width: 6px; height: 6px;
+  display: block;
+  background: var(--line);
+  border-radius: 1px;
+}
+.impact-bar span.filled { background: currentColor; }
+
+/* ── Nota editorial ───────────────────────────── */
+.nota-editorial {
+  font-style: italic;
+  color: var(--txt2);
+  border-left: 2px solid var(--line);
+  padding: 0.4rem 0.85rem;
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+/* ── Separador ────────────────────────────────── */
+hr.rule-thin {
   border: none;
   border-top: 1px solid var(--line);
   margin: 0;
 }
 
-/* Contenedor */
-.container {
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-/* Impact bar */
-.impact-bar {
-  display: flex;
-  gap: 3px;
-  align-items: center;
-}
-
-.impact-bar span {
-  width: 7px;
-  height: 7px;
-  display: block;
-  background: var(--line);
-  border: 1px solid var(--line);
-}
-
-.impact-bar span.filled {
-  background: currentColor;
-  border-color: currentColor;
-}
-
-/* Fade-up en scroll */
+/* ── Fade up ──────────────────────────────────── */
 .fade-up {
   opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  transform: translateY(10px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
 
-.fade-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Tarjetas de evento */
-.event-card {
-  background: var(--bg2);
-  border: 1px solid var(--line);
-  transition: border-color 0.15s;
-}
-
-.event-card:hover {
-  border-color: var(--txt3);
-}
-
-/* Pull quote / nota editorial */
-.nota-editorial {
-  font-style: italic;
-  color: var(--txt2);
-  border-left: 2px solid var(--line);
-  padding: 0.5rem 0.9rem;
-  margin: 0;
-  font-size: 0.88rem;
-  line-height: 1.55;
+/* ── Responsive: colapsa sidebar en móvil ─────── */
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main-content { margin-left: 0; }
 }

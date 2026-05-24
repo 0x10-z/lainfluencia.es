@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css'
-import Nav from '../components/Nav.astro'
+import Sidebar from '../components/Sidebar.astro'
 
 interface Props {
   title: string
@@ -8,7 +8,12 @@ interface Props {
   ogImage?: string
 }
 
-const { title, description = 'Periodismo de investigación sobre corrupción política en España.', ogImage } = Astro.props
+const {
+  title,
+  description = 'Investigación periodística sobre corrupción política en España. Datos verificados, fuentes documentadas.',
+  ogImage,
+} = Astro.props
+
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 const fullTitle = title === 'La Influencia' ? title : `${title} — La Influencia`
 ---
@@ -21,8 +26,6 @@ const fullTitle = title === 'La Influencia' ? title : `${title} — La Influenci
   <title>{fullTitle}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalURL} />
-
-  <!-- Open Graph -->
   <meta property="og:title" content={fullTitle} />
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
@@ -30,52 +33,29 @@ const fullTitle = title === 'La Influencia' ? title : `${title} — La Influenci
   {ogImage && <meta property="og:image" content={ogImage} />}
   <meta property="og:locale" content="es_ES" />
   <meta property="og:site_name" content="La Influencia" />
-
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={fullTitle} />
-  <meta name="twitter:description" content={description} />
-
-  <!-- Favicon simple -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 </head>
 <body>
-  <Nav />
-  <main>
-    <slot />
-  </main>
-  <footer style="margin-top: 4rem; background: var(--bg3); border-top: 1px solid var(--line);">
-    <div class="container">
-      <div style="padding: 2rem 0; display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: space-between; align-items: start;">
-        <div style="max-width: 480px;">
-          <p style="font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--txt2); margin: 0 0 0.4rem; line-height: 1.6;">
-            La imputación o procesamiento no implica condena.
-            Todos los investigados son inocentes hasta sentencia firme.
-          </p>
-          <p style="font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--txt3); margin: 0;">
-            Fuentes documentadas en cada hecho. Datos auditables.
-          </p>
-        </div>
-        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--txt3); text-align: right; line-height: 1.8;">
-          <p style="margin: 0; font-weight: 500; color: var(--txt2);">La Influencia</p>
-          <p style="margin: 0;">Periodismo de datos · España</p>
-        </div>
-      </div>
+  <div class="layout">
+    <Sidebar />
+    <div class="main-content">
+      <slot />
+      <footer style="border-top:1px solid var(--line); padding:1.5rem 2rem; margin-top:3rem;">
+        <p style="font-family:'IBM Plex Mono',monospace; font-size:0.62rem; color:var(--txt3); margin:0; line-height:1.7;">
+          La imputación o procesamiento no implica condena. Todos los investigados son inocentes hasta sentencia firme.<br />
+          Fuentes documentadas en cada hecho. Datos auditables y públicos.
+        </p>
+      </footer>
     </div>
-  </footer>
+  </div>
 
   <script>
-    // IntersectionObserver para fade-up en scroll
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible')
-            observer.unobserve(entry.target)
-          }
-        })
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target) }
+      }),
+      { threshold: 0.08, rootMargin: '0px 0px -24px 0px' }
     )
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el))
   </script>

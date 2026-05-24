@@ -159,7 +159,7 @@ export default function CronologiaClient({ events, entities, sources, tipos }: P
                   </div>
                 </div>
 
-                <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1rem', fontWeight: 700, color: 'var(--txt)', margin: '0 0 0.6rem', lineHeight: 1.35 }}>
+                <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: '1.15rem', fontWeight: 700, color: 'var(--txt)', margin: '0 0 0.6rem', lineHeight: 1.2, letterSpacing: '-0.01em' }}>
                   {ev.title}
                 </h3>
 

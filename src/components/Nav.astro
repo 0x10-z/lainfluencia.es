@@ -1,80 +1,60 @@
 ---
 const nav = [
-  { href: '/', label: 'Inicio' },
   { href: '/cronologia', label: 'Cronología' },
-  { href: '/red', label: 'Red' },
+  { href: '/red',        label: 'Red' },
   { href: '/documentos', label: 'Documentos' },
+  { href: '/buscar',     label: 'Buscar' },
 ]
 
 const pathname = Astro.url.pathname
 ---
 
-<header style="
-  position: sticky; top: 0; z-index: 100;
-  background: var(--bg2);
-  border-bottom: 1px solid var(--line);
-  box-shadow: 0 1px 0 var(--line);
-">
-  <div class="container" style="display: flex; align-items: center; justify-content: space-between; height: 54px;">
-    <a href="/" style="
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      font-weight: 900;
-      color: var(--ink);
-      letter-spacing: -0.01em;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    ">
-      <span style="
-        display: inline-block;
-        width: 8px; height: 8px;
-        background: var(--red);
-        border-radius: 50%;
-        flex-shrink: 0;
-      "></span>
-      La Influencia
-    </a>
+<header>
+  <!-- Franja superior: nombre + fecha -->
+  <div style="border-bottom: 1px solid var(--line); background: var(--bg2);">
+    <div class="container" style="display:flex; align-items:center; justify-content:space-between; padding-top:0.6rem; padding-bottom:0.6rem;">
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:0.62rem; color:var(--txt3); letter-spacing:0.06em; text-transform:uppercase;">
+        Periodismo de investigación · España
+      </span>
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:0.62rem; color:var(--txt3); letter-spacing:0.04em;">
+        D.P. 77/2024 — Caso Zapatero
+      </span>
+    </div>
+  </div>
 
-    <nav style="display: flex; align-items: center; gap: 0;">
-      {nav.map(({ href, label }) => {
-        const active = pathname === href || (href !== '/' && pathname.startsWith(href))
-        return (
-          <a
-            href={href}
-            style={`
-              font-family: 'IBM Plex Mono', monospace;
-              font-size: 0.72rem;
-              color: ${active ? 'var(--ink)' : 'var(--txt2)'};
-              padding: 6px 14px;
-              text-decoration: none;
-              letter-spacing: 0.03em;
-              border-bottom: ${active ? '2px solid var(--red)' : '2px solid transparent'};
-              transition: color 0.15s;
-            `}
-          >
-            {label}
-          </a>
-        )
-      })}
-      <a
-        href="/buscar"
-        aria-label="Buscar"
-        style="
-          font-family: 'IBM Plex Mono', monospace;
-          font-size: 0.8rem;
-          color: var(--txt2);
-          padding: 6px 12px;
-          text-decoration: none;
-          margin-left: 4px;
-          border: 1px solid var(--line);
-          letter-spacing: 0.02em;
-          background: var(--bg3);
-        "
-      >
-        ⌕ Buscar
+  <!-- Logotipo -->
+  <div style="background: var(--bg2); border-bottom: 3px double var(--txt);">
+    <div class="container" style="display:flex; align-items:center; justify-content:space-between; padding-top:0.9rem; padding-bottom:0.9rem;">
+      <a href="/" style="text-decoration:none;">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:700; color:var(--txt); letter-spacing:-0.02em; line-height:1;">
+          La Influencia
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.58rem; color:var(--txt3); letter-spacing:0.12em; text-transform:uppercase; margin-top:2px;">
+          Investigación · Corrupción · Datos verificados
+        </div>
       </a>
-    </nav>
+
+      <!-- Nav links -->
+      <nav style="display:flex; align-items:center; gap:0;">
+        {nav.map(({ href, label }) => {
+          const active = pathname === href || (href !== '/' && pathname.startsWith(href))
+          return (
+            <a href={href} style={`
+              font-family: 'IBM Plex Mono', monospace;
+              font-size: 0.68rem;
+              letter-spacing: 0.06em;
+              text-transform: uppercase;
+              color: ${active ? 'var(--red)' : 'var(--txt2)'};
+              padding: 6px 16px;
+              text-decoration: none;
+              border-left: 1px solid var(--line);
+              transition: color 0.12s;
+            `}>
+              {label}
+            </a>
+          )
+        })}
+      </nav>
+    </div>
   </div>
 </header>
