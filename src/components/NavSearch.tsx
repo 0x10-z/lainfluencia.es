@@ -18,7 +18,7 @@ interface Props {
 function highlight(text: string, query: string): string {
   if (!query) return text
   const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi')
-  return text.replace(re, '<mark style="background:rgba(168,35,24,0.2);color:var(--txt);">$1</mark>')
+  return text.replace(re, '<mark style="background:rgba(192,57,43,0.3);color:#ece8df;">$1</mark>')
 }
 
 export default function NavSearch({ events, entities }: Props) {
@@ -31,7 +31,7 @@ export default function NavSearch({ events, entities }: Props) {
       type: 'event' as const,
       id: ev.id,
       title: ev.title,
-      subtitle: ev.description.slice(0, 80) + '…',
+      subtitle: ev.description.slice(0, 90) + '…',
       href: `/eventos/${ev.id}`,
     })),
     ...entities.map(en => ({
@@ -48,7 +48,7 @@ export default function NavSearch({ events, entities }: Props) {
     threshold: 0.35,
   }), [items])
 
-  const results = query.trim().length >= 2 ? fuse.search(query).slice(0, 8) : []
+  const results = query.trim().length >= 2 ? fuse.search(query).slice(0, 7) : []
 
   useEffect(() => {
     function onClickOutside(e: MouseEvent) {
@@ -60,16 +60,16 @@ export default function NavSearch({ events, entities }: Props) {
     return () => document.removeEventListener('mousedown', onClickOutside)
   }, [])
 
-  const TYPE_LABEL = { event: 'Evento', entity: 'Personaje' }
-  const TYPE_COLOR = { event: 'var(--blue)', entity: 'var(--gold)' }
+  const TYPE_COLOR = { event: 'var(--red)', entity: 'var(--blue2)' }
+  const TYPE_LABEL = { event: 'Evento', entity: 'Actor' }
 
   return (
     <div ref={wrapRef} className="nav-search-wrap">
-      <span className="nav-search-icon">⌕</span>
+      <span className="nav-search-icon" style={{ fontSize: '0.7rem', color: 'var(--txt3)' }}>⌕</span>
       <input
         type="search"
         className="nav-search-input"
-        placeholder="Buscar…"
+        placeholder="Buscar archivo…"
         value={query}
         onInput={e => { setQuery((e.target as HTMLInputElement).value); setOpen(true) }}
         onFocus={() => setOpen(true)}
@@ -78,42 +78,60 @@ export default function NavSearch({ events, entities }: Props) {
       {open && query.trim().length >= 2 && (
         <div className="nav-search-dropdown">
           {results.length === 0 ? (
-            <div style={{ padding: '1rem 1.25rem', fontFamily: "'DM Mono',monospace", fontSize: '0.75rem', color: 'var(--txt3)' }}>
-              Sin resultados para "{query}"
+            <div style={{
+              padding: '1.2rem 1.5rem',
+              fontFamily: 'var(--fm)', fontSize: '0.6rem',
+              color: 'var(--txt3)', letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+            }}>
+              Sin resultados — {query}
             </div>
           ) : (
-            results.map(r => (
-              <a
-                key={r.item.id}
-                href={r.item.href}
-                onClick={() => { setOpen(false); setQuery('') }}
-                style={{
-                  display: 'block',
-                  padding: '0.65rem 1rem',
-                  textDecoration: 'none',
-                  borderBottom: '1px solid var(--line2)',
-                  borderLeft: `3px solid ${TYPE_COLOR[r.item.type]}`,
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '2px' }}>
-                  <span style={{
-                    fontFamily: "'DM Mono',monospace", fontSize: '0.58rem',
-                    textTransform: 'uppercase' as const, letterSpacing: '0.06em',
+            <>
+              <div style={{
+                padding: '0.5rem 1.5rem',
+                fontFamily: 'var(--fm)', fontSize: '0.48rem',
+                color: 'var(--txt3)', letterSpacing: '0.15em',
+                textTransform: 'uppercase',
+                borderBottom: '1px solid var(--line)',
+              }}>
+                {results.length} resultado{results.length !== 1 ? 's' : ''}
+              </div>
+              {results.map(r => (
+                <a
+                  key={r.item.id}
+                  href={r.item.href}
+                  onClick={() => { setOpen(false); setQuery('') }}
+                  style={{
+                    display: 'block',
+                    padding: '0.85rem 1.5rem',
+                    textDecoration: 'none',
+                    borderBottom: '1px solid var(--line)',
+                    borderLeft: `2px solid ${TYPE_COLOR[r.item.type]}`,
+                    transition: 'background 0.15s',
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg3)')}
+                  onMouseLeave={e => (e.currentTarget.style.background = '')}
+                >
+                  <div style={{
+                    fontFamily: 'var(--fm)', fontSize: '0.46rem',
+                    textTransform: 'uppercase', letterSpacing: '0.12em',
                     color: TYPE_COLOR[r.item.type],
+                    marginBottom: '0.3rem',
                   }}>
                     {TYPE_LABEL[r.item.type]}
-                  </span>
-                </div>
-                <div
-                  style={{ fontSize: '0.88rem', color: 'var(--txt)', fontWeight: 600, marginBottom: '1px' }}
-                  dangerouslySetInnerHTML={{ __html: highlight(r.item.title, query) }}
-                />
-                <div
-                  style={{ fontSize: '0.75rem', color: 'var(--txt3)', lineHeight: 1.3 }}
-                  dangerouslySetInnerHTML={{ __html: highlight(r.item.subtitle, query) }}
-                />
-              </a>
-            ))
+                  </div>
+                  <div
+                    style={{ fontFamily: "'Playfair Display',serif", fontSize: '0.9rem', fontWeight: 700, color: 'var(--txt)', marginBottom: '0.2rem', lineHeight: 1.2 }}
+                    dangerouslySetInnerHTML={{ __html: highlight(r.item.title, query) }}
+                  />
+                  <div
+                    style={{ fontFamily: 'var(--fm)', fontSize: '0.58rem', color: 'var(--txt3)', lineHeight: 1.4 }}
+                    dangerouslySetInnerHTML={{ __html: highlight(r.item.subtitle, query) }}
+                  />
+                </a>
+              ))}
+            </>
           )}
         </div>
       )}

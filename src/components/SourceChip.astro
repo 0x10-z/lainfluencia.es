@@ -9,10 +9,29 @@ interface Props {
 const { source } = Astro.props
 const badgeType = getSourceBadgeType(source)
 const label = source.subtype ?? getSourceTypeLabel(source.type)
+
+const badgeColors: Record<string, string> = {
+  jud: 'var(--gold)',
+  udef: 'var(--red)',
+  uco: 'var(--blue2)',
+  press: 'var(--txt3)',
+  official: 'var(--green)',
+  ref: 'var(--line2)',
+}
+const badgeColor = badgeColors[badgeType] ?? 'var(--line2)'
 ---
 
 <span style="display: inline-flex; align-items: center; gap: 6px; max-width: 100%;">
-  <span class={`badge badge-${badgeType}`}>{label}</span>
+  <span style={`
+    font-family: var(--fm);
+    font-size: 0.44rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.1rem 0.35rem;
+    border: 1px solid ${badgeColor};
+    color: ${badgeColor};
+    flex-shrink: 0;
+  `}>{label}</span>
   {source.url ? (
     <a
       href={source.url}
@@ -20,25 +39,27 @@ const label = source.subtype ?? getSourceTypeLabel(source.type)
       rel="noopener noreferrer"
       title={source.title}
       style="
-        font-size: 0.8rem;
-        color: var(--txt2);
+        font-family: var(--fm);
+        font-size: 0.6rem;
+        color: var(--txt3);
         text-decoration: none;
         border-bottom: 1px solid var(--line2);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        max-width: 300px;
+        max-width: 320px;
         display: inline-block;
+        transition: color 0.15s;
       "
     >
       {source.title}
-      <span style="font-size: 0.65rem; opacity: 0.6; margin-left: 3px;">↗</span>
+      <span style="font-size: 0.55rem; opacity: 0.5; margin-left: 2px;">↗</span>
     </a>
   ) : (
-    <span style="font-size: 0.8rem; color: var(--txt3);" title={source.availability_note}>
+    <span style="font-family: var(--fm); font-size: 0.6rem; color: var(--txt3);" title={source.availability_note}>
       {source.title}
       {source.availability === 'restricted' && (
-        <span style="margin-left: 4px; opacity: 0.5;" title="Acceso restringido">🔒</span>
+        <span style="margin-left: 3px; opacity: 0.4;" title="Acceso restringido">🔒</span>
       )}
     </span>
   )}

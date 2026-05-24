@@ -20,9 +20,13 @@ const typeLabel = getEventTypeLabel(event.type)
 const eventSources = event.sources.map(id => getSourceById(id, sources)).filter(Boolean) as Source[]
 const eventEntities = event.entities.map(id => getEntityById(id, entities)).filter(Boolean) as Entity[]
 
-const verifiedIcon = event.verified === true ? '✓' : event.verified === 'partial' ? '~' : '?'
-const verifiedTitle = event.verified === true ? 'Verificado' : event.verified === 'partial' ? 'Verificación parcial' : 'Pendiente de verificar'
+const verifiedIcon = event.verified === true ? '✓ verificado' : event.verified === 'partial' ? '~ parcial' : '? sin verificar'
 const verifiedColor = event.verified === true ? 'var(--green)' : event.verified === 'partial' ? 'var(--gold)' : 'var(--txt3)'
+
+const accentColor = event.cases.includes('dp-77-24') && event.cases.includes('caso-koldo')
+  ? 'var(--gold)'
+  : event.cases.includes('dp-77-24') ? 'var(--red)'
+  : 'var(--blue2)'
 ---
 
 <article
@@ -30,7 +34,7 @@ const verifiedColor = event.verified === true ? 'var(--green)' : event.verified 
   style={`
     background: var(--bg2);
     border: 1px solid var(--line);
-    padding: 0;
+    border-left: 3px solid ${accentColor};
     overflow: hidden;
     ${event.pending ? 'opacity: 0.65;' : ''}
   `}
@@ -40,41 +44,46 @@ const verifiedColor = event.verified === true ? 'var(--green)' : event.verified 
   data-impact={event.impact}
 >
   <!-- Cabecera siempre visible -->
-  <div style="padding: 1rem 1.25rem;">
-    <div style="display: flex; align-items: start; justify-content: space-between; gap: 1rem; margin-bottom: 0.75rem;">
-      <div style="display: flex; align-items: center; gap: 10px;">
+  <div style="padding: 1.5rem 2rem;">
+    <div style="display: flex; align-items: start; justify-content: space-between; gap: 1rem; margin-bottom: 0.8rem;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem;">
         <time
           datetime={event.date}
           style="
-            font-family: 'DM Mono', monospace;
-            font-size: 0.8rem;
+            font-family: var(--fm);
+            font-size: 0.62rem;
             color: var(--txt3);
             white-space: nowrap;
-            flex-shrink: 0;
+            letter-spacing: 0.06em;
           "
         >
           {dateStr}
           {event.pending && (
-            <span style="color: var(--gold); margin-left: 6px; font-size: 0.7rem;">PENDIENTE</span>
+            <span style="color: var(--gold); margin-left: 6px; font-size: 0.52rem; letter-spacing: 0.1em; text-transform: uppercase;">pendiente</span>
           )}
         </time>
         <span style="
-          font-family: 'DM Mono', monospace;
-          font-size: 0.65rem;
+          font-family: var(--fm);
+          font-size: 0.48rem;
           color: var(--txt3);
-          letter-spacing: 0.05em;
+          letter-spacing: 0.1em;
           text-transform: uppercase;
+          border: 1px solid var(--line2);
+          padding: 0.1rem 0.4rem;
         ">
           {typeLabel}
         </span>
+        {event.cases.map(c => <CaseTag caseId={c} />)}
       </div>
       <span
-        title={verifiedTitle}
+        title={verifiedIcon}
         style={`
-          font-family: 'DM Mono', monospace;
-          font-size: 0.7rem;
+          font-family: var(--fm);
+          font-size: 0.5rem;
           color: ${verifiedColor};
           flex-shrink: 0;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
         `}
       >
         {verifiedIcon}
@@ -82,77 +91,80 @@ const verifiedColor = event.verified === true ? 'var(--green)' : event.verified 
     </div>
 
     <h3 style="
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1.05rem;
+      font-family: var(--ft);
+      font-size: 1.1rem;
       font-weight: 700;
       color: var(--txt);
-      margin: 0 0 0.75rem;
-      line-height: 1.35;
+      margin: 0 0 0.8rem;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
     ">
       {expandable ? (
         <a href={`/eventos/${event.id}`} style="color: inherit; text-decoration: none;">{event.title}</a>
       ) : event.title}
     </h3>
 
-    <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
-      <ImpactBar impact={event.impact} />
-      <span style="color: var(--line2); font-size: 0.8rem;">|</span>
-      {event.cases.map(c => <CaseTag caseId={c} />)}
-    </div>
+    <ImpactBar impact={event.impact} />
   </div>
 
   <!-- Cuerpo expandible -->
   {expandable && (
     <details style="border-top: 1px solid var(--line);">
       <summary style="
-        padding: 0.6rem 1.25rem;
-        font-family: 'DM Mono', monospace;
-        font-size: 0.72rem;
+        padding: 0.6rem 2rem;
+        font-family: var(--fm);
+        font-size: 0.52rem;
         color: var(--txt3);
         cursor: pointer;
-        letter-spacing: 0.04em;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
         list-style: none;
         display: flex;
         align-items: center;
         gap: 6px;
         user-select: none;
+        transition: color 0.15s;
       ">
         <span class="toggle-icon">▸</span> Ver detalles
       </summary>
 
-      <div style="padding: 1rem 1.25rem; border-top: 1px solid var(--line);">
-        <p style="font-size: 0.9rem; color: var(--txt2); line-height: 1.6; margin: 0 0 1rem;">
+      <div style="padding: 1.2rem 2rem; border-top: 1px solid var(--line); background: var(--bg3);">
+        <p style="font-family: var(--fb); font-size: 0.88rem; color: var(--txt2); line-height: 1.75; margin: 0 0 1rem; max-width: 680px;">
           {event.description}
         </p>
 
         {event.notes && (
-          <p style="
-            font-size: 0.82rem;
-            color: var(--txt3);
+          <blockquote style="
+            font-family: var(--ft);
             font-style: italic;
+            font-size: 0.85rem;
+            color: var(--txt2);
             margin: 0 0 1rem;
-            padding: 0.5rem 0.75rem;
-            border-left: 2px solid var(--line2);
+            padding: 0.4rem 0.9rem;
+            border-left: 1px solid var(--line2);
+            line-height: 1.65;
           ">
             {event.notes}
-          </p>
+          </blockquote>
         )}
 
         {eventEntities.length > 0 && (
           <div style="margin-bottom: 1rem;">
-            <p style="font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--txt3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 0.5rem;">
-              Actores
+            <p style="font-family: var(--fm); font-size: 0.46rem; color: var(--txt3); text-transform: uppercase; letter-spacing: 0.15em; margin: 0 0 0.5rem;">
+              Actores implicados
             </p>
-            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <div style="display: flex; flex-wrap: wrap; gap: 5px;">
               {eventEntities.map(ent => (
                 <a
                   href={`/personajes/${ent.id}`}
                   style="
-                    font-size: 0.78rem;
-                    color: var(--txt2);
+                    font-family: var(--fm);
+                    font-size: 0.55rem;
+                    color: var(--txt3);
                     border: 1px solid var(--line2);
-                    padding: 3px 8px;
+                    padding: 0.2rem 0.55rem;
                     text-decoration: none;
+                    transition: color 0.15s;
                   "
                 >
                   {ent.name}
@@ -164,10 +176,10 @@ const verifiedColor = event.verified === true ? 'var(--green)' : event.verified 
 
         {eventSources.length > 0 && (
           <div>
-            <p style="font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--txt3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 0.5rem;">
-              Fuentes
+            <p style="font-family: var(--fm); font-size: 0.46rem; color: var(--txt3); text-transform: uppercase; letter-spacing: 0.15em; margin: 0 0 0.5rem;">
+              Fuentes documentales
             </p>
-            <div style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="display: flex; flex-direction: column; gap: 5px;">
               {eventSources.map(src => <SourceChip source={src} />)}
             </div>
           </div>

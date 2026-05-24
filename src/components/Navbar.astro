@@ -12,9 +12,9 @@ const pathname = Astro.url.pathname
 const nav = [
   { href: '/',            label: 'Inicio' },
   { href: '/cronologia',  label: 'Cronología' },
-  { href: '/personajes',  label: 'Personajes' },
+  { href: '/personajes',  label: 'Actores' },
   { href: '/red',         label: 'Red' },
-  { href: '/documentos',  label: 'Documentos' },
+  { href: '/documentos',  label: 'Archivo' },
 ]
 
 const isActive = (href: string) =>
@@ -22,46 +22,86 @@ const isActive = (href: string) =>
 ---
 
 <nav class="topnav">
-  <!-- Logo -->
+
+  <!-- Identidad -->
   <a href="/" style="
-    display: flex; align-items: center; gap: 0;
-    padding: 0 1.25rem;
-    height: 100%;
-    border-right: 1px solid var(--line);
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding: 0 2rem;
+    height: 52px;
     text-decoration: none;
     flex-shrink: 0;
+    border-right: 1px solid var(--line);
   ">
-    <div>
-      <div style="font-size: 0.95rem; font-weight: 700; color: var(--txt); letter-spacing: -0.03em; line-height: 1;">
-        La Influencia
-      </div>
-      <div style="font-family: 'DM Mono', monospace; font-size: 0.5rem; color: var(--red); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 1px;">
-        Investigación
-      </div>
-    </div>
+    <span style="
+      font-family: var(--ft);
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--txt);
+      letter-spacing: 0.01em;
+    ">
+      La <em style="color:var(--red);font-style:italic;">Influencia</em>
+    </span>
+    <span style="
+      font-family: var(--fm);
+      font-size: 0.45rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--txt3);
+      border: 1px solid var(--line2);
+      padding: 0.1rem 0.35rem;
+      position: relative;
+      top: -1px;
+    ">
+      archivo
+    </span>
   </a>
 
-  <!-- Links de nav -->
-  <div style="display: flex; align-items: stretch; height: 100%; flex: 1;">
+  <!-- Nav links — centrados -->
+  <div style="
+    display: flex;
+    align-items: stretch;
+    height: 52px;
+    flex: 1;
+    padding: 0 1rem;
+  ">
     {nav.map(({ href, label }) => (
       <a href={href} style={`
-        display: flex; align-items: center;
-        padding: 0 1rem;
-        font-size: 0.8rem;
-        font-weight: ${isActive(href) ? '600' : '400'};
-        color: ${isActive(href) ? 'var(--txt)' : 'var(--txt2)'};
-        border-bottom: 2px solid ${isActive(href) ? 'var(--red)' : 'transparent'};
+        display: flex;
+        align-items: center;
+        padding: 0 1.1rem;
+        font-family: var(--fm);
+        font-size: 0.55rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: ${isActive(href) ? 'var(--txt)' : 'var(--txt3)'};
+        border-bottom: 1px solid ${isActive(href) ? 'var(--red)' : 'transparent'};
+        border-top: 1px solid transparent;
         text-decoration: none;
         white-space: nowrap;
-        transition: color 0.1s;
+        transition: color 0.2s;
       `}>
         {label}
       </a>
     ))}
   </div>
 
-  <!-- Búsqueda integrada -->
-  <div style="display: flex; align-items: center; padding: 0 1rem; border-left: 1px solid var(--line);">
+  <!-- Indicador + búsqueda -->
+  <div style="display: flex; align-items: center; gap: 0.6rem; padding-right: 0.5rem;">
+    <span style="
+      font-family: var(--fm);
+      font-size: 0.48rem;
+      letter-spacing: 0.12em;
+      color: var(--txt3);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    ">
+      <span class="blink-dot" />
+      activo
+    </span>
     <NavSearch events={events} entities={entities} client:load />
   </div>
 </nav>

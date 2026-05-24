@@ -19,10 +19,11 @@ const label = getImpactLabel(impact)
   </div>
   {showLabel && (
     <span style={`
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
+      font-family: var(--fm);
+      font-size: 0.5rem;
       color: ${color};
-      letter-spacing: 0.03em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     `}>
       {label}
     </span>

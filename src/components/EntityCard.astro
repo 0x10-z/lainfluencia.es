@@ -26,21 +26,22 @@ const typeIcon: Record<string, string> = {
     display: block;
     background: var(--bg2);
     border: 1px solid var(--line);
-    padding: ${compact ? '0.75rem 1rem' : '1rem 1.25rem'};
+    border-left: 2px solid ${statusColor};
+    padding: ${compact ? '0.85rem 1.25rem' : '1.1rem 1.5rem'};
     text-decoration: none;
-    transition: border-color 0.15s;
+    transition: background 0.15s;
   `}
   class="entity-card"
 >
   <div style="display: flex; align-items: start; justify-content: space-between; gap: 1rem;">
     <div style="min-width: 0;">
-      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-        <span style="font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--txt3);">
+      <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 5px;">
+        <span style="font-family: var(--fm); font-size: 0.55rem; color: var(--txt3);">
           {typeIcon[entity.type] ?? '○'}
         </span>
         <span style="
-          font-family: 'DM Sans', sans-serif;
-          font-size: ${compact ? '0.95rem' : '1.05rem'};
+          font-family: var(--ft);
+          font-size: ${compact ? '0.88rem' : '1rem'};
           font-weight: 700;
           color: var(--txt);
           white-space: nowrap;
@@ -52,16 +53,18 @@ const typeIcon: Record<string, string> = {
       </div>
       {!compact && (
         <p style="
-          font-size: 0.85rem;
-          color: var(--txt2);
-          margin: 0 0 0.5rem;
-          line-height: 1.4;
+          font-family: var(--fm);
+          font-size: 0.58rem;
+          color: var(--txt3);
+          margin: 0 0 0.6rem;
+          line-height: 1.5;
+          letter-spacing: 0.03em;
         ">
           {entity.role}
         </p>
       )}
-      <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center;">
-        <span class="status-pill" style={`background: ${statusColor}20; color: ${statusColor}; border: 1px solid ${statusColor}40;`}>
+      <div style="display: flex; flex-wrap: wrap; gap: 5px; align-items: center;">
+        <span class="status-pill" style={`border-color: ${statusColor}; color: ${statusColor};`}>
           {statusLabel}
         </span>
         {entity.cases.map(c => <CaseTag caseId={c} />)}
@@ -72,6 +75,6 @@ const typeIcon: Record<string, string> = {
 
 <style>
   .entity-card:hover {
-    border-color: var(--line2);
+    background: var(--bg3) !important;
   }
 </style>
