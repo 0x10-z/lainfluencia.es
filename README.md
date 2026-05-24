@@ -18,8 +18,10 @@ npm run preview    # previsualizar el build
 ### Scripts auxiliares
 
 ```bash
-# Actualizar previews OG de fuentes de prensa (ejecutar tras añadir nuevas URLs)
-node scripts/fetch-og.mjs
+node scripts/fetch-og.mjs        # previews OG de fuentes de prensa (incremental)
+node scripts/fetch-photos.mjs    # fotos de perfil de entidades (Wikidata → placeholder JPG)
+node scripts/fetch-wikipedia.mjs # URLs de Wikipedia para personas (guarda en entities.json)
+node data/validate.js            # validación de integridad referencial del modelo de datos
 ```
 
 ---
@@ -191,7 +193,66 @@ Ejecutar siempre que se añadan fuentes de tipo `press` o `fact_check` con URL. 
 
 ---
 
-### 5. Checklist al añadir cualquier elemento
+### 5. Leer documentos judiciales (PDFs)
+
+Los PDFs fuente están en `data/pdf/`. El flujo para extraer datos de un documento judicial y volcarlo al modelo es:
+
+#### Estado de lectura
+
+- [ ] `auto-zapatero.pdf` — Auto de imputación del JCI Nº 2 (38 pp.)
+- [ ] `Informe UDEF Caso Zapatero - Caso Plus Ultra.pdf` — Informe policial UDEF
+
+#### Flujo con Claude
+
+Pedir a Claude que lea el PDF por tramos y extraiga directamente a JSON. No hace falta convertir a Markdown — es un paso intermedio que no aporta y consume más contexto.
+
+```text
+"Lee data/pdf/auto-zapatero.pdf páginas 1-15 y extrae hechos,
+entidades y relaciones nuevas para añadir al modelo de datos"
+```
+
+Claude lee el PDF en bloques de hasta 20 páginas y vuelca directamente a `events.json`, `entities.json`, `relations.json` y `sources.json`.
+
+#### Qué extraer de cada tipo de documento
+
+**Auto judicial** (`judicial_order`)
+
+- Hechos imputados → eventos con `type: "judicial"`, `impact: 5`
+- Personas imputadas → entidades con `status: "investigated"` o `"accused"`
+- Relaciones entre imputados que describe el juez → relations con `verified: true`
+- Fechas de los hechos descritos (no la fecha del auto)
+- Cantidades económicas mencionadas → `amount` en la relación correspondiente
+
+**Informe policial UDEF/UCO** (`police_report`)
+
+- Operaciones y transferencias → eventos con `type: "money_transfer"` o `"investigation"`
+- Sociedades instrumentales → entidades `type: "company"`
+- Cuentas bancarias y jurisdicciones → entidades `type: "account"`
+- Flujos de dinero → relations con `type: "transfers"` o `"pays"` + `amount`
+- El informe en sí como fuente con `subtype: "UDEF"` o `"UCO"`
+
+#### Criterio para decidir si algo entra al modelo
+
+| ¿Entra? | Criterio                                                                |
+| ------- | ----------------------------------------------------------------------- |
+| Sí      | Dato específico, fechado, atribuible a una fuente                       |
+| Sí      | Nombre, cantidad, fecha o relación nueva no documentada                 |
+| Parcial | Dato mencionado una sola vez sin corroboración (`verified: "partial"`)  |
+| No      | Valoraciones, opiniones, contexto genérico sin datos concretos          |
+| No      | Hechos ya existentes en el modelo (verificar antes por fecha)           |
+
+#### Tras añadir datos de un PDF
+
+```bash
+node data/validate.js            # verificar integridad — debe terminar sin errores
+node scripts/fetch-photos.mjs    # si hay personajes nuevos, buscar fotos
+node scripts/fetch-wikipedia.mjs # si hay personajes nuevos, buscar Wikipedia
+node scripts/fetch-og.mjs        # si hay fuentes de prensa nuevas
+```
+
+---
+
+### 6. Checklist al añadir cualquier elemento
 
 - [ ] El evento/entidad/fuente tiene al menos una fuente verificable
 - [ ] Los IDs son únicos y no rompen referencias existentes
