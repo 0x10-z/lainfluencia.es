@@ -1,6 +1,14 @@
 ---
 import '../styles/global.css'
 import Navbar from '../components/Navbar.astro'
+import DetailSidebar from '../components/DetailSidebar.tsx'
+
+import eventsData    from '../data/events.json'
+import entitiesData  from '../data/entities.json'
+import relationsData from '../data/relations.json'
+import sourcesData   from '../data/sources.json'
+
+import type { Event, Entity, Relation, Source } from '../types'
 
 interface Props {
   title: string
@@ -16,6 +24,11 @@ const {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 const fullTitle = title === 'La Influencia' ? title : `${title} — La Influencia`
+
+const events    = eventsData.events    as Event[]
+const entities  = entitiesData.entities as Entity[]
+const relations = relationsData.relations as Relation[]
+const sources   = sourcesData.sources   as Source[]
 ---
 
 <!doctype html>
@@ -41,14 +54,23 @@ const fullTitle = title === 'La Influencia' ? title : `${title} — La Influenci
     <Navbar />
     <div class="main-content">
       <slot />
-      <footer style="border-top:1px solid var(--line); padding:1.25rem 2rem; margin-top:4rem; background:var(--bg2);">
-        <p style="font-family:'DM Mono',monospace; font-size:0.58rem; color:var(--txt3); margin:0; line-height:1.7;">
-          La imputación o procesamiento no implica condena. Todos los investigados son inocentes hasta sentencia firme.
-          Fuentes documentadas en cada hecho. Datos auditables y públicos.
+      <footer style="border-top:1px solid var(--line); padding:1.25rem 3vw; margin-top:4rem; background:var(--bg2);">
+        <p style="font-family:var(--fm); font-size:0.52rem; color:var(--txt3); margin:0; line-height:1.8; letter-spacing:0.04em; max-width:700px;">
+          La imputación o procesamiento judicial no implica condena penal. Todos los investigados son
+          inocentes hasta sentencia judicial firme. Fuentes documentadas en cada hecho. Datos auditables y públicos.
         </p>
       </footer>
     </div>
   </div>
+
+  <!-- Sidebar global de detalle — disponible en todas las páginas -->
+  <DetailSidebar
+    events={events}
+    entities={entities}
+    relations={relations}
+    sources={sources}
+    client:load
+  />
 
   <script>
     const observer = new IntersectionObserver(

@@ -134,15 +134,16 @@ body::before {
 }
 
 /* ─────────────────────────────────────────────
-   BADGES — tipo fuente
+   BADGES — pill redondeada
 ───────────────────────────────────────────── */
 .badge {
   font-family: var(--fm);
   font-size: 0.5rem;
   font-weight: 400;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 0.15rem 0.45rem;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
   display: inline-block;
   border: 1px solid;
 }
@@ -160,8 +161,9 @@ body::before {
 .status-pill {
   font-family: var(--fm);
   font-size: 0.48rem;
-  padding: 0.15rem 0.45rem;
+  padding: 0.2rem 0.6rem;
   border: 1px solid;
+  border-radius: 999px;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -205,6 +207,7 @@ body::before {
 .ficha {
   background: var(--bg2);
   border: 1px solid var(--line);
+  border-radius: 10px;
   overflow: hidden;
 }
 
