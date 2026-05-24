@@ -1,0 +1,64 @@
+---
+const nav = [
+  { href: '/', label: 'Inicio' },
+  { href: '/cronologia', label: 'Cronología' },
+  { href: '/red', label: 'Red' },
+  { href: '/documentos', label: 'Documentos' },
+]
+
+const pathname = Astro.url.pathname
+---
+
+<header style="
+  position: sticky; top: 0; z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+">
+  <div class="container" style="display: flex; align-items: center; justify-content: space-between; height: 52px;">
+    <a href="/" style="
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--txt);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    ">
+      La <span style="color: var(--red);">Influencia</span>
+    </a>
+
+    <nav style="display: flex; align-items: center; gap: 0.25rem;">
+      {nav.map(({ href, label }) => (
+        <a
+          href={href}
+          style={`
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            color: ${pathname === href ? 'var(--txt)' : 'var(--txt2)'};
+            padding: 6px 12px;
+            border: 1px solid ${pathname === href ? 'var(--line2)' : 'transparent'};
+            text-decoration: none;
+            letter-spacing: 0.03em;
+            transition: color 0.15s;
+          `}
+        >
+          {label}
+        </a>
+      ))}
+      <a
+        href="/buscar"
+        aria-label="Buscar"
+        style="
+          font-family: 'IBM Plex Mono', monospace;
+          font-size: 0.75rem;
+          color: var(--txt2);
+          padding: 6px 12px;
+          text-decoration: none;
+          border: 1px solid var(--line2);
+          letter-spacing: 0.03em;
+        "
+      >
+        ⌕
+      </a>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,41 @@
+{
+  "$schema": "../schema/cases.schema.json",
+  "$comment": "CASOS — Los expedientes judiciales que enmarcan los eventos y relaciones.",
+  "cases": [
+    {
+      "id": "dp-77-24",
+      "name": "D.P. 77/2024 — Caso Zapatero / Plus Ultra",
+      "court": "Juzgado Central de Instrucción Nº 2, Madrid",
+      "judge": "calama",
+      "investigators": ["udef"],
+      "status": "instruccion",
+      "opened": "2024-01",
+      "color": "#c0392b",
+      "charges": [
+        "Organización criminal",
+        "Tráfico de influencias",
+        "Blanqueo de capitales",
+        "Falsedad documental"
+      ]
+    },
+    {
+      "id": "caso-koldo",
+      "name": "Especial 003/0020775/2020 — Caso Koldo / Mascarillas",
+      "court": "Tribunal Supremo — Sala 2ª (Penal)",
+      "judge": "leopoldo-puente",
+      "investigators": ["uco"],
+      "status": "visto_para_sentencia",
+      "opened": "2024-02-28",
+      "color": "#1a5f9e",
+      "charges": [
+        "Organización criminal",
+        "Cohecho continuado activo y pasivo",
+        "Aprovechamiento de información privilegiada",
+        "Tráfico de influencias",
+        "Malversación de fondos públicos",
+        "Falsedad en documento oficial",
+        "Prevaricación"
+      ]
+    }
+  ]
+}

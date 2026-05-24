@@ -1,0 +1,84 @@
+---
+import '../styles/global.css'
+import Nav from '../components/Nav.astro'
+
+interface Props {
+  title: string
+  description?: string
+  ogImage?: string
+}
+
+const { title, description = 'Periodismo de investigación sobre corrupción política en España.', ogImage } = Astro.props
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const fullTitle = title === 'La Influencia' ? title : `${title} — La Influencia`
+---
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalURL} />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL} />
+  {ogImage && <meta property="og:image" content={ogImage} />}
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:site_name" content="La Influencia" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+
+  <!-- Favicon simple -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body>
+  <Nav />
+  <main>
+    <slot />
+  </main>
+  <footer>
+    <div class="container">
+      <hr class="separator" />
+      <div style="padding: 2rem 0; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: start;">
+        <div>
+          <p style="font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--txt3); margin: 0 0 0.5rem;">
+            La imputación o procesamiento no implica condena.<br />
+            Todos los investigados son inocentes hasta sentencia firme.
+          </p>
+          <p style="font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--txt3); margin: 0;">
+            Código y datos auditables. Fuentes documentadas en cada hecho.
+          </p>
+        </div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--txt3); text-align: right;">
+          <p style="margin: 0;">La Influencia</p>
+          <p style="margin: 0;">Periodismo de datos · España</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // IntersectionObserver para fade-up en scroll
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    )
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el))
+  </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "entities.schema.json",
+  "title": "Entities Schema — La Influencia",
+  "description": "Valida el archivo entities.json. Cada entidad es una persona, empresa, institución o cuenta bancaria.",
+  "type": "object",
+  "required": ["entities"],
+  "properties": {
+    "entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "name", "cases"],
+        "properties": {
+
+          "id": {
+            "type": "string",
+            "description": "Identificador único. Snake-case, sin espacios. Ejemplo: 'koldo-garcia'",
+            "pattern": "^[a-z0-9-]+$"
+          },
+
+          "type": {
+            "type": "string",
+            "enum": ["person", "company", "institution", "account"],
+            "description": "Tipo de entidad"
+          },
+
+          "name": {
+            "type": "string",
+            "description": "Nombre completo oficial"
+          },
+
+          "aliases": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Apodos, nombres abreviados o alias conocidos"
+          },
+
+          "role": {
+            "type": "string",
+            "description": "Rol o función en el contexto del caso"
+          },
+
+          "cases": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["dp-77-24", "caso-koldo"]
+            },
+            "description": "Casos en los que participa esta entidad"
+          },
+
+          "status": {
+            "type": "string",
+            "enum": [
+              "investigated",
+              "accused",
+              "convicted",
+              "acquitted",
+              "witness",
+              "judge",
+              "prosecutor",
+              "lawyer",
+              "unknown"
+            ],
+            "description": "Estado procesal de la entidad"
+          },
+
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Etiquetas para filtrado y categorización"
+          },
+
+          "notes": {
+            "type": "string",
+            "description": "Notas adicionales sobre la entidad"
+          },
+
+          "registration": {
+            "type": "string",
+            "description": "País de registro (para empresas)"
+          },
+
+          "jurisdiction": {
+            "type": "string",
+            "description": "Jurisdicción (para cuentas bancarias/offshore)"
+          }
+        }
+      }
+    }
+  }
+}

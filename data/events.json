@@ -1,0 +1,789 @@
+{
+  "$schema": "../schema/events.schema.json",
+  "$comment": "EVENTOS — Hechos concretos verificados, anclados en fechas. Cada evento referencia entidades (entities[]) y fuentes (sources[]). El campo 'relations[]' vincula el evento a relaciones específicas del modelo.",
+  "events": [
+    {
+      "id": "ev-001",
+      "date": "2018-06-01",
+      "date_precision": "month",
+      "title": "Pedro Sánchez nombra a Ábalos ministro de Fomento",
+      "description": "Ábalos asume la cartera que controla Puertos del Estado y Adif. Koldo García lo acompaña como asesor personal. Se crea el contexto institucional que hace posible la trama de mascarillas.",
+      "cases": [
+        "caso-koldo"
+      ],
+      "type": "political",
+      "impact": 2,
+      "entities": [
+        "abalos",
+        "koldo-garcia",
+        "adif",
+        "puertos-estado"
+      ],
+      "relations": [
+        "rel-007"
+      ],
+      "sources": [
+        "prensa-general-jun-2018"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-002",
+      "date": "2020-03-14",
+      "date_precision": "day",
+      "title": "Decreto de estado de alarma por COVID-19",
+      "description": "El Gobierno decreta el estado de alarma. Las restricciones de urgencia en contratación pública permiten adjudicaciones sin concurso. Es el mecanismo legal que ambas tramas aprovechan.",
+      "cases": [
+        "dp-77-24",
+        "caso-koldo"
+      ],
+      "type": "context",
+      "impact": 5,
+      "entities": [
+        "fondo-solvencia"
+      ],
+      "relations": [],
+      "sources": [
+        "boe-14-mar-2020"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-003",
+      "date": "2020-03-21",
+      "date_precision": "day",
+      "title": "Puertos del Estado adjudica 24,2M€ a Soluciones de Gestión — sin concurso",
+      "description": "8 millones de mascarillas adjudicadas de urgencia a una empresa que facturó 0€ en 2019. La UCO determinará después que la empresa accedió a información privilegiada gracias a Koldo.",
+      "cases": [
+        "caso-koldo"
+      ],
+      "type": "contract",
+      "impact": 5,
+      "entities": [
+        "puertos-estado",
+        "soluciones-gestion",
+        "koldo-garcia",
+        "aldama",
+        "abalos"
+      ],
+      "relations": [
+        "rel-010",
+        "rel-008",
+        "rel-009"
+      ],
+      "sources": [
+        "newtral-guia-koldo-2024",
+        "wikipedia-koldo-case"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-004",
+      "date": "2020-03-27",
+      "date_precision": "day",
+      "title": "Adif adjudica 12,5M€ a Soluciones de Gestión — mismo patrón",
+      "description": "5 millones de mascarillas. Mismo adjudicatario, misma ausencia de concurso, misma urgencia COVID como cobertura. La UCO calificará esto de patrón sistemático.",
+      "cases": [
+        "caso-koldo"
+      ],
+      "type": "contract",
+      "impact": 4,
+      "entities": [
+        "adif",
+        "soluciones-gestion",
+        "koldo-garcia",
+        "aldama"
+      ],
+      "relations": [
+        "rel-011",
+        "rel-008",
+        "rel-009"
+      ],
+      "sources": [
+        "newtral-guia-koldo-2024"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-005",
+      "date": "2020-06-01",
+      "date_precision": "month",
+      "title": "El Gobierno aprueba rescate de 53M€ a Plus Ultra",
+      "description": "Consejo de Ministros aprueba la ayuda a través del Fondo de Apoyo a la Solvencia. La aerolínea venezolana con <1% de cuota de mercado cumple los requisitos 'de forma ajustada' según técnicos. La UDEF vinculará el proceso a presiones coordinadas por Zapatero.",
+      "cases": [
+        "dp-77-24"
+      ],
+      "type": "contract",
+      "impact": 5,
+      "entities": [
+        "fondo-solvencia",
+        "plus-ultra",
+        "zapatero"
+      ],
+      "relations": [
+        "rel-002",
+        "rel-006"
+      ],
+      "sources": [
+        "el-confidencial-plus-ultra-2020",
+        "udef-1907-26"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-006",
+      "date": "2020-09-15",
+      "date_precision": "day",
+      "title": "La noche del Parador de Teruel — viaje oficial, invitadas no oficiales",
+      "description": "Ábalos realiza visita institucional a infraestructuras ferroviarias de Teruel con representantes de Adif y del Gobierno de Aragón. Esa noche, la UCO documenta en 2025 el presunto desplazamiento de dos mujeres (22 y 21 años, desde Málaga y Córdoba) coordinado por Koldo García. Una habitación se reservó a nombre del hermano de Koldo como 'sala de espera'. Al día siguiente, Koldo contacta con un mando policial para 'solucionar un problema'.",
+      "cases": [
+        "caso-koldo"
+      ],
+      "type": "scandal",
+      "impact": 4,
+      "entities": [
+        "abalos",
+        "koldo-garcia",
+        "adif"
+      ],
+      "relations": [
+        "rel-007"
+      ],
+      "sources": [
+        "el-espanol-parador-teruel-may-2026",
+        "telemadrid-parador-10-may-2026",
+        "el-liberal-parador-11-may-2026",
+        "uco-informe-2025"
+      ],
+      "verified": "partial",
+      "notes": "Los hechos están recogidos en informes UCO de 2025 según El Español. Ábalos no ha sido acusado específicamente por este evento en el juicio oral."
+    },
+    {
+      "id": "ev-007",
+      "date": "2020-12-01",
+      "date_precision": "month",
+      "title": "Claudio Rivas comienza a pagar el alquiler del piso de Jésica Rodríguez en Madrid",
+      "description": "El socio de Aldama asume el pago del apartamento de la pareja del ministro Ábalos. Documentado en el atestado UCO de 233 páginas. Ábalos lo admitió en juicio pero lo calificó de 'parche provisional'.",
+      "cases": [
+        "caso-koldo"
+      ],
+      "type": "corruption",
+      "impact": 3,
+      "entities": [
+        "claudio-rivas",
+        "jessica-rodriguez",
+        "abalos",
+        "aldama"
+      ],
+      "relations": [
+        "rel-013"
+      ],
+      "sources": [
+        "uco-atestado-233pp",
+        "declaracion-abalos-juicio-2026"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-008",
+      "date": "2021-06-01",
+      "date_precision": "month",
+      "title": "Sánchez cesa a Ábalos como ministro sin explicaciones públicas",
+      "description": "Ábalos es sustituido en Transportes. No se dan explicaciones oficiales. Koldo García pierde su posición en el ministerio. Poco después se conocerán los primeros indicios de la trama de mascarillas.",
+      "cases": [
+        "caso-koldo"
+      ],
+      "type": "political",
+      "impact": 3,
+      "entities": [
+        "abalos",
+        "koldo-garcia"
+      ],
+      "relations": [
+        "rel-007"
+      ],
+      "sources": [
+        "prensa-general-jul-2021"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-009",
+      "date": "2021-12-01",
+      "date_precision": "month",
+      "title": "El Tribunal Supremo anula parcialmente el rescate de Plus Ultra",
+      "description": "La Sala Contencioso-Administrativa dictamina que Plus Ultra no cumplía todos los requisitos. Se ordena la devolución parcial. Este fallo abre la vía para investigar quién facilitó el rescate.",
+      "cases": [
+        "dp-77-24"
+      ],
+      "type": "judicial",
+      "impact": 3,
+      "entities": [
+        "tribunal-supremo",
+        "plus-ultra",
+        "fondo-solvencia"
+      ],
+      "relations": [
+        "rel-002"
+      ],
+      "sources": [
+        "sentencia-ts-plus-ultra-2021"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-010",
+      "date": "2022-04-01",
+      "date_precision": "month",
+      "title": "Fiscalía Anticorrupción abre investigación por los contratos de mascarillas",
+      "description": "Los fiscales detectan seis contratos sospechosos adjudicados sin licitación a Soluciones de Gestión. La empresa había pasado de 0€ a 54M€ en un año. Se cede la causa al juez Ismael Moreno de la Audiencia Nacional.",
+      "cases": [
+        "caso-koldo"
+      ],
+      "type": "investigation",
+      "impact": 3,
+      "entities": [
+        "soluciones-gestion",
+        "aldama"
+      ],
+      "relations": [
+        "rel-009",
+        "rel-010",
+        "rel-011"
+      ],
+      "sources": [
+        "wikipedia-koldo-case"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-011",
+      "date": "2024-01-01",
+      "date_precision": "month",
+      "title": "Apertura de D.P. 77/2024 — La UDEF investiga la red Zapatero",
+      "description": "El Juzgado Central de Instrucción Nº 2 abre diligencias. La UDEF comienza a analizar 39 sociedades vinculadas al entorno de Zapatero. Rastrean transferencias hacia Islas Vírgenes Británicas y operaciones en Venezuela, China y Emiratos.",
+      "cases": [
+        "dp-77-24"
+      ],
+      "type": "investigation",
+      "impact": 3,
+      "entities": [
+        "jci-2",
+        "udef",
+        "zapatero",
+        "julio-martinez"
+      ],
+      "relations": [
+        "rel-014"
+      ],
+      "sources": [
+        "udef-1907-26",
+        "udef-1908-26"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-012",
+      "date": "2024-02-21",
+      "date_precision": "day",
+      "title": "Operación Delorme — 20 detenidos, Koldo García arrestado",
+      "description": "La Guardia Civil ejecuta registros simultáneos. Koldo García y su esposa Patricia Úriz son detenidos. El caso explota en primera plana. Ábalos, aforado como diputado, pasa al Grupo Mixto para no perder el aforamiento ante el Supremo.",
+      "cases": [
+        "caso-koldo"
+      ],
+      "type": "police_operation",
+      "impact": 5,
+      "entities": [
+        "uco",
+        "koldo-garcia",
+        "abalos"
+      ],
+      "relations": [
+        "rel-015"
+      ],
+      "sources": [
+        "wikipedia-caso-abalos",
+        "prensa-op-delorme-feb-2024"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-013",
+      "date": "2025-06-01",
+      "date_precision": "month",
+      "title": "Santos Cerdán ingresa en prisión preventiva. UCO presenta 490 páginas",
+      "description": "El exnúmero 3 del PSOE entra en Soto del Real. El informe UCO de 490 páginas lo vincula directamente al entramado Koldo-Aldama. La Fiscalía abre la pieza de financiación ilegal del PSOE.",
+      "cases": [
+        "caso-koldo"
+      ],
+      "type": "judicial",
+      "impact": 4,
+      "entities": [
+        "uco",
+        "santos-cerdan",
+        "koldo-garcia"
+      ],
+      "relations": [
+        "rel-018"
+      ],
+      "sources": [
+        "uco-490pp-2025",
+        "wikipedia-santos-cerdan"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-014",
+      "date": "2025-11-03",
+      "date_precision": "day",
+      "title": "Juez Puente dicta auto de procesamiento contra Ábalos, Koldo y Aldama",
+      "description": "Auto por organización criminal, cohecho continuado, tráfico de influencias y malversación. Cierra la instrucción de la pieza principal. La causa pasa al tribunal de enjuiciamiento.",
+      "cases": [
+        "caso-koldo"
+      ],
+      "type": "judicial",
+      "impact": 5,
+      "entities": [
+        "leopoldo-puente",
+        "abalos",
+        "koldo-garcia",
+        "aldama"
+      ],
+      "relations": [
+        "rel-017"
+      ],
+      "sources": [
+        "auto-procesamiento-koldo-2025",
+        "cgpj-nota-prensa-nov-2025"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-015",
+      "date": "2025-11-27",
+      "date_precision": "day",
+      "title": "Ábalos y Koldo García ingresan en Soto del Real por riesgo 'extremo de fuga'",
+      "description": "Furgón policial. Prisión provisional sin fianza. Fianza civil de 60.000€ para cubrir responsabilidad civil. Primera vez que un exministro español entra en prisión preventiva en esta causa.",
+      "cases": [
+        "caso-koldo"
+      ],
+      "type": "judicial",
+      "impact": 5,
+      "entities": [
+        "leopoldo-puente",
+        "abalos",
+        "koldo-garcia"
+      ],
+      "relations": [
+        "rel-017"
+      ],
+      "sources": [
+        "infobae-soto-real-2025",
+        "auto-prision-koldo-2025"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-016",
+      "date": "2025-12-11",
+      "date_precision": "day",
+      "title": "Juez Puente abre juicio oral en el Tribunal Supremo",
+      "description": "Auto de apertura de juicio oral. La Sala Segunda del TS asume el enjuiciamiento. Fianzas de 60.000€ mantenidas. Se designan 7 magistrados.",
+      "cases": [
+        "caso-koldo"
+      ],
+      "type": "judicial",
+      "impact": 4,
+      "entities": [
+        "tribunal-supremo",
+        "leopoldo-puente",
+        "abalos",
+        "koldo-garcia",
+        "aldama"
+      ],
+      "relations": [],
+      "sources": [
+        "cgpj-nota-juicio-oral-dic-2025"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-017",
+      "date": "2026-02-19",
+      "date_precision": "day",
+      "title": "PP fuerza comparecencia de Zapatero en comisión Koldo del Senado",
+      "description": "Euronews informa que el PP exige que Zapatero comparezca en la comisión de investigación del caso Koldo, por haber asesorado a un empresario de su entorno personal vinculado a Plus Ultra. Primer nexo documental entre ambos casos.",
+      "cases": [
+        "dp-77-24",
+        "caso-koldo"
+      ],
+      "type": "political",
+      "impact": 3,
+      "entities": [
+        "zapatero",
+        "plus-ultra"
+      ],
+      "relations": [
+        "rel-019"
+      ],
+      "sources": [
+        "euronews-19-feb-2026"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-018",
+      "date": "2026-04-07",
+      "date_precision": "day",
+      "title": "Arranca el juicio oral en el Tribunal Supremo — caso Koldo",
+      "description": "Primera sesión. 7 magistrados. Fiscalía pide 24 años para Ábalos, 19,5 para Koldo, 7 para Aldama. Se prevén 14 jornadas y ~80 testigos.",
+      "cases": [
+        "caso-koldo"
+      ],
+      "type": "judicial",
+      "impact": 5,
+      "entities": [
+        "tribunal-supremo",
+        "abalos",
+        "koldo-garcia",
+        "aldama"
+      ],
+      "relations": [],
+      "sources": [
+        "prensa-juicio-abr-2026"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-019",
+      "date": "2026-04-29",
+      "date_precision": "day",
+      "title": "Declaran Aldama, Koldo y Ábalos — jornada clave en el Supremo",
+      "description": "Aldama se declara culpable de 3 delitos. Afirma haber entregado 4M€. Koldo niega haber cobrado y denuncia oferta de libertad a cambio de implicar al Gobierno. Ábalos niega todo y llama al proceso 'inquisitorial'. La UCO declara que Ábalos tomó 'la decisión última' de duplicar la compra de mascarillas.",
+      "cases": [
+        "caso-koldo"
+      ],
+      "type": "trial",
+      "impact": 5,
+      "entities": [
+        "tribunal-supremo",
+        "abalos",
+        "koldo-garcia",
+        "aldama",
+        "uco"
+      ],
+      "relations": [
+        "rel-012"
+      ],
+      "sources": [
+        "vozpopuli-juicio-mascarillas-2026",
+        "estrelladigital-juicio-2026",
+        "infobae-abalos-declaracion-2026"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-020",
+      "date": "2026-05-07",
+      "date_precision": "day",
+      "title": "El juicio Koldo queda visto para sentencia — 14 jornadas, 80 testigos",
+      "description": "Última sesión con informes finales de acusaciones y defensas. Fiscalía mantiene sus peticiones. El tribunal deberá decidir si existió organización criminal. Ábalos pide absolución. Aldama aguarda reducción de condena por colaboración.",
+      "cases": [
+        "caso-koldo"
+      ],
+      "type": "judicial",
+      "impact": 4,
+      "entities": [
+        "tribunal-supremo",
+        "abalos",
+        "koldo-garcia",
+        "aldama"
+      ],
+      "relations": [],
+      "sources": [
+        "estrelladigital-sentencia-2026",
+        "vozpopuli-juicio-mascarillas-2026"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-021",
+      "date": "2026-05-18",
+      "date_precision": "day",
+      "title": "El juez Calama imputa formalmente a Zapatero — 4 delitos, 88 páginas",
+      "description": "Auto de imputación: organización criminal, tráfico de influencias, blanqueo de capitales y falsedad documental. Se acuerda simultáneamente la entrada y registro en 5 domicilios. Primera imputación formal de un expresidente del Gobierno español.",
+      "cases": [
+        "dp-77-24"
+      ],
+      "type": "judicial",
+      "impact": 5,
+      "entities": [
+        "calama",
+        "jci-2",
+        "udef",
+        "zapatero"
+      ],
+      "relations": [
+        "rel-016"
+      ],
+      "sources": [
+        "auto-imputacion-zapatero-2026",
+        "el-mundo-zapatero-may-2026"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-022",
+      "date": "2026-05-19",
+      "date_precision": "day",
+      "title": "Policía Nacional registra la oficina de Ferraz y 4 domicilios más",
+      "description": "Registros simultáneos en 5 puntos de Madrid y Las Rozas. Se intervienen dispositivos electrónicos, documentación contable, criptoactivos y correos. La UCO recibe apoyo de la agencia HSI (Homeland Security Investigations, EEUU) para análisis de dispositivos extranjeros.",
+      "cases": [
+        "dp-77-24"
+      ],
+      "type": "police_operation",
+      "impact": 4,
+      "entities": [
+        "udef",
+        "zapatero",
+        "julio-martinez"
+      ],
+      "relations": [
+        "rel-001"
+      ],
+      "sources": [
+        "el-espanol-registro-ferraz-2026"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-023",
+      "date": "2026-06-02",
+      "date_precision": "day",
+      "title": "Zapatero citado a declarar como investigado — 09:00h",
+      "description": "Declaración fijada ante el juez Calama. Tiene derecho a asistencia letrada y acceso completo a los informes UDEF. Pendiente: si comparece o se acoge a su derecho a no declarar.",
+      "cases": [
+        "dp-77-24"
+      ],
+      "type": "judicial",
+      "impact": 4,
+      "entities": [
+        "calama",
+        "zapatero"
+      ],
+      "relations": [
+        "rel-016"
+      ],
+      "sources": [
+        "auto-imputacion-zapatero-2026"
+      ],
+      "verified": true,
+      "pending": true
+    },
+    {
+      "id": "ev-024",
+      "date": "2024-01-01",
+      "date_precision": "month",
+      "title": "Francia y Suiza solicitan cooperación judicial a España por blanqueo venezolano vinculado a Plus Ultra",
+      "description": "Los dos países investigan una red de blanqueo ligada a fondos venezolanos y detectan movimientos sospechosos relacionados con Plus Ultra. La hipótesis: parte de los 53M€ del rescate habrían servido para devolver préstamos ficticios y 'limpiar' dinero procedente de Venezuela. Las solicitudes activan a la Fiscalía Anticorrupción española.",
+      "cases": [
+        "dp-77-24"
+      ],
+      "type": "investigation",
+      "impact": 4,
+      "entities": [
+        "plus-ultra",
+        "zapatero",
+        "silvia-martinez-canton"
+      ],
+      "relations": [
+        "rel-025"
+      ],
+      "sources": [
+        "infobae-guia-plus-ultra-2026",
+        "publico-guia-imputacion-zapatero-2026"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-025",
+      "date": "2024-07-22",
+      "date_precision": "day",
+      "title": "Gobierno nombra a Silvia Martínez Cantón magistrada de enlace ante Francia y Suiza",
+      "description": "La magistrada accede al cargo con mandato de 5 años. Tenía acreditación extendida para operar también en Suiza, clave para las investigaciones financieras internacionales relacionadas con Plus Ultra. El Gobierno había barajado primero a la exministra Pilar Llop, descartada por presión de asociaciones judiciales.",
+      "cases": [
+        "dp-77-24"
+      ],
+      "type": "political",
+      "impact": 2,
+      "entities": [
+        "silvia-martinez-canton",
+        "ministerio-justicia"
+      ],
+      "relations": [],
+      "sources": [
+        "libertad-digital-juez-enlace-2026"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-026",
+      "date": "2025-12-01",
+      "date_precision": "month",
+      "title": "UDEF detiene al presidente y al CEO de Plus Ultra por blanqueo",
+      "description": "La Policía Nacional detiene a Julio Martínez Solá (presidente) y Roberto Roselli (CEO) de Plus Ultra en una operación por blanqueo de capitales. Los registros terminan de situar la investigación en el centro de la actualidad. Es el salto mediático y judicial que llevará a la imputación de Zapatero cinco meses después.",
+      "cases": [
+        "dp-77-24"
+      ],
+      "type": "police_operation",
+      "impact": 4,
+      "entities": [
+        "udef",
+        "julio-martinez-sola",
+        "roberto-roselli",
+        "plus-ultra"
+      ],
+      "relations": [
+        "rel-028"
+      ],
+      "sources": [
+        "infobae-guia-plus-ultra-2026",
+        "publico-guia-imputacion-zapatero-2026"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-027",
+      "date": "2026-05-22",
+      "date_precision": "day",
+      "title": "El Gobierno cesa a la juez de enlace ante Francia y Suiza — 'pérdida de confianza'",
+      "description": "El Ministerio de Justicia (ministro Félix Bolaños) cesa a la magistrada Silvia Martínez Cantón antes de cumplir el mínimo de su mandato de 5 años. Bolaños alega exceso de trabajo en Francia. El Confidencial publica que el cese real está vinculado al manejo por la magistrada de información sensible sobre Plus Ultra de la que el Gobierno no tenía constancia. La nueva convocatoria elimina la acreditación para Suiza, el país más relevante para investigaciones financieras europeas. No es la primera vez: en 2019, Sánchez ya cesó al juez de enlace con EEUU en plena investigación de una causa que afectaba a Zapatero.",
+      "cases": [
+        "dp-77-24"
+      ],
+      "type": "scandal",
+      "impact": 5,
+      "entities": [
+        "ministerio-justicia",
+        "silvia-martinez-canton",
+        "zapatero"
+      ],
+      "relations": [
+        "rel-027"
+      ],
+      "sources": [
+        "libertad-digital-juez-enlace-2026",
+        "confilegal-cooperacion-judicial-2026"
+      ],
+      "verified": true,
+      "notes": "El ministro Bolaños negó cualquier relación con la investigación Plus Ultra. Confilegal señala que la pérdida de la acreditación suiza 'lo cambia todo' en términos de cooperación judicial internacional."
+    },
+    {
+      "id": "ev-028",
+      "date": "2024-11-01",
+      "date_precision": "month",
+      "title": "Raúl Morodo condenado por la Audiencia Nacional por cobrar de PDVSA",
+      "description": "La Audiencia Nacional condena a Raúl Morodo, embajador de Zapatero en Venezuela, a 10 meses de cárcel por reconocer haber ocultado a Hacienda ingresos procedentes de negocios de su hijo con PDVSA. La causa investigó pagos millonarios vinculados al entorno chavista mediante asesorías ficticias. Es el primer caso documentado que conecta la élite socialista española con los dineros de la petrolera estatal venezolana.",
+      "cases": [
+        "dp-77-24"
+      ],
+      "type": "judicial",
+      "impact": 3,
+      "entities": [
+        "raul-morodo",
+        "pdvsa",
+        "zapatero"
+      ],
+      "relations": [
+        "rel-026"
+      ],
+      "sources": [
+        "el-independiente-conexion-venezolana-2026"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-029",
+      "date": "2020-01-01",
+      "date_precision": "month",
+      "title": "Inteligencia Prospectiva S.L. se constituye en Madrid. Empieza a pagar a la red",
+      "description": "Los hijos del empresario venezolano Domingo Amaro Rangel (contratos con PDVSA, investigado por EEUU) constituyen Inteligencia Prospectiva en Madrid. Entre 2020 y 2025 pagará 368.258€ a Análisis Relevante (Julio Martínez), 561.440€ a Whathefav (hijas de Zapatero) y 266.200€ a Gate Center (lobby prochino de Zapatero). La UDEF califica estos pagos como el canal de financiación de la red desde Venezuela y China.",
+      "cases": [
+        "dp-77-24"
+      ],
+      "type": "corruption",
+      "impact": 4,
+      "entities": [
+        "inteligencia-prospectiva",
+        "domingo-amaro",
+        "analisis-relevante",
+        "whathefav",
+        "gate-center",
+        "julio-martinez",
+        "zapatero"
+      ],
+      "relations": [
+        "rel-020",
+        "rel-021",
+        "rel-022",
+        "rel-023"
+      ],
+      "sources": [
+        "the-objective-red-opaca-2026"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-030",
+      "date": "2023-01-01",
+      "date_precision": "year",
+      "title": "Marlaska nombra a Fernando Alonso jefe de la UDEF — reducción de efectivos al 50%",
+      "description": "Tras la jubilación del anterior jefe Fernando Moré —a quien Marlaska nunca se atrevió a cesar directamente para no repetir otro caso Pérez de los Cobos—, el ministro nombra a Fernando Alonso, descrito por fuentes sindicales como 'afín al PSOE'. Bajo su mando los efectivos de la UDEF se reducen a la mitad. Fuentes policiales afirman que el objetivo era alejar a la unidad de las causas políticamente comprometedoras. La UDEF que había destapado Gürtel, Pujol y PDVSA deja de figurar en las grandes causas activas.",
+      "cases": [
+        "dp-77-24"
+      ],
+      "type": "political",
+      "impact": 4,
+      "entities": [
+        "marlaska",
+        "fernando-alonso-comisario",
+        "udef"
+      ],
+      "relations": [
+        "rel-031"
+      ],
+      "sources": [
+        "okdiario-marlaska-udef-2023",
+        "the-objective-marlaska-udef-2025"
+      ],
+      "verified": "partial",
+      "notes": "Fuente principal: OKDiario y The Objective, medios de línea editorial contraria al Gobierno. Verificar con fuentes adicionales."
+    },
+    {
+      "id": "ev-031",
+      "date": "2026-05-23",
+      "date_precision": "day",
+      "title": "Marlaska nombrará a dedo el nuevo jefe de Policía Judicial en plena investigación Zapatero",
+      "description": "Vozpópuli revela que el comisario Fernando Pascual Grasa, jefe de la Comisaría General de Policía Judicial —de la que depende directamente la UDEF—, se jubila el 10 de noviembre de 2026. Marlaska elegirá libremente a su sustituto. El cargo es el mando bisagra que reporta al Ministerio la información sobre las pesquisas de la UDEF. El nombramiento se producirá mientras la unidad instruye el caso más sensible políticamente de los últimos años.",
+      "cases": [
+        "dp-77-24"
+      ],
+      "type": "political",
+      "impact": 4,
+      "entities": [
+        "marlaska",
+        "fernando-pascual-grasa",
+        "udef",
+        "zapatero"
+      ],
+      "relations": [
+        "rel-032"
+      ],
+      "sources": [
+        "vozpopuli-marlaska-udef-2026"
+      ],
+      "verified": true,
+      "notes": "La jubilación es un hecho verificado. La calificación política del nombramiento futuro es una valoración editorial de Vozpópuli."
+    }
+  ]
+}

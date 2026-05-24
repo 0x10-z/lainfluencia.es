@@ -1,0 +1,45 @@
+---
+import type { Source } from '../types'
+import { getSourceBadgeType, getSourceTypeLabel } from '../utils'
+
+interface Props {
+  source: Source
+}
+
+const { source } = Astro.props
+const badgeType = getSourceBadgeType(source)
+const label = source.subtype ?? getSourceTypeLabel(source.type)
+---
+
+<span style="display: inline-flex; align-items: center; gap: 6px; max-width: 100%;">
+  <span class={`badge badge-${badgeType}`}>{label}</span>
+  {source.url ? (
+    <a
+      href={source.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      title={source.title}
+      style="
+        font-size: 0.8rem;
+        color: var(--txt2);
+        text-decoration: none;
+        border-bottom: 1px solid var(--line2);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 300px;
+        display: inline-block;
+      "
+    >
+      {source.title}
+      <span style="font-size: 0.65rem; opacity: 0.6; margin-left: 3px;">↗</span>
+    </a>
+  ) : (
+    <span style="font-size: 0.8rem; color: var(--txt3);" title={source.availability_note}>
+      {source.title}
+      {source.availability === 'restricted' && (
+        <span style="margin-left: 4px; opacity: 0.5;" title="Acceso restringido">🔒</span>
+      )}
+    </span>
+  )}
+</span>

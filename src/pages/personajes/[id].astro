@@ -1,0 +1,184 @@
+---
+import Base from '../../layouts/Base.astro'
+import CaseTag from '../../components/CaseTag.astro'
+import EventCard from '../../components/EventCard.astro'
+
+import entitiesData from '../../data/entities.json'
+import eventsData from '../../data/events.json'
+import relationsData from '../../data/relations.json'
+import sourcesData from '../../data/sources.json'
+
+import type { Entity, Event, Relation, Source } from '../../types'
+import { getStatusLabel, getStatusColor, getRelationsByEntity, getEventsByEntity } from '../../utils'
+
+export async function getStaticPaths() {
+  const entities = entitiesData.entities as Entity[]
+  return entities.map(e => ({ params: { id: e.id } }))
+}
+
+const { id } = Astro.params
+const entities = entitiesData.entities as Entity[]
+const events = eventsData.events as Event[]
+const relations = relationsData.relations as Relation[]
+const sources = sourcesData.sources as Source[]
+
+const entity = entities.find(e => e.id === id)!
+const entityEvents = getEventsByEntity(id, events).sort(
+  (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+)
+const entityRelations = getRelationsByEntity(id, relations)
+
+const statusColor = getStatusColor(entity.status)
+const statusLabel = getStatusLabel(entity.status)
+
+const TYPE_ICON: Record<string, string> = {
+  person: '◉', company: '▣', institution: '⬡', account: '◈',
+}
+const TYPE_LABEL: Record<string, string> = {
+  person: 'Persona', company: 'Empresa', institution: 'Institución', account: 'Cuenta',
+}
+
+const borderColor = entity.cases.includes('dp-77-24') && entity.cases.includes('caso-koldo')
+  ? 'var(--gold)' : entity.cases.includes('dp-77-24') ? 'var(--red)'
+  : entity.cases.includes('caso-koldo') ? 'var(--blue)' : 'var(--line2)'
+---
+
+<Base
+  title={entity.name}
+  description={`${entity.role}. ${entity.notes ?? ''}`}
+>
+  <div class="container" style="padding-top: 2rem; padding-bottom: 4rem; max-width: 860px;">
+
+    <!-- Breadcrumb -->
+    <a href="/cronologia" style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--txt3);text-decoration:none;letter-spacing:0.04em;">
+      ← Volver
+    </a>
+
+    <!-- Cabecera del personaje -->
+    <div style={`margin-top:1.5rem;padding:1.5rem 1.5rem 1.5rem;border:1px solid var(--line);border-left:3px solid ${borderColor};background:var(--bg2);`}>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:0.75rem;">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:0.8rem;color:var(--txt3);">
+          {TYPE_ICON[entity.type]} {TYPE_LABEL[entity.type]}
+        </span>
+        <span class="status-pill" style={`background:${statusColor}20;color:${statusColor};border:1px solid ${statusColor}40;`}>
+          {statusLabel}
+        </span>
+        {entity.cases.map(c => <CaseTag caseId={c} />)}
+      </div>
+
+      <h1 style="font-size:clamp(1.6rem,4vw,2.5rem);margin:0 0 0.5rem;line-height:1.2;">
+        {entity.name}
+      </h1>
+
+      {entity.aliases.length > 0 && (
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:var(--txt3);margin:0 0 0.75rem;">
+          También: {entity.aliases.join(', ')}
+        </p>
+      )}
+
+      <p style="font-size:1rem;color:var(--txt2);margin:0 0 1rem;line-height:1.6;">
+        {entity.role}
+      </p>
+
+      {entity.notes && (
+        <p style="font-size:0.88rem;color:var(--txt3);font-style:italic;margin:0;padding:0.75rem 1rem;border-left:2px solid var(--line2);line-height:1.6;">
+          {entity.notes}
+        </p>
+      )}
+
+      {entity.tags.length > 0 && (
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:1rem;">
+          {entity.tags.map(tag => (
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--txt3);padding:2px 8px;border:1px solid var(--line2);">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {(entity.registration || entity.jurisdiction) && (
+        <div style="margin-top:0.75rem;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--txt3);">
+          {entity.registration && <span>Registro: {entity.registration}</span>}
+          {entity.jurisdiction && <span style="margin-left:1rem;">Jurisdicción: {entity.jurisdiction}</span>}
+        </div>
+      )}
+    </div>
+
+    <!-- Relaciones -->
+    {entityRelations.length > 0 && (
+      <section style="margin-top:3rem;">
+        <h2 style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--txt3);text-transform:uppercase;letter-spacing:0.08em;margin:0 0 1rem;font-weight:400;padding-bottom:0.5rem;border-bottom:1px solid var(--line);">
+          Relaciones — {entityRelations.length}
+        </h2>
+        <div style="display:flex;flex-direction:column;gap:1px;background:var(--line);">
+          {entityRelations.map(r => {
+            const other = r.from === id ? entities.find(e => e.id === r.to) : entities.find(e => e.id === r.from)
+            const isFrom = r.from === id
+            const bc = r.cases.includes('dp-77-24') && r.cases.includes('caso-koldo')
+              ? 'var(--gold)' : r.cases.includes('dp-77-24') ? 'var(--red)' : 'var(--blue)'
+            return (
+              <div style={`background:var(--bg2);border-left:3px solid ${bc};padding:0.85rem 1.25rem;`}>
+                <div style="display:flex;flex-wrap:wrap;align-items:center;gap:0.75rem;margin-bottom:0.4rem;">
+                  {isFrom ? (
+                    <>
+                      <span style="font-size:0.85rem;color:var(--txt2);font-weight:600;">{entity.name}</span>
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--txt3);padding:2px 8px;border:1px solid var(--line2);">
+                        {r.label}
+                      </span>
+                      <a href={`/personajes/${r.to}`} style="font-size:0.88rem;color:var(--txt);text-decoration:none;font-weight:600;">
+                        {other?.name ?? r.to}
+                      </a>
+                    </>
+                  ) : (
+                    <>
+                      <a href={`/personajes/${r.from}`} style="font-size:0.88rem;color:var(--txt);text-decoration:none;font-weight:600;">
+                        {other?.name ?? r.from}
+                      </a>
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--txt3);padding:2px 8px;border:1px solid var(--line2);">
+                        {r.label}
+                      </span>
+                      <span style="font-size:0.85rem;color:var(--txt2);font-weight:600;">{entity.name}</span>
+                    </>
+                  )}
+                  {r.amount?.value != null && (
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:0.78rem;color:var(--gold);margin-left:auto;">
+                      {r.amount.approximate ? '~' : ''}{r.amount.value.toLocaleString('es-ES')} {r.amount.currency}
+                    </span>
+                  )}
+                </div>
+                <p style="font-size:0.82rem;color:var(--txt3);margin:0;line-height:1.5;">
+                  {r.description}
+                </p>
+              </div>
+            )
+          })}
+        </div>
+      </section>
+    )}
+
+    <!-- Eventos -->
+    {entityEvents.length > 0 && (
+      <section style="margin-top:3rem;">
+        <h2 style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--txt3);text-transform:uppercase;letter-spacing:0.08em;margin:0 0 1rem;font-weight:400;padding-bottom:0.5rem;border-bottom:1px solid var(--line);">
+          Aparece en — {entityEvents.length} evento{entityEvents.length !== 1 ? 's' : ''}
+        </h2>
+        <div style="display:flex;flex-direction:column;gap:1px;background:var(--line);">
+          {entityEvents.map(ev => (
+            <EventCard event={ev} entities={entities} sources={sources} expandable />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- ID técnico -->
+    <div style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--line);">
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--txt3);margin:0;">
+        ID: <code style="color:var(--txt2);">{entity.id}</code>
+        {' · '}
+        Tipo: {entity.type}
+        {' · '}
+        Estado: {entity.status}
+      </p>
+    </div>
+  </div>
+</Base>

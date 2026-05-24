@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Influencia — Tablero de Investigación</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #070707;
+  --bg2: #0d0d0d;
+  --bg3: #111;
+  --border: #1e1e1e;
+  --border2: #2a2a2a;
+  --txt: #e8e4da;
+  --txt2: #999;
+  --txt3: #555;
+  --rojo: #c0392b;
+  --rojo2: rgba(192,57,43,.08);
+  --azul: #1a5f9e;
+  --azul2: rgba(26,95,158,.08);
+  --dorado: #b8960c;
+  --verde: #27ae60;
+  --naranja: #d35400;
+  --ft: 'Playfair Display',Georgia,serif;
+  --fm: 'IBM Plex Mono',monospace;
+  --fb: 'IBM Plex Sans',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--txt);font-family:var(--fb);overflow-x:hidden;}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:300;background:rgba(7,7,7,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 4vw;height:48px;}
+.nav-logo{font-family:var(--ft);font-size:.95rem;font-weight:900;}
+.nav-logo em{color:var(--rojo);font-style:italic;}
+.nav-pills{display:flex;gap:.4rem;}
+.nav-pill{font-family:var(--fm);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;padding:.3rem .9rem;border:1px solid var(--border2);background:transparent;color:var(--txt3);cursor:pointer;transition:all .2s;text-decoration:none;}
+.nav-pill:hover,.nav-pill.active{border-color:var(--rojo);color:var(--rojo);background:var(--rojo2);}
+.nav-pill.azul-pill:hover,.nav-pill.azul-pill.active{border-color:var(--azul);color:#5ba3d9;background:var(--azul2);}
+
+/* ── HERO ── */
+.hero{min-height:88vh;display:grid;grid-template-columns:1fr 1fr;gap:0;position:relative;overflow:hidden;}
+.hero-left{padding:8vw 5vw 6vw 8vw;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--border);}
+.hero-right{padding:8vw 8vw 6vw 5vw;display:flex;flex-direction:column;justify-content:center;}
+.hero-case-label{font-family:var(--fm);font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;margin-bottom:1.2rem;opacity:0;animation:fadeUp .6s ease forwards .1s;}
+.lbl-z{color:var(--rojo);}
+.lbl-k{color:#5ba3d9;}
+.hero-title{font-family:var(--ft);font-size:clamp(2.8rem,6vw,5rem);font-weight:900;line-height:.95;letter-spacing:-.02em;margin-bottom:1.5rem;opacity:0;animation:fadeUp .6s ease forwards .25s;}
+.hero-title em{font-style:italic;}
+.hero-q{font-family:var(--ft);font-size:clamp(.9rem,1.5vw,1.1rem);font-style:italic;color:var(--txt2);line-height:1.65;margin-bottom:2rem;opacity:0;animation:fadeUp .6s ease forwards .4s;}
+.hero-q strong{color:var(--txt);font-style:normal;}
+.hero-meta{display:flex;flex-direction:column;gap:.7rem;opacity:0;animation:fadeUp .6s ease forwards .55s;}
+.hm-row{display:flex;gap:1rem;align-items:baseline;}
+.hm-key{font-family:var(--fm);font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--txt3);min-width:90px;}
+.hm-val{font-family:var(--fm);font-size:.8rem;color:var(--txt2);}
+.hm-val.accent{color:var(--rojo);}
+.hm-val.accent-b{color:#5ba3d9;}
+.hero-divider{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--fm);font-size:.6rem;letter-spacing:.2em;color:var(--txt3);writing-mode:vertical-lr;text-orientation:mixed;padding:1rem .5rem;background:var(--bg);border:1px solid var(--border);opacity:0;animation:fadeUp .6s ease forwards .7s;}
+
+/* ── METHODOLOGY BANNER ── */
+.method-band{background:var(--bg2);border-bottom:1px solid var(--border);padding:1.5rem 8vw;display:flex;align-items:center;gap:3rem;flex-wrap:wrap;}
+.method-item{display:flex;align-items:center;gap:.7rem;}
+.method-icon{width:28px;height:28px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0;}
+.method-text{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;color:var(--txt3);line-height:1.5;}
+.method-sep{width:1px;height:30px;background:var(--border2);}
+
+/* ── SECTION LABELS ── */
+.sec-wrap{padding:5vw 8vw;border-bottom:1px solid var(--border);}
+.sec-wrap.dark{background:var(--bg2);}
+.sec-label{font-family:var(--fm);font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--rojo);margin-bottom:1.2rem;display:flex;align-items:center;gap:1rem;}
+.sec-label.b{color:#5ba3d9;}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.sec-title{font-family:var(--ft);font-size:clamp(1.6rem,3.5vw,2.5rem);font-weight:700;line-height:1.1;margin-bottom:1.5rem;}
+
+/* ── EVIDENCE BOARD / TIMELINE ── */
+.board{position:relative;margin-top:1.5rem;}
+.board-axis{position:absolute;left:180px;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--rojo) 0%,rgba(192,57,43,.2) 85%,transparent 100%);}
+.board-axis.b{background:linear-gradient(to bottom,var(--azul) 0%,rgba(26,95,158,.2) 85%,transparent 100%);}
+
+.event{display:grid;grid-template-columns:180px 1fr;margin-bottom:0;position:relative;opacity:0;transform:translateX(-8px);transition:opacity .5s ease,transform .5s ease;}
+.event.visible{opacity:1;transform:translateX(0);}
+
+.event-date{text-align:right;padding:1.6rem 2rem 1.6rem 0;border-right:0;position:relative;}
+.event-date-inner{position:sticky;top:70px;}
+.event-day{font-family:var(--fm);font-size:1.1rem;font-weight:500;color:var(--rojo);line-height:1;}
+.event-day.b{color:#5ba3d9;}
+.event-month{font-family:var(--fm);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--txt3);margin-top:.2rem;}
+.event-year{font-family:var(--fm);font-size:.6rem;color:var(--txt3);}
+
+.event-dot{position:absolute;right:-6px;top:1.85rem;width:11px;height:11px;border-radius:50%;background:var(--bg);border:2px solid var(--rojo);transition:background .2s,transform .2s;z-index:2;}
+.event-dot.b{border-color:var(--azul);}
+.event:hover .event-dot{background:var(--rojo);transform:scale(1.2);}
+.event:hover .event-dot.b{background:var(--azul);}
+
+.event-body{padding:1.4rem 0 1.4rem 2.5rem;border-bottom:1px solid var(--border);}
+.event:last-child .event-body{border-bottom:none;}
+
+.event-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem;}
+.etag{font-family:var(--fm);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;padding:.15rem .5rem;border:1px solid;}
+.etag-k{border-color:var(--border2);color:var(--txt3);}  /* tipo evento */
+.etag-z{border-color:var(--rojo);color:var(--rojo);}     /* caso zapatero */
+.etag-k2{border-color:var(--azul);color:#5ba3d9;}        /* caso koldo */
+.etag-imp{border-color:var(--naranja);color:var(--naranja);} /* impacto alto */
+
+.event-title{font-family:var(--ft);font-size:1.05rem;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
+.event-desc{font-size:.83rem;color:var(--txt2);line-height:1.75;margin-bottom:.9rem;}
+.event-desc strong{color:var(--txt);}
+
+/* SOURCE CARD */
+.source-card{display:inline-flex;align-items:center;gap:.7rem;padding:.5rem .9rem;background:var(--bg3);border:1px solid var(--border2);text-decoration:none;color:inherit;transition:border-color .2s,background .2s;max-width:520px;}
+.source-card:hover{border-color:var(--border2);background:#161616;}
+.source-card + .source-card{margin-top:.4rem;}
+.sc-icon{font-size:.9rem;flex-shrink:0;color:var(--txt3);}
+.sc-info{flex:1;min-width:0;}
+.sc-pub{font-family:var(--fm);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--txt3);margin-bottom:.1rem;}
+.sc-title{font-family:var(--fm);font-size:.65rem;color:var(--txt2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sc-date{font-family:var(--fm);font-size:.5rem;color:var(--txt3);margin-left:auto;padding-left:.5rem;flex-shrink:0;}
+.sc-badge{font-family:var(--fm);font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;padding:.15rem .4rem;border:1px solid;flex-shrink:0;}
+.sc-badge.jud{border-color:var(--dorado);color:var(--dorado);}
+.sc-badge.per{border-color:var(--txt3);color:var(--txt3);}
+.sc-badge.uco{border-color:#5ba3d9;color:#5ba3d9;}
+.sc-badge.udef{border-color:var(--rojo);color:var(--rojo);}
+
+/* sources-stack: multiple sources */
+.sources-stack{display:flex;flex-direction:column;gap:.4rem;margin-top:.5rem;}
+
+/* IMPACT LEVEL */
+.impact{display:flex;align-items:center;gap:.4rem;margin-top:.7rem;}
+.impact-label{font-family:var(--fm);font-size:.5rem;letter-spacing:.1em;color:var(--txt3);}
+.impact-bar{display:flex;gap:2px;}
+.impact-seg{width:16px;height:4px;background:var(--border2);}
+.impact-seg.on{background:var(--rojo);}
+.impact-seg.on.b{background:var(--azul);}
+
+/* FILTER BAR */
+.filter-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:.8rem 8vw;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;position:sticky;top:48px;z-index:200;}
+.filter-label{font-family:var(--fm);font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--txt3);}
+.fbtn{font-family:var(--fm);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;padding:.25rem .7rem;border:1px solid var(--border2);background:transparent;color:var(--txt3);cursor:pointer;transition:all .2s;}
+.fbtn:hover{border-color:var(--border2);color:var(--txt2);}
+.fbtn.on{background:var(--rojo2);border-color:var(--rojo);color:var(--rojo);}
+.fbtn.on.bk{background:var(--azul2);border-color:var(--azul);color:#5ba3d9;}
+.filter-sep{width:1px;height:18px;background:var(--border2);}
+
+/* STATS SIDEBAR */
+.layout-split{display:grid;grid-template-columns:1fr 320px;gap:0;}
+.sidebar{border-left:1px solid var(--border);padding:2rem 1.5rem;position:sticky;top:96px;height:calc(100vh - 96px);overflow-y:auto;}
+.sidebar-section{margin-bottom:2rem;}
+.sidebar-title{font-family:var(--fm);font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--txt3);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
+.stat-row{display:flex;justify-content:space-between;align-items:baseline;padding:.4rem 0;border-bottom:1px solid var(--border);}
+.stat-k{font-family:var(--fm);font-size:.62rem;color:var(--txt3);}
+.stat-v{font-family:var(--fm);font-size:.75rem;color:var(--txt);}
+.stat-v.r{color:var(--rojo);}
+.stat-v.b{color:#5ba3d9;}
+
+/* NEXO PANEL */
+.nexo{background:var(--bg2);padding:3rem 8vw;border-bottom:1px solid var(--border);}
+.nexo-grid{display:grid;grid-template-columns:1fr 1px 1fr;gap:3rem;margin-top:1.5rem;}
+.nexo-divider{background:var(--border2);}
+.nexo-item h4{font-family:var(--ft);font-size:1rem;font-weight:700;margin-bottom:.8rem;}
+.nexo-row{display:flex;gap:.6rem;align-items:flex-start;margin-bottom:.5rem;}
+.nexo-k{font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--txt3);min-width:80px;padding-top:.05rem;}
+.nexo-v{font-family:var(--fm);font-size:.7rem;color:var(--txt2);line-height:1.5;}
+
+/* FOOTER */
+footer{padding:3rem 8vw;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:2rem;}
+.foot-logo{font-family:var(--ft);font-size:1.3rem;font-weight:900;}
+.foot-logo em{color:var(--rojo);font-style:italic;}
+.foot-note{font-family:var(--fm);font-size:.55rem;color:var(--txt3);line-height:1.9;text-align:right;max-width:460px;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;}
+  .hero-right{border-top:1px solid var(--border);}
+  .hero-divider{display:none;}
+  .layout-split{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  .board-axis{left:120px;}
+  .event{grid-template-columns:120px 1fr;}
+  .nexo-grid{grid-template-columns:1fr;}
+  .nexo-divider{display:none;}
+}
+@media(max-width:600px){
+  .nav-pills{display:none;}
+  .method-band{gap:1.5rem;}
+  .method-sep{display:none;}
+  .board-axis{left:80px;}
+  .event{grid-template-columns:80px 1fr;}
+  .event-day{font-size:.85rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-logo">La <em>Influencia</em></div>
+  <div class="nav-pills">
+    <a href="#board-z" class="nav-pill active">D.P. 77/24 Zapatero</a>
+    <a href="#board-k" class="nav-pill azul-pill">Caso Koldo</a>
+    <a href="#nexo" class="nav-pill">El nexo</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-left">
+    <p class="hero-case-label lbl-z">D.P. 77/24 · UDEF-BBCA · JCI Nº2 Madrid</p>
+    <h1 class="hero-title">Plus <em>Ultra</em><br>& la Red</h1>
+    <p class="hero-q">En 2020, una aerolínea venezolana sin aviones propios recibió <strong>53 millones de euros</strong> del Estado. Lo que la UDEF encontró al seguir el dinero cambió todo.</p>
+    <div class="hero-meta">
+      <div class="hm-row"><span class="hm-key">Investigado</span><span class="hm-val accent">J.L.R. Zapatero</span></div>
+      <div class="hm-row"><span class="hm-key">Juez</span><span class="hm-val">Calama Teixeira · JCI Nº2</span></div>
+      <div class="hm-row"><span class="hm-key">Imputación</span><span class="hm-val">18 mayo 2026</span></div>
+      <div class="hm-row"><span class="hm-key">Declaración</span><span class="hm-val">2 junio 2026 · 09:00h</span></div>
+      <div class="hm-row"><span class="hm-key">Delitos</span><span class="hm-val">Org. criminal · Tráfico influencias · Blanqueo · Falsedad</span></div>
+    </div>
+  </div>
+  <div class="hero-divider">· · ·</div>
+  <div class="hero-right">
+    <p class="hero-case-label lbl-k">Especial 003/0020775/2020 · UCO · Tribunal Supremo</p>
+    <h1 class="hero-title">Las <em>Mascarillas</em><br>& las Mordidas</h1>
+    <p class="hero-q">En plena pandemia, contratos millonarios se adjudicaron sin concurso. <strong>Ábalos era el ministro. Koldo, el intermediario. Aldama, el dinero.</strong></p>
+    <div class="hero-meta">
+      <div class="hm-row"><span class="hm-key">Acusados</span><span class="hm-val accent-b">Ábalos · Koldo · Aldama</span></div>
+      <div class="hm-row"><span class="hm-key">Juez</span><span class="hm-val">Leopoldo Puente · TS Sala 2ª</span></div>
+      <div class="hm-row"><span class="hm-key">Juicio oral</span><span class="hm-val">7 abril – 7 mayo 2026</span></div>
+      <div class="hm-row"><span class="hm-key">Petición fiscal</span><span class="hm-val">24 + 19,5 + 7 años prisión</span></div>
+      <div class="hm-row"><span class="hm-key">Estado</span><span class="hm-val">Visto para sentencia</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── METHODOLOGY ── -->
+<div class="method-band">
+  <div class="method-item"><div class="method-icon">📰</div><div class="method-text">Cada evento enlaza<br>con la fuente periodística</div></div>
+  <div class="method-sep"></div>
+  <div class="method-item"><div class="method-icon">⚖</div><div class="method-text">Fuentes judiciales<br>identificadas y distinguidas</div></div>
+  <div class="method-sep"></div>
+  <div class="method-item"><div class="method-icon">🔍</div><div class="method-text">Informes UDEF y UCO<br>diferenciados por caso</div></div>
+  <div class="method-sep"></div>
+  <div class="method-item"><div class="method-icon">⚡</div><div class="method-text">Nivel de impacto<br>indicado en cada hecho</div></div>
+  <div class="method-sep"></div>
+  <div class="method-item"><div class="method-icon">🔗</div><div class="method-text">Conexiones entre casos<br>marcadas explícitamente</div></div>
+</div>
+
+<!-- ── FILTER BAR ── -->
+<div class="filter-bar" id="filter-bar">
+  <span class="filter-label">Filtrar:</span>
+  <button class="fbtn on" onclick="filterEvents('all',this)">Todo</button>
+  <button class="fbtn" onclick="filterEvents('contrato',this)">Contratos</button>
+  <button class="fbtn" onclick="filterEvents('judicial',this)">Judicial</button>
+  <button class="fbtn" onclick="filterEvents('politico',this)">Político</button>
+  <button class="fbtn" onclick="filterEvents('investigacion',this)">Investigación</button>
+  <div class="filter-sep"></div>
+  <button class="fbtn" onclick="filterCase('z',this)">Solo Zapatero</button>
+  <button class="fbtn bk" onclick="filterCase('k',this)">Solo Koldo</button>
+</div>
+
+<!-- ── MAIN LAYOUT ── -->
+<div class="layout-split">
+
+  <!-- TIMELINE BOARD -->
+  <div>
+
+    <!-- ═══ CASO ZAPATERO ═══ -->
+    <div id="board-z" class="sec-wrap">
+      <div class="sec-label">D.P. 77/24 — Caso Zapatero</div>
+      <h2 class="sec-title">Cronología de<br>hechos verificados</h2>
+
+      <div class="board">
+        <div class="board-axis"></div>
+
+        <!-- EVENT 1 -->
+        <div class="event" data-type="politico" data-case="z">
+          <div class="event-date">
+            <div class="event-date-inner">
+              <div class="event-day">Jun</div>
+              <div class="event-month">2018</div>
+            </div>
+            <div class="event-dot"></div>
+          </div>
+          <div class="event-body">
+            <div class="event-tags">
+              <span class="etag etag-k">Político</span>
+              <span class="etag etag-z">Zapatero</span>
+            </div>
+            <div class="event-title">Pedro Sánchez nombra a Ábalos ministro de Fomento</div>
+            <div class="event-desc">Ábalos asume la cartera que controla Puertos del Estado, Adif y las adjudicaciones de obra pública. Desde ese momento, su asesor Koldo García gana acceso a contratos millonarios. El contexto institucional que hace posible la trama.</div>
+            <div class="sources-stack">
+              <a href="https://www.elespanol.com" class="source-card" target="_blank">
+                <span class="sc-icon">📰</span>
+                <div class="sc-info"><div class="sc-pub">El Español</div><div class="sc-title">Sánchez forma Gobierno: Ábalos en Fomento, Margarita Robles en Defensa</div></div>
+                <span class="sc-date">Jun 2018</span><span class="sc-badge per">Prensa</span>
+              </a>
+            </div>
+            <div class="impact"><span class="impact-label">Impacto</span><div class="impact-bar"><div class="impact-seg on"></div><div class="impact-seg on"></div><div class="impact-seg"></div><div class="impact-seg"></div><div class="impact-seg"></div></div></div>
+          </div>
+        </div>
+
+        <!-- EVENT 2 -->
+        <div class="event" data-type="contrato" data-case="z">
+          <div class="event-date">
+            <div class="event-date-inner">
+              <div class="event-day">2020</div>
+              <div class="event-month">Mar–Jun</div>
+            </div>
+            <div class="event-dot"></div>
+          </div>
+          <div class="event-body">
+            <div class="event-tags">
+              <span class="etag etag-k">Contrato</span>
+              <span class="etag etag-z">Zapatero</span>
+              <span class="etag etag-imp">⚡ Alto impacto</span>
+            </div>
+            <div class="event-title">El Gobierno concede 53M€ a Plus Ultra. Zapatero, en el trasfondo</div>
+            <div class="event-desc">El Consejo de Ministros aprueba el rescate a través del Fondo de Apoyo a la Solvencia. La aerolínea —de capital venezolano, con menos del 1% del mercado— cumple los requisitos «de forma ajustada» según los propios técnicos. La UDEF señalará después que <strong>Zapatero coordinó presiones para facilitar la concesión</strong> desde su oficina en la calle Ferraz.</div>
+            <div class="sources-stack">
+              <a href="https://www.elconfidencial.com" class="source-card" target="_blank">
+                <span class="sc-icon">📰</span>
+                <div class="sc-info"><div class="sc-pub">El Confidencial</div><div class="sc-title">El Gobierno rescata a Plus Ultra con 53 millones pese al rechazo técnico</div></div>
+                <span class="sc-date">Jun 2020</span><span class="sc-badge per">Prensa</span>
+              </a>
+              <a href="#" class="source-card">
+                <span class="sc-icon">🔍</span>
+                <div class="sc-info"><div class="sc-pub">UDEF — Informe 1907/26</div><div class="sc-title">Análisis del flujo de fondos vinculado a Plus Ultra y red societaria</div></div>
+                <span class="sc-date">2026</span><span class="sc-badge udef">UDEF</span>
+              </a>
+            </div>
+            <div class="impact"><span class="impact-label">Impacto</span><div class="impact-bar"><div class="impact-seg on"></div><div class="impact-seg on"></div><div class="impact-seg on"></div><div class="impact-seg on"></div><div class="impact-seg on"></div></div></div>
+          </div>
+        </div>
+
+        <!-- EVENT 3 -->
+        <div class="event" data-type="judicial" data-case="z">
+          <div class="event-date">
+            <div class="event-date-inner">
+              <div class="event-day">Dic</div>
+              <div class="event-month">2021</div>
+            </div>
+            <div class="event-dot"></div>
+          </div>
+          <div class="event-body">
+            <div class="event-tags">
+              <span class="etag etag-k">Judicial</span>
+              <span class="etag etag-z">Zapatero</span>
+            </div>
+            <div class="event-title">El Tribunal Supremo anula parcialmente el rescate de Plus Ultra</div>
+            <div class="event-desc">La Sala Contencioso-Administrativa dictamina que la aerolínea <strong>no cumplía todos los requisitos</strong> para ser considerada empresa estratégica. Se ordena la devolución parcial de fondos. El fallo judicial abre la puerta a investigar quién facilitó el rescate.</div>
+            <div class="sources-stack">
+              <a href="https://www.poderjudicial.es" class="source-card" target="_blank">
+                <span class="sc-icon">⚖</span>
+                <div class="sc-info"><div class="sc-pub">Tribunal Supremo</div><div class="sc-title">Sentencia — Sala Contencioso-Administrativa — Plus Ultra</div></div>
+                <span class="sc-date">Dic 2021</span><span class="sc-badge jud">Auto judicial</span>
+              </a>
+            </div>
+            <div class="impact"><span class="impact-label">Impacto</span><div class="impact-bar"><div class="impact-seg on"></div><div class="impact-seg on"></div><div class="impact-seg on"></div><div class="impact-seg"></div><div class="impact-seg"></div></div></div>
+          </div>
+        </div>
+
+        <!-- EVENT 4 -->
+        <div class="event" data-type="investigacion" data-case="z">
+          <div class="event-date">
+            <div class="event-date-inner">
+              <div class="event-day">Ene</div>
+              <div class="event-month">2024</div>
+            </div>
+            <div class="event-dot"></div>
+          </div>
+          <div class="event-body">
+            <div class="event-tags">
+              <span class="etag etag-k">Investigación</span>
+              <span class="etag etag-z">Zapatero</span>
+            </div>
+            <div class="event-title">Apertura D.P. 77/2024. La UDEF entra en escena</div>
+            <div class="event-desc">El Juzgado Central de Instrucción Nº 2 abre diligencias. La UDEF comienza a analizar el entramado de <strong>39 sociedades</strong> vinculadas al entorno de Zapatero. Rastrean transferencias hacia Islas Vírgenes Británicas y conexiones con operaciones en Venezuela, China y Emiratos.</div>
+            <div class="sources-stack">
+              <a href="#" class="source-card">
+                <span class="sc-icon">🔍</span>
+                <div class="sc-info"><div class="sc-pub">UDEF — Informe 1908/26</div><div class="sc-title">Análisis societario: 39 mercantiles, 20 inactivas, flujos offshore</div></div>
+                <span class="sc-date">2026</span><span class="sc-badge udef">UDEF</span>
+              </a>
+            </div>
+            <div class="impact"><span class="impact-label">Impacto</span><div class="impact-bar"><div class="impact-seg on"></div><div class="impact-seg on"></div><div class="impact-seg on"></div><div class="impact-seg"></div><div class="impact-seg"></div></div></div>
+          </div>
+        </div>
+
+        <!-- EVENT 5 -->
+        <div class="event" data-type="judicial" data-case="z">
+          <div class="event-date">
+            <div class="event-date-inner">
+              <div class="event-day">18 May</div>
+              <div class="event-month">2026</div>
+            </div>
+            <div class="event-dot"></div>
+          </div>
+          <div class="event-body">
+            <div class="event-tags">
+              <span class="etag etag-k">Judicial</span>
+              <span class="etag etag-z">Zapatero</span>
+              <span class="etag etag-imp">⚡ Alto impacto</span>
+            </div>
+            <div class="event-title">El juez Calama imputa formalmente a Zapatero</div>
+            <div class="event-desc">88 páginas. Cuatro delitos: <strong>organización criminal, tráfico de influencias, blanqueo de capitales y falsedad documental</strong>. El juez acuerda también entrada y registro en cinco domicilios. Es la primera vez que un expresidente del Gobierno español es formalmente imputado.</div>
+            <div class="sources-stack">
+              <a href="#" class="source-card">
+                <span class="sc-icon">⚖</span>
+                <div class="sc-info"><div class="sc-pub">Juzgado Central de Instrucción Nº 2</div><div class="sc-title">Auto de imputación · D.P. 0000077/2024 · 88 páginas</div></div>
+                <span class="sc-date">18 may 2026</span><span class="sc-badge jud">Auto judicial</span>
+              </a>
+              <a href="https://www.elmundo.es" class="source-card" target="_blank">
+                <span class="sc-icon">📰</span>
+                <div class="sc-info"><div class="sc-pub">El Mundo</div><div class="sc-title">El juez imputa a Zapatero por organización criminal y blanqueo de capitales</div></div>
+                <span class="sc-date">18 may 2026</span><span class="sc-badge per">Prensa</span>
+              </a>
+            </div>
+            <div class="impact"><span class="impact-label">Impacto</span><div class="impact-bar"><div class="impact-seg on"></div><div class="impact-seg on"></div><div class="impact-seg on"></div><div class="impact-seg on"></div><div class="impact-seg on"></div></div></div>
+          </div>
+        </div>
+
+        <!-- EVENT 6 -->
+        <div class="event" data-type="investigacion" data-case="z">
+          <div class="event-date">
+            <div class="event-date-inner">
+              <div class="event-day">19 May</div>
+              <div class="event-month">2026</div>
+            </div>
+            <div class="event-dot"></div>
+          </div>
+          <div class="event-body">
+            <div class="event-tags">
+              <span class="etag etag-k">Registro</span>
+              <span class="etag etag-z">Zapatero</span>
+            </div>
+            <div class="event-title">Policía Nacional registra la oficina de Ferraz y cuatro domicilios más</div>
+            <div class="event-desc">Simultáneamente en cinco puntos de Madrid y Las Rozas. Se intervienen dispositivos electrónicos, documentación contable, criptoactivos y correos. La UCO recibe apoyo de la agencia estadounidense HSI (Homeland Security Investigations) para el análisis de dispositivos extranjeros.</div>
+            <div class="sources-stack">
+              <a href="https://www.elespanol.com" class="source-card" target="_blank">
+                <span class="sc-icon">📰</span>
+                <div class="sc-info"><div class="sc-pub">El Español</div><div class="sc-title">La Policía registra la oficina personal de Zapatero en Ferraz</div></div>
+                <span class="sc-date">19 may 2026</span><span class="sc-badge per">Prensa</span>
+              </a>
+            </div>
+            <div class="impact"><span class="impact-label">Impacto</span><div class="impact-bar"><div class="impact-seg on"></div><div class="impact-seg on"></div><div class="impact-seg on"></div><div class="impact-seg on"></div><div class="impact-seg"></div></div></div>
+          </div>
+        </div>
+
+      </div><!-- /board -->
+    </div>
+
+    <!-- ═══ CASO KOLDO ═══ -->
+    <div id="board-k" class="sec-wrap dark">
+      <div class="sec-label b">Caso Koldo — Especial 003/0020775/2020</div>
+      <h2 class="sec-title">Los hechos del caso,<br>uno a uno</h2>
+
+      <div class="board">
+        <div class="board-axis b"></div>
+
+        <!-- K1 -->
+        <div class="event" data-type="contrato" data-case="k">
+          <div class="event-date">
+            <div class="event-date-inner">
+              <div class="event-day b" style="color:#5ba3d9">21 Mar</div>
+              <div class="event-month">2020</div>
+            </div>
+            <div class="event-dot b"></div>
+          </div>
+          <div class="event-body">
+            <div class="event-tags">
+              <span class="etag etag-k">Contrato</span>
+              <span class="etag etag-k2">Koldo</span>
+              <span class="etag etag-imp">⚡ Hecho central</span>
+            </div>
+            <div class="event-title">Puertos del Estado adjudica 24,2M€ a Soluciones de Gestión — sin concurso</div>
+            <div class="event-desc">8 millones de mascarillas adjudicadas de urgencia a una empresa que en 2019 facturó 0 euros. <strong>Soluciones de Gestión</strong> está vinculada al entorno de Aldama. Koldo García, según la UCO, facilitó el acceso a información reservada sobre las necesidades del ministerio antes de que se publicara ninguna licitación.</div>
+            <div class="sources-stack">
+              <a href="https://www.newtral.es/guia-caso-koldo/20240303/" class="source-card" target="_blank">
+                <span class="sc-icon">📰</span>
+                <div class="sc-info"><div class="sc-pub">Newtral — Verificación</div><div class="sc-title">Guía para no perderse en el caso Koldo: los contratos, las fechas, los montos</div></div>
+                <span class="sc-date">Mar 2024</span><span class="sc-badge per">Fact-check</span>
+              </a>
+              <a href="https://en.wikipedia.org/wiki/Koldo_Case" class="source-card" target="_blank">
+                <span class="sc-icon">📋</span>
+                <div class="sc-info"><div class="sc-pub">Wikipedia (Koldo Case) — fuente estructurada</div><div class="sc-title">Relación completa de contratos adjudicados por fecha e importe</div></div>
+                <span class="sc-date">Actualizado 2026</span><span class="sc-badge per">Referencia</span>
+              </a>
+            </div>
+            <div class="impact"><span class="impact-label">Impacto</span><div class="impact-bar"><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg on b"></div></div></div>
+          </div>
+        </div>
+
+        <!-- K2 -->
+        <div class="event" data-type="contrato" data-case="k">
+          <div class="event-date">
+            <div class="event-date-inner">
+              <div class="event-day b" style="color:#5ba3d9">27 Mar</div>
+              <div class="event-month">2020</div>
+            </div>
+            <div class="event-dot b"></div>
+          </div>
+          <div class="event-body">
+            <div class="event-tags">
+              <span class="etag etag-k">Contrato</span>
+              <span class="etag etag-k2">Koldo</span>
+            </div>
+            <div class="event-title">Adif contrata 5 millones de mascarillas por 12,5M€ — misma empresa</div>
+            <div class="event-desc">Seis días después del contrato de Puertos del Estado, Adif (también dependiente del Ministerio de Transportes de Ábalos) adjudica otro contrato masivo a Soluciones de Gestión. El patrón de adjudicación sin licitación previa se repite. La UCO documentará después que <strong>la empresa fue favorecida con información privilegiada</strong>.</div>
+            <div class="sources-stack">
+              <a href="https://www.newtral.es/guia-caso-koldo/20240303/" class="source-card" target="_blank">
+                <span class="sc-icon">📰</span>
+                <div class="sc-info"><div class="sc-pub">Newtral</div><div class="sc-title">Caso Koldo: los seis contratos sospechosos, con fechas e importes</div></div>
+                <span class="sc-date">Mar 2024</span><span class="sc-badge per">Prensa</span>
+              </a>
+            </div>
+            <div class="impact"><span class="impact-label">Impacto</span><div class="impact-bar"><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg"></div></div></div>
+          </div>
+        </div>
+
+        <!-- K3 — PARADOR DE TERUEL -->
+        <div class="event" data-type="politico" data-case="k">
+          <div class="event-date">
+            <div class="event-date-inner">
+              <div class="event-day b" style="color:#5ba3d9">15 Sep</div>
+              <div class="event-month">2020</div>
+            </div>
+            <div class="event-dot b"></div>
+          </div>
+          <div class="event-body">
+            <div class="event-tags">
+              <span class="etag etag-k">Escándalo</span>
+              <span class="etag etag-k2">Koldo</span>
+              <span class="etag etag-imp">⚡ Muy relevante</span>
+            </div>
+            <div class="event-title">La noche del Parador de Teruel — viaje oficial, invitadas no oficiales</div>
+            <div class="event-desc">Ábalos realiza un viaje institucional a Teruel para visitar infraestructuras ferroviarias junto a representantes de Adif y del Gobierno de Aragón. Esa noche, en el Parador Nacional, la UCO documenta en 2025 el presunto desplazamiento de <strong>dos mujeres desde Málaga y Córdoba</strong> coordinado por Koldo García. Según El Español, una habitación fue reservada a nombre del hermano de Koldo como «sala de espera». Al día siguiente, Koldo se pone en contacto con el mando policial para «solucionar un problema».</div>
+            <div class="sources-stack">
+              <a href="https://www.telemadrid.es/programas/telenoticias-fin-de-semana/Los-nuevos-detalles-sobre-la-presunta-fiesta-de-Abalos-en-el-Parador-de-Teruel-durante-la-pandemia-2-2887531238--20260510030835.html" class="source-card" target="_blank">
+                <span class="sc-icon">📰</span>
+                <div class="sc-info"><div class="sc-pub">Telemadrid / El Español</div><div class="sc-title">Nuevos detalles sobre la presunta fiesta de Ábalos en el Parador de Teruel</div></div>
+                <span class="sc-date">10 may 2026</span><span class="sc-badge per">Prensa</span>
+              </a>
+              <a href="https://www.elliberal.cat/2026/05/11/una-investigacion-apunta-a-un-presunto-operativo-de-traslado-de-mujeres-al-parador-de-teruel-durante-un-viaje-de-abalos-en-2020/" class="source-card" target="_blank">
+                <span class="sc-icon">📰</span>
+                <div class="sc-info"><div class="sc-pub">El Liberal</div><div class="sc-title">Investigación apunta a un operativo de traslado de mujeres al Parador de Teruel</div></div>
+                <span class="sc-date">11 may 2026</span><span class="sc-badge per">Prensa</span>
+              </a>
+              <a href="#" class="source-card">
+                <span class="sc-icon">🔍</span>
+                <div class="sc-info"><div class="sc-pub">UCO — Informe 2025</div><div class="sc-title">Documentación del dispositivo logístico del 15/09/2020 en Teruel</div></div>
+                <span class="sc-date">2025</span><span class="sc-badge uco">UCO</span>
+              </a>
+            </div>
+            <div class="impact"><span class="impact-label">Impacto</span><div class="impact-bar"><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg"></div></div></div>
+          </div>
+        </div>
+
+        <!-- K4 — PISO JÉSICA -->
+        <div class="event" data-type="politico" data-case="k">
+          <div class="event-date">
+            <div class="event-date-inner">
+              <div class="event-day b" style="color:#5ba3d9">2020</div>
+              <div class="event-month">–2022</div>
+            </div>
+            <div class="event-dot b"></div>
+          </div>
+          <div class="event-body">
+            <div class="event-tags">
+              <span class="etag etag-k">Corrupción</span>
+              <span class="etag etag-k2">Koldo</span>
+            </div>
+            <div class="event-title">Aldama paga el alquiler del piso de la novia de Ábalos en Madrid</div>
+            <div class="event-desc">La UCO documenta en su atestado de 233 páginas que <strong>Claudio Rivas —socio de Aldama— pagó el alquiler del apartamento de Jésica Rodríguez</strong>, pareja del ministro, en Madrid. Ábalos admitió en juicio saber que Rivas pagaba el piso, aunque lo enmarcó como «un parche provisional» y aseguró que «nunca tuvo llave». Aldama lo presentó como un favor a cambio de influencia.</div>
+            <div class="sources-stack">
+              <a href="https://www.newtral.es/guia-caso-koldo/20240303/" class="source-card" target="_blank">
+                <span class="sc-icon">📰</span>
+                <div class="sc-info"><div class="sc-pub">Newtral</div><div class="sc-title">Caso Koldo: el atestado de la UCO, los 233 páginas y el alquiler de la novia</div></div>
+                <span class="sc-date">2024</span><span class="sc-badge per">Verificación</span>
+              </a>
+              <a href="#" class="source-card">
+                <span class="sc-icon">🔍</span>
+                <div class="sc-info"><div class="sc-pub">UCO — Atestado 233 pp.</div><div class="sc-title">Pagos de Claudio Rivas vinculados al entorno de Ábalos</div></div>
+                <span class="sc-date">2024</span><span class="sc-badge uco">UCO</span>
+              </a>
+            </div>
+            <div class="impact"><span class="impact-label">Impacto</span><div class="impact-bar"><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg"></div><div class="impact-seg"></div></div></div>
+          </div>
+        </div>
+
+        <!-- K5 — OPERACIÓN DELORME -->
+        <div class="event" data-type="judicial" data-case="k">
+          <div class="event-date">
+            <div class="event-date-inner">
+              <div class="event-day b" style="color:#5ba3d9">21 Feb</div>
+              <div class="event-month">2024</div>
+            </div>
+            <div class="event-dot b"></div>
+          </div>
+          <div class="event-body">
+            <div class="event-tags">
+              <span class="etag etag-k">Operación policial</span>
+              <span class="etag etag-k2">Koldo</span>
+              <span class="etag etag-imp">⚡ Momento clave</span>
+            </div>
+            <div class="event-title">Operación Delorme — 20 detenidos, Koldo García arrestado</div>
+            <div class="event-desc">La Guardia Civil ejecuta registros simultáneos. Detienen a Koldo García, su esposa Patricia Úriz y 18 personas más. El caso explota en primera plana. Ábalos, aforado como diputado, queda inicialmente fuera del alcance del juez de la Audiencia Nacional y pasa al Grupo Mixto para proteger su aforamiento ante el Supremo.</div>
+            <div class="sources-stack">
+              <a href="https://es.wikipedia.org/wiki/Caso_%C3%81balos" class="source-card" target="_blank">
+                <span class="sc-icon">📋</span>
+                <div class="sc-info"><div class="sc-pub">Wikipedia — Caso Ábalos</div><div class="sc-title">Cronología completa de la Operación Delorme y sus consecuencias</div></div>
+                <span class="sc-date">Feb 2024</span><span class="sc-badge per">Referencia</span>
+              </a>
+            </div>
+            <div class="impact"><span class="impact-label">Impacto</span><div class="impact-bar"><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg on b"></div></div></div>
+          </div>
+        </div>
+
+        <!-- K6 — SANTOS CERDÁN -->
+        <div class="event" data-type="investigacion" data-case="k">
+          <div class="event-date">
+            <div class="event-date-inner">
+              <div class="event-day b" style="color:#5ba3d9">Jun</div>
+              <div class="event-month">2025</div>
+            </div>
+            <div class="event-dot b"></div>
+          </div>
+          <div class="event-body">
+            <div class="event-tags">
+              <span class="etag etag-k">Expansión</span>
+              <span class="etag etag-k2">Koldo</span>
+            </div>
+            <div class="event-title">Santos Cerdán ingresa en prisión preventiva. La trama se amplía</div>
+            <div class="event-desc">El exsecretario de Organización del PSOE entra en Soto del Real. Un informe de 490 páginas de la UCO lo vincula directamente al caso Koldo. La Fiscalía abre también la pieza de <strong>financiación ilegal del PSOE</strong>. La trama ha dejado de ser solo «el caso de las mascarillas».</div>
+            <div class="sources-stack">
+              <a href="https://es.wikipedia.org/wiki/Santos_Cerd%C3%A1n" class="source-card" target="_blank">
+                <span class="sc-icon">📋</span>
+                <div class="sc-info"><div class="sc-pub">Wikipedia — Santos Cerdán</div><div class="sc-title">Perfil: de número 3 del PSOE a investigado en el caso Koldo</div></div>
+                <span class="sc-date">2025</span><span class="sc-badge per">Referencia</span>
+              </a>
+              <a href="#" class="source-card">
+                <span class="sc-icon">🔍</span>
+                <div class="sc-info"><div class="sc-pub">UCO — 490 páginas</div><div class="sc-title">Informe que vincula a Santos Cerdán con el entramado Koldo-Aldama</div></div>
+                <span class="sc-date">Jun 2025</span><span class="sc-badge uco">UCO</span>
+              </a>
+            </div>
+            <div class="impact"><span class="impact-label">Impacto</span><div class="impact-bar"><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg"></div></div></div>
+          </div>
+        </div>
+
+        <!-- K7 — PROCESAMIENTO -->
+        <div class="event" data-type="judicial" data-case="k">
+          <div class="event-date">
+            <div class="event-date-inner">
+              <div class="event-day b" style="color:#5ba3d9">27 Nov</div>
+              <div class="event-month">2025</div>
+            </div>
+            <div class="event-dot b"></div>
+          </div>
+          <div class="event-body">
+            <div class="event-tags">
+              <span class="etag etag-k">Judicial</span>
+              <span class="etag etag-k2">Koldo</span>
+              <span class="etag etag-imp">⚡ Alto impacto</span>
+            </div>
+            <div class="event-title">Ábalos y Koldo ingresan en Soto del Real por «riesgo extremo de fuga»</div>
+            <div class="event-desc">El juez Puente, tras dictar el auto de procesamiento el 3 de noviembre, acuerda prisión provisional sin fianza. Ábalos llega al centro penitenciario en furgón policial. <strong>Por primera vez, un exministro del Gobierno de España entra en prisión preventiva</strong> en esta causa. Se fijan fianzas de 60.000€ para cubrir responsabilidad civil.</div>
+            <div class="sources-stack">
+              <a href="https://www.infobae.com/espana/2026/01/14/estos-son-los-siete-magistrados-que-formaran-el-tribunal-que-juzgara-a-abalos-koldo-y-aldama-dos-de-ellos-condenaron-al-exfiscal-general-del-estado/" class="source-card" target="_blank">
+                <span class="sc-icon">📰</span>
+                <div class="sc-info"><div class="sc-pub">Infobae</div><div class="sc-title">Ábalos y Koldo entran en Soto del Real. El tribunal que los juzgará</div></div>
+                <span class="sc-date">Ene 2026</span><span class="sc-badge per">Prensa</span>
+              </a>
+              <a href="#" class="source-card">
+                <span class="sc-icon">⚖</span>
+                <div class="sc-info"><div class="sc-pub">Auto de procesamiento — Juez Leopoldo Puente</div><div class="sc-title">Org. criminal · Cohecho · Tráfico influencias · Malversación — 3 nov. 2025</div></div>
+                <span class="sc-date">3 nov 2025</span><span class="sc-badge jud">Auto judicial</span>
+              </a>
+            </div>
+            <div class="impact"><span class="impact-label">Impacto</span><div class="impact-bar"><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg on b"></div></div></div>
+          </div>
+        </div>
+
+        <!-- K8 — JUICIO ORAL -->
+        <div class="event" data-type="judicial" data-case="k">
+          <div class="event-date">
+            <div class="event-date-inner">
+              <div class="event-day b" style="color:#5ba3d9">7 May</div>
+              <div class="event-month">2026</div>
+            </div>
+            <div class="event-dot b"></div>
+          </div>
+          <div class="event-body">
+            <div class="event-tags">
+              <span class="etag etag-k">Juicio oral</span>
+              <span class="etag etag-k2">Koldo</span>
+              <span class="etag etag-imp">⚡ Hito judicial</span>
+            </div>
+            <div class="event-title">14 jornadas, 80 testigos. El juicio queda visto para sentencia</div>
+            <div class="event-desc">Aldama se declara culpable y pide atenuante por colaboración. Ábalos niega todo y denuncia un «proceso inquisitorial» con presunción de culpabilidad desde el inicio. Koldo afirma que le ofrecieron libertad a cambio de implicar al Gobierno. <strong>La UCO declaró que Ábalos tomó «la decisión última» de duplicar la compra de mascarillas</strong>. La Fiscalía mantiene su petición: 24 años para Ábalos.</div>
+            <div class="sources-stack">
+              <a href="https://www.estrelladigital.es/articulo/tribunales/juicio-abalos-koldo-aldama-queda-visto-sentencia-entre-acusaciones-cruzadas-reproches-investigacion/20260507114645446264.html" class="source-card" target="_blank">
+                <span class="sc-icon">📰</span>
+                <div class="sc-info"><div class="sc-pub">Estrella Digital</div><div class="sc-title">El juicio contra Ábalos, Koldo y Aldama queda visto para sentencia</div></div>
+                <span class="sc-date">7 may 2026</span><span class="sc-badge per">Prensa</span>
+              </a>
+              <a href="https://www.vozpopuli.com/espana/juicio-a-abalos-koldo-y-aldama-por-el-caso-mascarillas-en-directo-declaraciones-en-el-supremo-y-reacciones.html" class="source-card" target="_blank">
+                <span class="sc-icon">📰</span>
+                <div class="sc-info"><div class="sc-pub">Voz Pópuli</div><div class="sc-title">Las 14 sesiones del juicio: Ábalos, Koldo y Aldama en el Supremo — en directo</div></div>
+                <span class="sc-date">Abr–May 2026</span><span class="sc-badge per">Prensa</span>
+              </a>
+            </div>
+            <div class="impact"><span class="impact-label">Impacto</span><div class="impact-bar"><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg on b"></div><div class="impact-seg on b"></div></div></div>
+          </div>
+        </div>
+
+      </div><!-- /board koldo -->
+    </div>
+
+  </div><!-- /main column -->
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-title">Caso Zapatero — D.P. 77/24</div>
+      <div class="stat-row"><span class="stat-k">Investigado</span><span class="stat-v r">J.L.R. Zapatero</span></div>
+      <div class="stat-row"><span class="stat-k">Juez</span><span class="stat-v">Calama · JCI Nº2</span></div>
+      <div class="stat-row"><span class="stat-k">Rescate</span><span class="stat-v">53M€ Plus Ultra</span></div>
+      <div class="stat-row"><span class="stat-k">Sociedades</span><span class="stat-v">39 investigadas</span></div>
+      <div class="stat-row"><span class="stat-k">Imputación</span><span class="stat-v">18 mayo 2026</span></div>
+      <div class="stat-row"><span class="stat-k">Delitos</span><span class="stat-v">4 cargos</span></div>
+      <div class="stat-row"><span class="stat-k">Estado</span><span class="stat-v r">Instrucción</span></div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">Caso Koldo — Especial 003/2020</div>
+      <div class="stat-row"><span class="stat-k">Acusados</span><span class="stat-v b">3 en juicio</span></div>
+      <div class="stat-row"><span class="stat-k">Juez</span><span class="stat-v">L. Puente · TS</span></div>
+      <div class="stat-row"><span class="stat-k">Contratos</span><span class="stat-v">~50M€</span></div>
+      <div class="stat-row"><span class="stat-k">Testigos</span><span class="stat-v">~80 en juicio</span></div>
+      <div class="stat-row"><span class="stat-k">Petición fiscal</span><span class="stat-v">24+19,5+7 años</span></div>
+      <div class="stat-row"><span class="stat-k">Estado</span><span class="stat-v b">Para sentencia</span></div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">Fuentes en esta página</div>
+      <div class="stat-row"><span class="stat-k">Autos judiciales</span><span class="stat-v">3</span></div>
+      <div class="stat-row"><span class="stat-k">Informes UDEF</span><span class="stat-v">2</span></div>
+      <div class="stat-row"><span class="stat-k">Informes UCO</span><span class="stat-v">3</span></div>
+      <div class="stat-row"><span class="stat-k">Fuentes prensa</span><span class="stat-v">8+</span></div>
+      <div class="stat-row"><span class="stat-k">Verificadores</span><span class="stat-v">1 (Newtral)</span></div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">Leyenda</div>
+      <div class="stat-row" style="border:none;padding:.3rem 0;gap:.5rem;">
+        <span style="font-family:var(--fm);font-size:.55rem;color:var(--rojo);">■</span>
+        <span class="stat-k">Caso Zapatero</span>
+      </div>
+      <div class="stat-row" style="border:none;padding:.3rem 0;">
+        <span style="font-family:var(--fm);font-size:.55rem;color:#5ba3d9;">■</span>
+        <span class="stat-k">Caso Koldo</span>
+      </div>
+      <div class="stat-row" style="border:none;padding:.3rem 0;">
+        <span style="font-family:var(--fm);font-size:.55rem;color:var(--dorado);">⚖</span>
+        <span class="stat-k">Auto judicial</span>
+      </div>
+      <div class="stat-row" style="border:none;padding:.3rem 0;">
+        <span style="font-family:var(--fm);font-size:.55rem;color:var(--rojo);">🔍</span>
+        <span class="stat-k">Informe UDEF</span>
+      </div>
+      <div class="stat-row" style="border:none;padding:.3rem 0;">
+        <span style="font-family:var(--fm);font-size:.55rem;color:#5ba3d9;">🔍</span>
+        <span class="stat-k">Informe UCO</span>
+      </div>
+    </div>
+  </aside>
+
+</div><!-- /layout-split -->
+
+<!-- ── NEXO ── -->
+<div class="nexo" id="nexo">
+  <div class="sec-label" style="color:var(--dorado);">Conexión entre casos</div>
+  <h2 class="sec-title">El patrón común</h2>
+  <div class="nexo-grid">
+    <div>
+      <h4 style="color:var(--rojo);">Caso Zapatero</h4>
+      <div class="nexo-row"><span class="nexo-k">Palanca</span><span class="nexo-v">Fondos COVID — rescate empresas</span></div>
+      <div class="nexo-row"><span class="nexo-k">Vehículo</span><span class="nexo-v">Plus Ultra Líneas Aéreas</span></div>
+      <div class="nexo-row"><span class="nexo-k">Pantalla</span><span class="nexo-v">39 sociedades instrumentales</span></div>
+      <div class="nexo-row"><span class="nexo-k">Destino</span><span class="nexo-v">Offshore · Islas Vírgenes</span></div>
+      <div class="nexo-row"><span class="nexo-k">Instrumento</span><span class="nexo-v">Asesoría ficticia, facturas falsas</span></div>
+    </div>
+    <div class="nexo-divider"></div>
+    <div>
+      <h4 style="color:#5ba3d9;">Caso Koldo</h4>
+      <div class="nexo-row"><span class="nexo-k">Palanca</span><span class="nexo-v">Fondos COVID — contratos urgentes</span></div>
+      <div class="nexo-row"><span class="nexo-k">Vehículo</span><span class="nexo-v">Soluciones de Gestión SL</span></div>
+      <div class="nexo-row"><span class="nexo-k">Pantalla</span><span class="nexo-v">Empresas sin historial previo</span></div>
+      <div class="nexo-row"><span class="nexo-k">Destino</span><span class="nexo-v">Comisiones en efectivo · PSOE</span></div>
+      <div class="nexo-row"><span class="nexo-k">Instrumento</span><span class="nexo-v">Acceso a info privilegiada, presión</span></div>
+    </div>
+  </div>
+  <div style="margin-top:2rem;padding:1.2rem 1.5rem;border-left:2px solid var(--dorado);background:rgba(184,150,12,.04);">
+    <p style="font-family:var(--fm);font-size:.65rem;color:var(--txt3);line-height:1.8;">
+      <strong style="color:var(--dorado);">Nexo verificado:</strong> Euronews (19 feb. 2026) publica que el PP fuerza la comparecencia de Zapatero en la comisión de investigación del caso Koldo en el Senado, al haber asesorado a un empresario de su entorno vinculado a Plus Ultra. Ambas investigaciones comparten período (2020–2024), metodología y conexiones institucionales.
+    </p>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-logo">La <em>Influencia</em></div>
+  <div class="foot-note">
+    Metodología: cada hecho va acompañado de su fuente —judicial, policial o periodística— verificable.<br>
+    Los autos judiciales completos no están en dominio público; se trabaja con extractos y notas del CGPJ.<br>
+    La imputación o procesamiento no implica condena. Todos son inocentes hasta sentencia firme.<br><br>
+    D.P. 77/24 · Juez Calama · JCI Nº2 Madrid &nbsp;|&nbsp; Especial 003/0020775/2020 · Juez Puente · TS Sala 2ª
+  </div>
+</footer>
+
+<script>
+// ── SCROLL OBSERVER ──
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold: 0.08});
+document.querySelectorAll('.event').forEach(el => io.observe(el));
+
+// ── FILTER FUNCTIONS ──
+function filterEvents(type, btn) {
+  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.event').forEach(ev => {
+    if(type === 'all') { ev.style.display = ''; return; }
+    ev.style.display = ev.dataset.type === type ? '' : 'none';
+  });
+}
+
+function filterCase(c, btn) {
+  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.event').forEach(ev => {
+    ev.style.display = ev.dataset.case === c ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>

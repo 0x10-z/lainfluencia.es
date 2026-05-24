@@ -1,0 +1,165 @@
+---
+import Base from '../../layouts/Base.astro'
+import ImpactBar from '../../components/ImpactBar.astro'
+import CaseTag from '../../components/CaseTag.astro'
+import SourceChip from '../../components/SourceChip.astro'
+import EntityCard from '../../components/EntityCard.astro'
+
+import eventsData from '../../data/events.json'
+import entitiesData from '../../data/entities.json'
+import relationsData from '../../data/relations.json'
+import sourcesData from '../../data/sources.json'
+
+import type { Event, Entity, Relation, Source } from '../../types'
+import { formatDate, getEventTypeLabel, getSourceById, getEntityById } from '../../utils'
+
+export async function getStaticPaths() {
+  const events = eventsData.events as Event[]
+  return events.map(ev => ({ params: { id: ev.id } }))
+}
+
+const { id } = Astro.params
+const events = eventsData.events as Event[]
+const entities = entitiesData.entities as Entity[]
+const relations = relationsData.relations as Relation[]
+const sources = sourcesData.sources as Source[]
+
+const event = events.find(e => e.id === id)!
+const evEntities = event.entities.map(eid => getEntityById(eid, entities)).filter(Boolean) as Entity[]
+const evSources = event.sources.map(sid => getSourceById(sid, sources)).filter(Boolean) as Source[]
+const evRelations = event.relations.map(rid => relations.find(r => r.id === rid)).filter(Boolean) as Relation[]
+
+const dateStr = formatDate(event.date, event.date_precision)
+const typeLabel = getEventTypeLabel(event.type)
+
+const verifiedLabel = event.verified === true ? 'Verificado' : event.verified === 'partial' ? 'Verificación parcial' : 'Pendiente'
+const verifiedColor = event.verified === true ? 'var(--green)' : event.verified === 'partial' ? 'var(--gold)' : 'var(--txt3)'
+
+const borderColor = event.cases.includes('dp-77-24') && event.cases.includes('caso-koldo')
+  ? 'var(--gold)' : event.cases.includes('dp-77-24') ? 'var(--red)' : 'var(--blue)'
+
+const ogDesc = event.description.slice(0, 160)
+---
+
+<Base title={event.title} description={ogDesc}>
+  <div class="container" style="padding-top: 2rem; padding-bottom: 4rem; max-width: 800px;">
+
+    <!-- Breadcrumb -->
+    <a href="/cronologia" style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--txt3);text-decoration:none;letter-spacing:0.04em;">
+      ← Volver a la cronología
+    </a>
+
+    <!-- Cabecera del evento -->
+    <div style={`margin-top:1.5rem;border-left:3px solid ${borderColor};padding-left:1.25rem;${event.pending ? 'opacity:0.75;' : ''}`}>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:0.75rem;">
+        <time datetime={event.date} style="font-family:'IBM Plex Mono',monospace;font-size:0.82rem;color:var(--txt3);">
+          {dateStr}
+          {event.pending && <span style="color:var(--gold);margin-left:8px;font-size:0.7rem;">PENDIENTE</span>}
+        </time>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--txt3);text-transform:uppercase;letter-spacing:0.05em;">
+          {typeLabel}
+        </span>
+        <span style={`font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:${verifiedColor};`}>
+          {verifiedLabel}
+        </span>
+      </div>
+
+      <h1 style="font-size:clamp(1.5rem,4vw,2.2rem);margin:0 0 1rem;line-height:1.25;color:var(--txt);">
+        {event.title}
+      </h1>
+
+      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:1.5rem;">
+        <ImpactBar impact={event.impact} />
+        <span style="color:var(--line2);">|</span>
+        {event.cases.map(c => <CaseTag caseId={c} />)}
+      </div>
+
+      <p style="font-size:1rem;color:var(--txt2);line-height:1.7;margin:0;">
+        {event.description}
+      </p>
+
+      {event.notes && (
+        <p style="font-size:0.85rem;color:var(--txt3);font-style:italic;margin:1rem 0 0;padding:0.75rem 1rem;border-left:2px solid var(--line2);line-height:1.6;">
+          {event.notes}
+        </p>
+      )}
+    </div>
+
+    <!-- Actores -->
+    {evEntities.length > 0 && (
+      <section style="margin-top:3rem;">
+        <h2 style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--txt3);text-transform:uppercase;letter-spacing:0.08em;margin:0 0 1rem;font-weight:400;padding-bottom:0.5rem;border-bottom:1px solid var(--line);">
+          Actores — {evEntities.length}
+        </h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1px;background:var(--line);">
+          {evEntities.map(ent => <EntityCard entity={ent} compact />)}
+        </div>
+      </section>
+    )}
+
+    <!-- Fuentes -->
+    {evSources.length > 0 && (
+      <section style="margin-top:3rem;">
+        <h2 style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--txt3);text-transform:uppercase;letter-spacing:0.08em;margin:0 0 1rem;font-weight:400;padding-bottom:0.5rem;border-bottom:1px solid var(--line);">
+          Fuentes — {evSources.length}
+        </h2>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          {evSources.map(src => (
+            <div style="background:var(--bg2);border:1px solid var(--line);padding:0.75rem 1rem;">
+              <SourceChip source={src} />
+              {src.issuer && (
+                <p style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--txt3);margin:0.4rem 0 0;">
+                  {src.issuer}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Relaciones activadas -->
+    {evRelations.length > 0 && (
+      <section style="margin-top:3rem;">
+        <h2 style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--txt3);text-transform:uppercase;letter-spacing:0.08em;margin:0 0 1rem;font-weight:400;padding-bottom:0.5rem;border-bottom:1px solid var(--line);">
+          Relaciones activadas — {evRelations.length}
+        </h2>
+        <div style="display:flex;flex-direction:column;gap:1px;background:var(--line);">
+          {evRelations.map(r => {
+            const from = entities.find(e => e.id === r.from)
+            const to = entities.find(e => e.id === r.to)
+            return (
+              <div style="background:var(--bg2);padding:0.85rem 1.25rem;display:flex;flex-wrap:wrap;align-items:center;gap:0.75rem;">
+                <a href={`/personajes/${r.from}`} style="font-size:0.88rem;color:var(--txt);text-decoration:none;font-weight:600;">
+                  {from?.name ?? r.from}
+                </a>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--txt3);padding:2px 8px;border:1px solid var(--line2);">
+                  {r.label}
+                </span>
+                <a href={`/personajes/${r.to}`} style="font-size:0.88rem;color:var(--txt);text-decoration:none;font-weight:600;">
+                  {to?.name ?? r.to}
+                </a>
+                {r.amount?.value != null && (
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:0.8rem;color:var(--gold);margin-left:auto;">
+                    {r.amount.approximate ? '~' : ''}{r.amount.value.toLocaleString('es-ES')} {r.amount.currency}
+                  </span>
+                )}
+              </div>
+            )
+          })}
+        </div>
+      </section>
+    )}
+
+    <!-- ID técnico -->
+    <div style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--line);">
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--txt3);margin:0;">
+        ID: <code style="color:var(--txt2);">{event.id}</code>
+        {' · '}
+        Impacto: {event.impact}/5
+        {' · '}
+        Verificación: {String(event.verified)}
+      </p>
+    </div>
+  </div>
+</Base>

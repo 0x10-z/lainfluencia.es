@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro'
+import SearchBox from '../components/SearchBox.tsx'
+
+import eventsData from '../data/events.json'
+import entitiesData from '../data/entities.json'
+
+import type { Event, Entity } from '../types'
+
+const events = eventsData.events as Event[]
+const entities = entitiesData.entities as Entity[]
+---
+
+<Base
+  title="Buscar"
+  description="Busca eventos, personajes y empresas en la investigación."
+>
+  <div class="container" style="padding-top: 3rem; padding-bottom: 4rem;">
+    <div style="margin-bottom: 2rem;">
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--txt3);text-transform:uppercase;letter-spacing:0.08em;margin:0 0 0.5rem;">
+        Búsqueda
+      </p>
+      <h1 style="font-size:clamp(1.6rem,3.5vw,2.2rem);margin:0 0 0.5rem;">
+        Buscar en la investigación
+      </h1>
+      <p style="font-size:0.88rem;color:var(--txt2);margin:0;">
+        Eventos, personas, empresas e instituciones.
+      </p>
+    </div>
+
+    <SearchBox events={events} entities={entities} client:load />
+  </div>
+</Base>

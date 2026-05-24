@@ -1,0 +1,77 @@
+---
+import type { Entity } from '../types'
+import { getStatusLabel, getStatusColor } from '../utils'
+import CaseTag from './CaseTag.astro'
+
+interface Props {
+  entity: Entity
+  compact?: boolean
+}
+
+const { entity, compact = false } = Astro.props
+const statusColor = getStatusColor(entity.status)
+const statusLabel = getStatusLabel(entity.status)
+
+const typeIcon: Record<string, string> = {
+  person: '◉',
+  company: '▣',
+  institution: '⬡',
+  account: '◈',
+}
+---
+
+<a
+  href={`/personajes/${entity.id}`}
+  style={`
+    display: block;
+    background: var(--bg2);
+    border: 1px solid var(--line);
+    padding: ${compact ? '0.75rem 1rem' : '1rem 1.25rem'};
+    text-decoration: none;
+    transition: border-color 0.15s;
+  `}
+  class="entity-card"
+>
+  <div style="display: flex; align-items: start; justify-content: space-between; gap: 1rem;">
+    <div style="min-width: 0;">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--txt3);">
+          {typeIcon[entity.type] ?? '○'}
+        </span>
+        <span style="
+          font-family: 'Playfair Display', serif;
+          font-size: ${compact ? '0.95rem' : '1.05rem'};
+          font-weight: 700;
+          color: var(--txt);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        ">
+          {entity.name}
+        </span>
+      </div>
+      {!compact && (
+        <p style="
+          font-size: 0.85rem;
+          color: var(--txt2);
+          margin: 0 0 0.5rem;
+          line-height: 1.4;
+        ">
+          {entity.role}
+        </p>
+      )}
+      <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center;">
+        <span class="status-pill" style={`background: ${statusColor}20; color: ${statusColor}; border: 1px solid ${statusColor}40;`}>
+          {statusLabel}
+        </span>
+        {entity.cases.map(c => <CaseTag caseId={c} />)}
+      </div>
+    </div>
+  </div>
+</a>
+
+<style>
+  .entity-card:hover {
+    border-color: var(--line2);
+  }
+</style>

@@ -1,0 +1,32 @@
+---
+import { getCaseColor } from '../utils'
+
+interface Props {
+  caseId: string
+}
+
+const { caseId } = Astro.props
+
+const labels: Record<string, string> = {
+  'dp-77-24': 'Zapatero',
+  'caso-koldo': 'Koldo',
+}
+
+const label = labels[caseId] ?? caseId
+const color = getCaseColor(caseId)
+---
+
+<span style={`
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid ${color};
+  color: ${color};
+  display: inline-block;
+`}>
+  {label}
+</span>

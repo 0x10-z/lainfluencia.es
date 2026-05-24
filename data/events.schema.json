@@ -1,0 +1,113 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "events.schema.json",
+  "title": "Events Schema — La Influencia",
+  "description": "Valida el archivo events.json. Cada evento es un hecho concreto anclado en una fecha con fuentes verificadas.",
+  "type": "object",
+  "required": ["events"],
+  "properties": {
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "date", "title", "cases", "type", "entities", "sources", "verified"],
+        "properties": {
+
+          "id": {
+            "type": "string",
+            "pattern": "^ev-[0-9]+$",
+            "description": "Identificador único. Formato: 'ev-001'"
+          },
+
+          "date": {
+            "type": "string",
+            "description": "Fecha ISO 8601. Puede ser 'YYYY', 'YYYY-MM' o 'YYYY-MM-DD'",
+            "pattern": "^[0-9]{4}(-[0-9]{2}(-[0-9]{2})?)?$"
+          },
+
+          "date_precision": {
+            "type": "string",
+            "enum": ["day", "month", "year"],
+            "description": "Precisión de la fecha conocida"
+          },
+
+          "title": {
+            "type": "string",
+            "description": "Título descriptivo del evento (máx. ~100 chars)"
+          },
+
+          "description": {
+            "type": "string",
+            "description": "Descripción detallada del hecho con contexto"
+          },
+
+          "cases": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["dp-77-24", "caso-koldo"] },
+            "description": "Casos a los que pertenece el evento"
+          },
+
+          "type": {
+            "type": "string",
+            "enum": [
+              "contract",
+              "judicial",
+              "political",
+              "police_operation",
+              "investigation",
+              "scandal",
+              "trial",
+              "corruption",
+              "context",
+              "money_transfer"
+            ],
+            "description": "Tipo de evento"
+          },
+
+          "impact": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5,
+            "description": "Nivel de impacto del evento en la investigación (1=bajo, 5=crítico)"
+          },
+
+          "entities": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "IDs de entidades que participan en este evento (referencias a entities.json)"
+          },
+
+          "relations": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^rel-[0-9]+$" },
+            "description": "IDs de relaciones activadas o ilustradas por este evento (referencias a relations.json)"
+          },
+
+          "sources": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "IDs de fuentes que documentan este evento (referencias a sources.json)"
+          },
+
+          "verified": {
+            "oneOf": [
+              { "type": "boolean" },
+              { "type": "string", "enum": ["partial"] }
+            ],
+            "description": "true = verificado por múltiples fuentes. 'partial' = verificado parcialmente. false = solo una fuente."
+          },
+
+          "pending": {
+            "type": "boolean",
+            "description": "true si el evento aún no ha ocurrido (fecha futura o en curso)"
+          },
+
+          "notes": {
+            "type": "string",
+            "description": "Notas editoriales sobre el evento (dudas, matices, contexto adicional)"
+          }
+        }
+      }
+    }
+  }
+}

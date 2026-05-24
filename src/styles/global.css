@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #070707;
+  --bg2: #0c0c0c;
+  --txt: #ece8df;
+  --txt2: #9a9589;
+  --txt3: #4a4740;
+  --red: #c0392b;
+  --blue: #1a5f9e;
+  --blue2: #5ba3d9;
+  --gold: #b8960c;
+  --green: #27a050;
+  --line: #1f1f1f;
+  --line2: #2d2d2d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--txt);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+}
+
+code, .mono {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85em;
+}
+
+a {
+  color: var(--blue2);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Barra lateral por caso */
+.case-z { border-left: 3px solid var(--red); }
+.case-k { border-left: 3px solid var(--blue); }
+.case-both { border-left: 3px solid var(--gold); }
+
+/* Badges de tipo de fuente */
+.badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  display: inline-block;
+}
+
+.badge-jud {
+  background: rgba(192, 57, 43, 0.15);
+  color: var(--red);
+  border: 1px solid rgba(192, 57, 43, 0.3);
+}
+
+.badge-udef {
+  background: rgba(26, 95, 158, 0.15);
+  color: var(--blue2);
+  border: 1px solid rgba(26, 95, 158, 0.3);
+}
+
+.badge-uco {
+  background: rgba(91, 163, 217, 0.15);
+  color: var(--blue2);
+  border: 1px solid rgba(91, 163, 217, 0.3);
+}
+
+.badge-press {
+  background: rgba(154, 149, 137, 0.15);
+  color: var(--txt2);
+  border: 1px solid rgba(154, 149, 137, 0.2);
+}
+
+.badge-official {
+  background: rgba(184, 150, 12, 0.15);
+  color: var(--gold);
+  border: 1px solid rgba(184, 150, 12, 0.3);
+}
+
+.badge-ref {
+  background: rgba(74, 71, 64, 0.3);
+  color: var(--txt3);
+  border: 1px solid var(--line2);
+}
+
+/* Fade-in en scroll */
+.fade-up {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Estado procesal */
+.status-pill {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: inline-block;
+}
+
+/* Separadores */
+hr.separator {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin: 0;
+}
+
+/* Contenedor principal */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Barra de impacto */
+.impact-bar {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.impact-bar span {
+  width: 8px;
+  height: 8px;
+  display: block;
+  background: var(--line2);
+}
+
+.impact-bar span.filled {
+  background: currentColor;
+}
+
+/* Scroll-driven reveal */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}

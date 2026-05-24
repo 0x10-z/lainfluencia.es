@@ -1,0 +1,30 @@
+---
+import { getImpactLabel, getImpactColor } from '../utils'
+
+interface Props {
+  impact: 1 | 2 | 3 | 4 | 5
+  showLabel?: boolean
+}
+
+const { impact, showLabel = true } = Astro.props
+const color = getImpactColor(impact)
+const label = getImpactLabel(impact)
+---
+
+<div style="display: flex; align-items: center; gap: 8px;" title={`Impacto: ${label}`}>
+  <div class="impact-bar" style={`color: ${color}`}>
+    {Array.from({ length: 5 }, (_, i) => (
+      <span class={i < impact ? 'filled' : ''} />
+    ))}
+  </div>
+  {showLabel && (
+    <span style={`
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      color: ${color};
+      letter-spacing: 0.03em;
+    `}>
+      {label}
+    </span>
+  )}
+</div>

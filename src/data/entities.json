@@ -1,0 +1,656 @@
+{
+  "$schema": "../schema/entities.schema.json",
+  "$comment": "ENTIDADES — Personas físicas, jurídicas, instituciones y cuentas. Cada entidad tiene un id único que se referencia desde events.json y relations.json",
+  "entities": [
+    {
+      "id": "zapatero",
+      "type": "person",
+      "name": "José Luis Rodríguez Zapatero",
+      "aliases": [
+        "JLZ",
+        "Zapatero"
+      ],
+      "role": "Expresidente del Gobierno de España (2004–2011)",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "investigated",
+      "tags": [
+        "político",
+        "PSOE",
+        "expresidente"
+      ],
+      "notes": "Vértice de la red según la UDEF. Coordina desde su oficina en calle Ferraz, Madrid."
+    },
+    {
+      "id": "julio-martinez",
+      "type": "person",
+      "name": "Julio Martínez Martínez",
+      "aliases": [],
+      "role": "Empresario. Administrador de 39 sociedades investigadas",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "investigated",
+      "tags": [
+        "operador",
+        "sociedades-offshore"
+      ],
+      "notes": "Amigo personal de Zapatero. Gestiona las sociedades instrumentales."
+    },
+    {
+      "id": "maria-alcazar",
+      "type": "person",
+      "name": "María Gertrudis Alcázar Jiménez",
+      "aliases": [],
+      "role": "Encargada de documentación ficticia",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "investigated",
+      "tags": [
+        "falsedad-documental"
+      ],
+      "notes": "Elabora contratos, facturas e informes para cubrir servicios inexistentes."
+    },
+    {
+      "id": "cristobal-cano",
+      "type": "person",
+      "name": "Cristóbal Cano",
+      "aliases": [],
+      "role": "Gestor del entramado societario y facturación",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "investigated",
+      "tags": [
+        "blanqueo",
+        "facturación"
+      ],
+      "notes": "Coordina transferencias entre empresas para dificultar el rastreo."
+    },
+    {
+      "id": "abalos",
+      "type": "person",
+      "name": "José Luis Ábalos Meco",
+      "aliases": [
+        "Ábalos"
+      ],
+      "role": "Exministro de Transportes (2018–2021), exsecretario Organización PSOE",
+      "cases": [
+        "caso-koldo"
+      ],
+      "status": "accused",
+      "tags": [
+        "político",
+        "PSOE",
+        "ministro",
+        "preso-preventivo"
+      ],
+      "notes": "En Soto del Real desde nov. 2025 por riesgo extremo de fuga. Fiscalía pide 24 años."
+    },
+    {
+      "id": "koldo-garcia",
+      "type": "person",
+      "name": "Koldo García Izaguirre",
+      "aliases": [
+        "Koldo",
+        "Goblin"
+      ],
+      "role": "Exasesor y exescolta de Ábalos",
+      "cases": [
+        "caso-koldo"
+      ],
+      "status": "accused",
+      "tags": [
+        "intermediario",
+        "asesor",
+        "preso-preventivo"
+      ],
+      "notes": "Alias 'Goblin' en las comunicaciones interceptadas. Preso desde nov. 2025."
+    },
+    {
+      "id": "aldama",
+      "type": "person",
+      "name": "Víctor Gonzalo de Aldama Delgado",
+      "aliases": [
+        "Aldama"
+      ],
+      "role": "Empresario. Presidente Zamora CF. Conseguidor",
+      "cases": [
+        "caso-koldo"
+      ],
+      "status": "accused",
+      "tags": [
+        "empresario",
+        "conseguidor",
+        "culpable-confeso"
+      ],
+      "notes": "Se declaró culpable de 3 delitos. Colaborador con la Justicia. Pide atenuante."
+    },
+    {
+      "id": "santos-cerdan",
+      "type": "person",
+      "name": "Santos Cerdán García",
+      "aliases": [],
+      "role": "Exsecretario de Organización PSOE (número 3)",
+      "cases": [
+        "caso-koldo"
+      ],
+      "status": "investigated",
+      "tags": [
+        "político",
+        "PSOE",
+        "preso-preventivo"
+      ],
+      "notes": "Ingresó en prisión preventiva jun. 2025. Informe UCO 490 pp. lo vincula directamente."
+    },
+    {
+      "id": "claudio-rivas",
+      "type": "person",
+      "name": "Claudio Rivas",
+      "aliases": [],
+      "role": "Empresario. Socio de Aldama",
+      "cases": [
+        "caso-koldo"
+      ],
+      "status": "investigated",
+      "tags": [
+        "empresario",
+        "hidrocarburos"
+      ],
+      "notes": "Pagó el alquiler del piso de la novia de Ábalos. Vinculado a fraude de 182M€ en hidrocarburos (Villafuel)."
+    },
+    {
+      "id": "jessica-rodriguez",
+      "type": "person",
+      "name": "Jésica Rodríguez",
+      "aliases": [],
+      "role": "Expareja de Ábalos",
+      "cases": [
+        "caso-koldo"
+      ],
+      "status": "witness",
+      "tags": [
+        "testigo"
+      ],
+      "notes": "Su piso en Madrid era pagado por Claudio Rivas. Declaró en el juicio."
+    },
+    {
+      "id": "calama",
+      "type": "person",
+      "name": "José Luis Calama Teixeira",
+      "aliases": [],
+      "role": "Magistrado — Juzgado Central de Instrucción Nº 2, Madrid",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "judge",
+      "tags": [
+        "juez",
+        "JCI-2"
+      ],
+      "notes": "Firmó el auto de imputación el 18/05/2026."
+    },
+    {
+      "id": "leopoldo-puente",
+      "type": "person",
+      "name": "Leopoldo Puente",
+      "aliases": [],
+      "role": "Magistrado — Tribunal Supremo, Sala 2ª",
+      "cases": [
+        "caso-koldo"
+      ],
+      "status": "judge",
+      "tags": [
+        "juez",
+        "tribunal-supremo"
+      ],
+      "notes": "Instructor del caso Koldo. Acordó la prisión preventiva de Ábalos y Koldo."
+    },
+    {
+      "id": "plus-ultra",
+      "type": "company",
+      "name": "Plus Ultra Líneas Aéreas",
+      "aliases": [],
+      "role": "Aerolínea de capital venezolano",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "investigated",
+      "tags": [
+        "aerolínea",
+        "venezuela",
+        "rescatada"
+      ],
+      "registration": "España",
+      "notes": "Menos del 1% cuota de mercado. Recibió 53M€ en 2020. TS anuló rescate parcialmente en 2021."
+    },
+    {
+      "id": "soluciones-gestion",
+      "type": "company",
+      "name": "Soluciones de Gestión y Apoyo a Empresas SL",
+      "aliases": [
+        "SGAE",
+        "Sol. de Gestión"
+      ],
+      "role": "Empresa adjudicataria de contratos de mascarillas",
+      "cases": [
+        "caso-koldo"
+      ],
+      "status": "investigated",
+      "tags": [
+        "empresa-pantalla",
+        "mascarillas",
+        "adjudicataria"
+      ],
+      "registration": "España",
+      "notes": "Facturó 0€ en 2019. Casi 54M€ en 2020 tras adjudicaciones sin concurso."
+    },
+    {
+      "id": "soc-a",
+      "type": "company",
+      "name": "Sociedad Instrumental A",
+      "aliases": [],
+      "role": "Sociedad instrumental sin actividad real",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "investigated",
+      "tags": [
+        "instrumental",
+        "offshore"
+      ],
+      "registration": "España",
+      "notes": "Una de las 39 sociedades investigadas. Administrador: Julio Martínez."
+    },
+    {
+      "id": "jci-2",
+      "type": "institution",
+      "name": "Juzgado Central de Instrucción Nº 2",
+      "aliases": [],
+      "role": "Órgano judicial instructor — Caso Zapatero",
+      "cases": [
+        "dp-77-24"
+      ],
+      "tags": [
+        "juzgado",
+        "audiencia-nacional"
+      ],
+      "notes": "Avenida del Madrono, Madrid. Plaza número 2."
+    },
+    {
+      "id": "tribunal-supremo",
+      "type": "institution",
+      "name": "Tribunal Supremo — Sala 2ª (Penal)",
+      "aliases": [
+        "TS"
+      ],
+      "role": "Órgano judicial enjuiciador — Caso Koldo",
+      "cases": [
+        "caso-koldo"
+      ],
+      "tags": [
+        "tribunal",
+        "supremo"
+      ],
+      "notes": "7 magistrados. Juzgó el caso Koldo en 14 sesiones (abr–may 2026)."
+    },
+    {
+      "id": "udef",
+      "type": "institution",
+      "name": "UDEF — Unidad de Delincuencia Económica y Fiscal",
+      "aliases": [
+        "UDEF-BBCA"
+      ],
+      "role": "Unidad policial. Policía Nacional",
+      "cases": [
+        "dp-77-24"
+      ],
+      "tags": [
+        "policía",
+        "investigador"
+      ],
+      "notes": "Elaboró los informes 1907/26 y 1908/26 sobre el caso Zapatero."
+    },
+    {
+      "id": "uco",
+      "type": "institution",
+      "name": "UCO — Unidad Central Operativa",
+      "aliases": [],
+      "role": "Unidad policial. Guardia Civil",
+      "cases": [
+        "caso-koldo"
+      ],
+      "tags": [
+        "guardia-civil",
+        "investigador"
+      ],
+      "notes": "Elaboró el atestado de 233 páginas y el informe de 490 pp. vinculando a Santos Cerdán."
+    },
+    {
+      "id": "puertos-estado",
+      "type": "institution",
+      "name": "Puertos del Estado",
+      "aliases": [],
+      "role": "Organismo público dependiente del Ministerio de Transportes",
+      "cases": [
+        "caso-koldo"
+      ],
+      "tags": [
+        "administración-pública",
+        "adjudicador"
+      ],
+      "notes": "Adjudicó 24,2M€ a Soluciones de Gestión el 21/03/2020 sin concurso."
+    },
+    {
+      "id": "adif",
+      "type": "institution",
+      "name": "Adif — Administrador de Infraestructuras Ferroviarias",
+      "aliases": [],
+      "role": "Organismo público dependiente del Ministerio de Transportes",
+      "cases": [
+        "caso-koldo"
+      ],
+      "tags": [
+        "administración-pública",
+        "adjudicador"
+      ],
+      "notes": "Adjudicó 12,5M€ a Soluciones de Gestión el 27/03/2020 sin concurso."
+    },
+    {
+      "id": "fondo-solvencia",
+      "type": "institution",
+      "name": "Fondo de Apoyo a la Solvencia de Empresas Estratégicas",
+      "aliases": [
+        "FASEE"
+      ],
+      "role": "Instrumento financiero del Estado para rescates COVID",
+      "cases": [
+        "dp-77-24"
+      ],
+      "tags": [
+        "fondo-público",
+        "covid"
+      ],
+      "notes": "Gestionado por SEPI. Vehículo del rescate a Plus Ultra."
+    },
+    {
+      "id": "cuenta-offshore-ivb",
+      "type": "account",
+      "name": "Cuentas en Islas Vírgenes Británicas",
+      "aliases": [],
+      "role": "Destino offshore de fondos de la red Zapatero",
+      "cases": [
+        "dp-77-24"
+      ],
+      "jurisdiction": "Islas Vírgenes Británicas",
+      "tags": [
+        "offshore",
+        "blanqueo"
+      ],
+      "notes": "Controladas por Julio Martínez. Destino final de comisiones."
+    },
+    {
+      "id": "inteligencia-prospectiva",
+      "type": "company",
+      "name": "Inteligencia Prospectiva S.L.",
+      "aliases": [],
+      "role": "Sociedad constituida en Madrid (ene. 2020) por hijos de empresario venezolano vinculado a PDVSA",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "investigated",
+      "tags": [
+        "venezuela",
+        "pdvsa",
+        "instrumental",
+        "blanqueo"
+      ],
+      "registration": "España",
+      "notes": "Pagó 368.258€ a Análisis Relevante, 561.440€ a Whathefav y 266.200€ a Gate Center. Administrada por hijos de Domingo Arnaldo Amaro Rangel, investigado por blanqueo vinculado al chavismo por EEUU."
+    },
+    {
+      "id": "analisis-relevante",
+      "type": "company",
+      "name": "Análisis Relevante S.L.",
+      "aliases": [],
+      "role": "Empresa de Julio Martínez. Recibió 368.258€ de Inteligencia Prospectiva",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "investigated",
+      "tags": [
+        "consultoría",
+        "instrumental"
+      ],
+      "registration": "España",
+      "notes": "Empresa del socio y amigo personal de Zapatero. Julio Martínez administra 15+ sociedades activas."
+    },
+    {
+      "id": "whathefav",
+      "type": "company",
+      "name": "Whathefav",
+      "aliases": [],
+      "role": "Agencia de marketing de las hijas de Zapatero. Recibió 561.440€ de Inteligencia Prospectiva",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "investigated",
+      "tags": [
+        "hijas-zapatero",
+        "marketing"
+      ],
+      "registration": "España",
+      "notes": "Las hijas de Zapatero borraron públicamente sus vínculos con medios una vez iniciada la investigación."
+    },
+    {
+      "id": "gate-center",
+      "type": "company",
+      "name": "Gate Center",
+      "aliases": [],
+      "role": "Lobby prochino. Nexo entre intereses venezolanos y la rama china de la red Zapatero",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "investigated",
+      "tags": [
+        "china",
+        "lobby",
+        "blanqueo"
+      ],
+      "registration": "España",
+      "notes": "Recibió 266.200€ de Inteligencia Prospectiva. Señalado como conexión Venezuela-China por los investigadores."
+    },
+    {
+      "id": "pdvsa",
+      "type": "company",
+      "name": "PDVSA — Petróleos de Venezuela S.A.",
+      "aliases": [
+        "PDVSA"
+      ],
+      "role": "Petrolera estatal venezolana. Nexo financiero central de la trama internacional",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "investigated",
+      "tags": [
+        "venezuela",
+        "petroleo",
+        "chavismo",
+        "blanqueo"
+      ],
+      "registration": "Venezuela",
+      "notes": "Fondos del saqueo del programa CLAP habrían circulado a través de Plus Ultra. El embajador Raúl Morodo fue condenado en 2024 por cobrar de PDVSA mediante asesorías ficticias."
+    },
+    {
+      "id": "domingo-amaro",
+      "type": "person",
+      "name": "Domingo Arnaldo Amaro Rangel",
+      "aliases": [],
+      "role": "Empresario venezolano con contratos con PDVSA. Padre de los administradores de Inteligencia Prospectiva",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "investigated",
+      "tags": [
+        "venezuela",
+        "pdvsa",
+        "blanqueo"
+      ],
+      "notes": "Investigado por EEUU por blanqueo vinculado al chavismo. Controla una docena de sociedades en Panamá."
+    },
+    {
+      "id": "manuel-fajardo",
+      "type": "person",
+      "name": "Manuel Aaron Fajardo García",
+      "aliases": [],
+      "role": "Coordinador de segundo nivel de la red. Citado en informes UDEF junto a Julio Martínez",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "investigated",
+      "tags": [
+        "operador",
+        "coordinador"
+      ],
+      "notes": "La UDEF lo sitúa como coordinador bajo la dirección de Zapatero."
+    },
+    {
+      "id": "raul-morodo",
+      "type": "person",
+      "name": "Raúl Morodo Leoncio",
+      "aliases": [],
+      "role": "Embajador de Zapatero en Venezuela (2004–2007). Condenado por fraude fiscal con PDVSA",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "convicted",
+      "tags": [
+        "diplomático",
+        "pdvsa",
+        "venezuela",
+        "fraude-fiscal"
+      ],
+      "notes": "Condenado por la Audiencia Nacional en 2024 a 10 meses por ocultar ingresos procedentes de asesorías ficticias cobradas de PDVSA a través de su hijo."
+    },
+    {
+      "id": "silvia-martinez-canton",
+      "type": "person",
+      "name": "Silvia Martínez Cantón",
+      "aliases": [],
+      "role": "Magistrada de enlace ante Francia y Suiza. Cesada por el Gobierno en mayo 2026",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "witness",
+      "tags": [
+        "juez-enlace",
+        "cooperacion-judicial",
+        "cesada"
+      ],
+      "notes": "Nombrada el 22/07/2024 con mandato de 5 años. Cesada antes del mínimo por 'pérdida de confianza'. El Confidencial vincula su cese al manejo de información sensible de Plus Ultra. La nueva convocatoria elimina la acreditación para Suiza."
+    },
+    {
+      "id": "ministerio-justicia",
+      "type": "institution",
+      "name": "Ministerio de Justicia — Gobierno de España",
+      "aliases": [],
+      "role": "Órgano que controla nombramiento y cese de jueces de enlace internacionales",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "unknown",
+      "tags": [
+        "gobierno",
+        "justicia"
+      ],
+      "notes": "Ministro: Félix Bolaños. Justificó el cese de Martínez Cantón alegando 'exceso de trabajo en Francia'. El Confidencial desmiente esa versión."
+    },
+    {
+      "id": "julio-martinez-sola",
+      "type": "person",
+      "name": "Julio Martínez Solá",
+      "aliases": [],
+      "role": "Presidente de Plus Ultra Líneas Aéreas. Detenido en dic. 2025",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "investigated",
+      "tags": [
+        "plus-ultra",
+        "detenido"
+      ],
+      "notes": "Detenido por la UDEF en diciembre de 2025 en operación por blanqueo de capitales."
+    },
+    {
+      "id": "roberto-roselli",
+      "type": "person",
+      "name": "Roberto Roselli",
+      "aliases": [],
+      "role": "CEO de Plus Ultra Líneas Aéreas. Detenido en dic. 2025",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "investigated",
+      "tags": [
+        "plus-ultra",
+        "detenido"
+      ],
+      "notes": "Detenido por la UDEF en diciembre de 2025 junto al presidente de la aerolínea."
+    },
+    {
+      "id": "fernando-pascual-grasa",
+      "type": "person",
+      "name": "Fernando Pascual Grasa",
+      "aliases": [],
+      "role": "Comisario principal. Jefe Comisaría General de Policía Judicial (mando bisagra sobre UDEF). Se jubila el 10/11/2026",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "unknown",
+      "tags": [
+        "policia-judicial",
+        "udef",
+        "jubilacion"
+      ],
+      "notes": "Su jubilación permite a Marlaska elegir a dedo al nuevo jefe de Policía Judicial en plena investigación Zapatero. Es el mando que reporta la información de la UDEF a la cúpula del Ministerio."
+    },
+    {
+      "id": "fernando-alonso-comisario",
+      "type": "person",
+      "name": "Fernando Alonso",
+      "aliases": [],
+      "role": "Comisario jefe de la UDEF nombrado por Marlaska. Descrito como 'afín al PSOE' por fuentes policiales",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "unknown",
+      "tags": [
+        "udef",
+        "marlaska",
+        "nombrado-a-dedo"
+      ],
+      "notes": "Fuentes sindicales afirman que fue colocado por Marlaska con el objetivo de frenar investigaciones sensibles para el PSOE. Bajo su mando la UDEF redujo a la mitad su personal."
+    },
+    {
+      "id": "marlaska",
+      "type": "person",
+      "name": "Fernando Grande-Marlaska",
+      "aliases": [
+        "Marlaska"
+      ],
+      "role": "Ministro del Interior del Gobierno Sánchez",
+      "cases": [
+        "dp-77-24"
+      ],
+      "status": "unknown",
+      "tags": [
+        "ministro",
+        "interior",
+        "gobierno"
+      ],
+      "notes": "Redujo los efectivos de la UDEF al 50%. Nombró a Fernando Alonso al frente de la unidad tras la jubilación de Fernando Moré. Nombrará a dedo al sustituto de Pascual Grasa en nov. 2026."
+    }
+  ]
+}

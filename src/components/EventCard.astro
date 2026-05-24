@@ -1,0 +1,183 @@
+---
+import type { Event, Entity, Source } from '../types'
+import { formatDate, getCaseClass, getEventTypeLabel, getSourceById, getEntityById } from '../utils'
+import ImpactBar from './ImpactBar.astro'
+import CaseTag from './CaseTag.astro'
+import SourceChip from './SourceChip.astro'
+
+interface Props {
+  event: Event
+  entities: Entity[]
+  sources: Source[]
+  expandable?: boolean
+}
+
+const { event, entities, sources, expandable = true } = Astro.props
+const caseClass = getCaseClass(event.cases)
+const dateStr = formatDate(event.date, event.date_precision)
+const typeLabel = getEventTypeLabel(event.type)
+
+const eventSources = event.sources.map(id => getSourceById(id, sources)).filter(Boolean) as Source[]
+const eventEntities = event.entities.map(id => getEntityById(id, entities)).filter(Boolean) as Entity[]
+
+const verifiedIcon = event.verified === true ? '✓' : event.verified === 'partial' ? '~' : '?'
+const verifiedTitle = event.verified === true ? 'Verificado' : event.verified === 'partial' ? 'Verificación parcial' : 'Pendiente de verificar'
+const verifiedColor = event.verified === true ? 'var(--green)' : event.verified === 'partial' ? 'var(--gold)' : 'var(--txt3)'
+---
+
+<article
+  class={`event-card ${caseClass} fade-up`}
+  style={`
+    background: var(--bg2);
+    border: 1px solid var(--line);
+    padding: 0;
+    overflow: hidden;
+    ${event.pending ? 'opacity: 0.65;' : ''}
+  `}
+  data-event-id={event.id}
+  data-cases={event.cases.join(',')}
+  data-type={event.type}
+  data-impact={event.impact}
+>
+  <!-- Cabecera siempre visible -->
+  <div style="padding: 1rem 1.25rem;">
+    <div style="display: flex; align-items: start; justify-content: space-between; gap: 1rem; margin-bottom: 0.75rem;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <time
+          datetime={event.date}
+          style="
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--txt3);
+            white-space: nowrap;
+            flex-shrink: 0;
+          "
+        >
+          {dateStr}
+          {event.pending && (
+            <span style="color: var(--gold); margin-left: 6px; font-size: 0.7rem;">PENDIENTE</span>
+          )}
+        </time>
+        <span style="
+          font-family: 'IBM Plex Mono', monospace;
+          font-size: 0.65rem;
+          color: var(--txt3);
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+        ">
+          {typeLabel}
+        </span>
+      </div>
+      <span
+        title={verifiedTitle}
+        style={`
+          font-family: 'IBM Plex Mono', monospace;
+          font-size: 0.7rem;
+          color: ${verifiedColor};
+          flex-shrink: 0;
+        `}
+      >
+        {verifiedIcon}
+      </span>
+    </div>
+
+    <h3 style="
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--txt);
+      margin: 0 0 0.75rem;
+      line-height: 1.35;
+    ">
+      {expandable ? (
+        <a href={`/eventos/${event.id}`} style="color: inherit; text-decoration: none;">{event.title}</a>
+      ) : event.title}
+    </h3>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+      <ImpactBar impact={event.impact} />
+      <span style="color: var(--line2); font-size: 0.8rem;">|</span>
+      {event.cases.map(c => <CaseTag caseId={c} />)}
+    </div>
+  </div>
+
+  <!-- Cuerpo expandible -->
+  {expandable && (
+    <details style="border-top: 1px solid var(--line);">
+      <summary style="
+        padding: 0.6rem 1.25rem;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.72rem;
+        color: var(--txt3);
+        cursor: pointer;
+        letter-spacing: 0.04em;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        user-select: none;
+      ">
+        <span class="toggle-icon">▸</span> Ver detalles
+      </summary>
+
+      <div style="padding: 1rem 1.25rem; border-top: 1px solid var(--line);">
+        <p style="font-size: 0.9rem; color: var(--txt2); line-height: 1.6; margin: 0 0 1rem;">
+          {event.description}
+        </p>
+
+        {event.notes && (
+          <p style="
+            font-size: 0.82rem;
+            color: var(--txt3);
+            font-style: italic;
+            margin: 0 0 1rem;
+            padding: 0.5rem 0.75rem;
+            border-left: 2px solid var(--line2);
+          ">
+            {event.notes}
+          </p>
+        )}
+
+        {eventEntities.length > 0 && (
+          <div style="margin-bottom: 1rem;">
+            <p style="font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--txt3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 0.5rem;">
+              Actores
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+              {eventEntities.map(ent => (
+                <a
+                  href={`/personajes/${ent.id}`}
+                  style="
+                    font-size: 0.78rem;
+                    color: var(--txt2);
+                    border: 1px solid var(--line2);
+                    padding: 3px 8px;
+                    text-decoration: none;
+                  "
+                >
+                  {ent.name}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {eventSources.length > 0 && (
+          <div>
+            <p style="font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--txt3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 0.5rem;">
+              Fuentes
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              {eventSources.map(src => <SourceChip source={src} />)}
+            </div>
+          </div>
+        )}
+      </div>
+    </details>
+  )}
+</article>
+
+<style>
+  details[open] .toggle-icon { transform: rotate(90deg); }
+  .toggle-icon { display: inline-block; transition: transform 0.15s; }
+</style>

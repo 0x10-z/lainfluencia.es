@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Influencia — Preview del modelo de datos</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<style>
+/* ══════════════════════════════════════════
+   TOKENS
+══════════════════════════════════════════ */
+:root {
+  --bg:      #070707;
+  --bg2:     #0c0c0c;
+  --bg3:     #121212;
+  --bg4:     #181818;
+  --line:    #1f1f1f;
+  --line2:   #2d2d2d;
+  --txt:     #ece8df;
+  --txt2:    #9a9589;
+  --txt3:    #4a4740;
+  --red:     #c0392b;
+  --red2:    #8b1a12;
+  --redalpha:#c0392b22;
+  --blue:    #1a5f9e;
+  --bluealpha:#1a5f9e22;
+  --blue2:   #5ba3d9;
+  --gold:    #b8960c;
+  --goldalpha:#b8960c18;
+  --green:   #27a050;
+  --orange:  #c75c1a;
+  --purple:  #7c3aed;
+  --ft: 'Playfair Display', Georgia, serif;
+  --fm: 'IBM Plex Mono', 'Fira Code', monospace;
+  --fb: 'IBM Plex Sans', sans-serif;
+}
+
+/* ══════════════════════════════════════════
+   RESET & BASE
+══════════════════════════════════════════ */
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--txt);
+  font-family:var(--fb);
+  overflow-x:hidden;
+  cursor:default;
+}
+::selection{background:var(--red);color:#fff;}
+a{color:inherit;text-decoration:none;}
+
+/* ══════════════════════════════════════════
+   GRAIN OVERLAY
+══════════════════════════════════════════ */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:.025;
+  pointer-events:none;
+  z-index:1000;
+}
+
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  height:52px;
+  background:rgba(7,7,7,.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3vw;
+}
+.nav-logo{
+  font-family:var(--ft);font-size:1rem;font-weight:900;
+  letter-spacing:.02em;
+  display:flex;align-items:center;gap:.5rem;
+}
+.nav-logo em{color:var(--red);font-style:italic;}
+.nav-logo .ver{
+  font-family:var(--fm);font-size:.5rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--txt3);
+  border:1px solid var(--line2);padding:.15rem .4rem;
+}
+.nav-tabs{display:flex;}
+.nav-tab{
+  font-family:var(--fm);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;
+  padding:0 1.2rem;height:52px;display:flex;align-items:center;
+  color:var(--txt3);border-right:1px solid var(--line);
+  cursor:pointer;transition:all .2s;border-bottom:2px solid transparent;
+}
+.nav-tab:first-child{border-left:1px solid var(--line);}
+.nav-tab:hover{color:var(--txt2);background:var(--bg2);}
+.nav-tab.active{color:var(--txt);border-bottom-color:var(--red);}
+.nav-tab.active-b{color:var(--blue2);border-bottom-color:var(--blue);}
+.nav-right{
+  font-family:var(--fm);font-size:.55rem;letter-spacing:.12em;
+  color:var(--txt3);display:flex;align-items:center;gap:.6rem;
+}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--green);
+  animation:blink 2s ease infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+/* ══════════════════════════════════════════
+   VIEWS
+══════════════════════════════════════════ */
+.view{display:none;padding-top:52px;}
+.view.active{display:block;}
+
+/* ══════════════════════════════════════════
+   ── VIEW: TIMELINE ──
+══════════════════════════════════════════ */
+#view-timeline{
+  display:none;
+  padding-top:52px;
+  min-height:100vh;
+}
+#view-timeline.active{display:flex;flex-direction:column;}
+
+/* HERO strip */
+.tl-hero{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--line);
+  min-height:220px;
+}
+.tl-hero-half{
+  padding:3rem 4rem;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.tl-hero-half:first-child{border-right:1px solid var(--line);}
+.tl-case-pill{
+  font-family:var(--fm);font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;
+  margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;
+}
+.tl-case-pill::before{content:'';width:6px;height:6px;border-radius:50%;}
+.pill-z::before{background:var(--red);}
+.pill-k::before{background:var(--blue2);}
+.pill-z{color:var(--red);}
+.pill-k{color:var(--blue2);}
+.tl-case-title{font-family:var(--ft);font-size:1.6rem;font-weight:900;line-height:1;margin-bottom:.6rem;}
+.tl-case-sub{font-family:var(--fm);font-size:.62rem;color:var(--txt3);line-height:1.6;}
+
+/* FILTER strip */
+.tl-filters{
+  background:var(--bg2);border-bottom:1px solid var(--line);
+  padding:.7rem 3vw;
+  display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
+  position:sticky;top:52px;z-index:100;
+}
+.fl{font-family:var(--fm);font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:var(--txt3);}
+.fb{
+  font-family:var(--fm);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:.2rem .65rem;border:1px solid var(--line2);background:transparent;
+  color:var(--txt3);cursor:pointer;transition:all .18s;
+}
+.fb:hover{color:var(--txt2);border-color:var(--line2);}
+.fb.on{background:var(--redalpha);border-color:var(--red);color:var(--red);}
+.fb.on-b{background:var(--bluealpha);border-color:var(--blue);color:var(--blue2);}
+.fsep{width:1px;height:16px;background:var(--line2);}
+
+/* BOARD */
+.board-wrap{
+  display:grid;grid-template-columns:200px 1fr;
+  flex:1;
+}
+.year-col{
+  background:var(--bg2);border-right:1px solid var(--line);
+  position:sticky;top:0;/* handled by inner */
+}
+.year-col-inner{position:sticky;top:98px;}
+.year-block{
+  padding:1.5rem 1.2rem;
+  border-bottom:1px solid var(--line);
+  cursor:pointer;
+  transition:background .18s;
+}
+.year-block:hover{background:var(--bg3);}
+.year-block.active-year{background:var(--bg3);}
+.year-num{
+  font-family:var(--ft);font-size:1.8rem;font-weight:900;
+  color:var(--line2);transition:color .18s;line-height:1;
+}
+.year-block:hover .year-num,
+.year-block.active-year .year-num{color:var(--txt);}
+.year-count{font-family:var(--fm);font-size:.5rem;letter-spacing:.1em;color:var(--txt3);margin-top:.3rem;}
+
+.events-col{overflow:hidden;}
+
+/* EVENT CARD */
+.ev-card{
+  border-bottom:1px solid var(--line);
+  padding:1.8rem 3vw 1.8rem 2.5rem;
+  display:grid;grid-template-columns:110px 1fr;gap:0 2rem;
+  transition:background .18s;
+  cursor:pointer;
+  position:relative;
+}
+.ev-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:transparent;transition:background .18s;
+}
+.ev-card.case-z::before{background:var(--red);}
+.ev-card.case-k::before{background:var(--blue);}
+.ev-card.case-both::before{
+  background:linear-gradient(to bottom,var(--red) 50%,var(--blue) 50%);
+}
+.ev-card:hover{background:var(--bg2);}
+.ev-card.expanded{background:var(--bg3);}
+
+.ev-date{
+  padding-top:.1rem;
+}
+.ev-day{font-family:var(--fm);font-size:.9rem;font-weight:500;line-height:1;}
+.ev-day.r{color:var(--red);}
+.ev-day.b{color:var(--blue2);}
+.ev-mon{font-family:var(--fm);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--txt3);margin-top:.15rem;}
+
+.ev-main{}
+.ev-header{display:flex;align-items:flex-start;gap:.7rem;margin-bottom:.5rem;flex-wrap:wrap;}
+.ev-tags{display:flex;gap:.3rem;flex-wrap:wrap;}
+.etag{
+  font-family:var(--fm);font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:.12rem .4rem;border:1px solid;
+}
+.etag-type{border-color:var(--line2);color:var(--txt3);}
+.etag-z{border-color:var(--red);color:var(--red);}
+.etag-k{border-color:var(--blue);color:var(--blue2);}
+.etag-both{border-color:var(--gold);color:var(--gold);}
+.etag-verified{border-color:var(--green);color:var(--green);}
+.etag-partial{border-color:var(--orange);color:var(--orange);}
+.etag-pending{border-color:var(--purple);color:#a78bfa;}
+
+.ev-title{
+  font-family:var(--ft);font-size:1.05rem;font-weight:700;
+  line-height:1.25;margin-bottom:.4rem;
+}
+.ev-impact{display:flex;gap:2px;margin-bottom:.5rem;}
+.imp-seg{width:14px;height:3px;background:var(--line2);}
+.imp-seg.on-r{background:var(--red);}
+.imp-seg.on-b{background:var(--blue);}
+
+.ev-desc{
+  font-size:.83rem;color:var(--txt2);line-height:1.75;
+  display:none;margin-bottom:1rem;
+}
+.ev-desc strong{color:var(--txt);}
+.ev-card.expanded .ev-desc{display:block;}
+
+/* Source chips */
+.ev-sources{display:none;flex-wrap:wrap;gap:.4rem;}
+.ev-card.expanded .ev-sources{display:flex;}
+.src-chip{
+  display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;
+  background:var(--bg4);border:1px solid var(--line2);
+  font-family:var(--fm);font-size:.55rem;color:var(--txt3);
+  cursor:pointer;transition:all .18s;
+  text-decoration:none;
+}
+.src-chip:hover{border-color:var(--line2);color:var(--txt2);background:var(--bg3);}
+.src-badge{
+  font-size:.45rem;letter-spacing:.08em;text-transform:uppercase;
+  padding:.1rem .3rem;border:1px solid;
+}
+.src-jud{border-color:var(--gold);color:var(--gold);}
+.src-udef{border-color:var(--red);color:var(--red);}
+.src-uco{border-color:var(--blue2);color:var(--blue2);}
+.src-press{border-color:var(--line2);color:var(--txt3);}
+.src-official{border-color:var(--green);color:var(--green);}
+
+/* Entities row */
+.ev-entities{display:none;margin-top:.7rem;flex-wrap:wrap;gap:.3rem;}
+.ev-card.expanded .ev-entities{display:flex;}
+.ent-chip{
+  font-family:var(--fm);font-size:.52rem;letter-spacing:.06em;
+  padding:.15rem .5rem;background:var(--bg2);border:1px solid var(--line2);
+  color:var(--txt3);cursor:pointer;transition:all .18s;
+}
+.ent-chip:hover{color:var(--txt2);border-color:var(--line2);}
+
+.ev-toggle{
+  position:absolute;right:2rem;top:1.8rem;
+  font-family:var(--fm);font-size:.6rem;color:var(--txt3);
+  transition:transform .2s;
+}
+.ev-card.expanded .ev-toggle{transform:rotate(180deg);}
+
+/* ══════════════════════════════════════════
+   ── VIEW: NETWORK ──
+══════════════════════════════════════════ */
+#view-network{display:none;padding-top:52px;height:100vh;flex-direction:column;}
+#view-network.active{display:flex;}
+.net-top{
+  background:var(--bg2);border-bottom:1px solid var(--line);
+  padding:.7rem 3vw;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;
+}
+.net-legend{display:flex;gap:1.2rem;flex-wrap:wrap;}
+.leg{display:flex;align-items:center;gap:.4rem;font-family:var(--fm);font-size:.55rem;color:var(--txt3);}
+.leg-dot{width:8px;height:8px;border-radius:50%;}
+#net-svg{flex:1;}
+.net-tooltip{
+  position:fixed;
+  background:rgba(7,7,7,.97);
+  border:1px solid var(--line2);
+  padding:.8rem 1rem;
+  font-family:var(--fm);font-size:.65rem;color:var(--txt);
+  pointer-events:none;opacity:0;transition:opacity .15s;
+  max-width:240px;line-height:1.7;z-index:400;
+}
+.net-tooltip .tt-name{font-family:var(--ft);font-size:.85rem;font-weight:700;margin-bottom:.3rem;}
+.net-tooltip .tt-role{color:var(--txt2);margin-bottom:.3rem;font-size:.6rem;}
+.net-tooltip .tt-case{font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;}
+.net-tooltip .tt-case.r{color:var(--red);}
+.net-tooltip .tt-case.b{color:var(--blue2);}
+
+/* ══════════════════════════════════════════
+   ── VIEW: DATA ──
+══════════════════════════════════════════ */
+#view-data{display:none;padding-top:52px;}
+#view-data.active{display:block;}
+.data-grid{
+  display:grid;grid-template-columns:1fr 1fr 1fr 1fr;
+  border-bottom:1px solid var(--line);
+}
+.data-stat{
+  padding:2.5rem 2rem;border-right:1px solid var(--line);
+  cursor:pointer;transition:background .18s;
+}
+.data-stat:last-child{border-right:none;}
+.data-stat:hover{background:var(--bg2);}
+.ds-num{font-family:var(--ft);font-size:3rem;font-weight:900;line-height:1;margin-bottom:.3rem;}
+.ds-label{font-family:var(--fm);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--txt3);}
+
+.data-section{border-bottom:1px solid var(--line);}
+.data-section-header{
+  padding:1.5rem 3vw;display:flex;align-items:center;justify-content:space-between;
+  background:var(--bg2);border-bottom:1px solid var(--line);
+  cursor:pointer;
+}
+.data-section-title{font-family:var(--fm);font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--txt2);}
+.data-section-count{font-family:var(--fm);font-size:.55rem;color:var(--txt3);}
+.data-table{width:100%;border-collapse:collapse;font-family:var(--fm);font-size:.65rem;}
+.data-table th{
+  text-align:left;padding:.6rem 3vw;
+  border-bottom:1px solid var(--line);color:var(--txt3);
+  font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;
+  background:var(--bg2);
+}
+.data-table td{
+  padding:.7rem 3vw;border-bottom:1px solid var(--line);
+  color:var(--txt2);vertical-align:top;line-height:1.5;
+}
+.data-table tr:hover td{background:var(--bg2);}
+.data-table td:first-child{font-family:var(--fm);color:var(--txt3);font-size:.55rem;}
+.pill{
+  display:inline-block;padding:.1rem .4rem;border:1px solid;
+  font-size:.48rem;letter-spacing:.08em;text-transform:uppercase;
+}
+.pill-person{border-color:#555;color:#999;}
+.pill-company{border-color:var(--blue);color:var(--blue2);}
+.pill-institution{border-color:var(--gold);color:var(--gold);}
+.pill-account{border-color:var(--purple);color:#a78bfa;}
+.pill-inv{border-color:var(--orange);color:var(--orange);}
+.pill-acc{border-color:var(--red);color:var(--red);}
+.pill-jud{border-color:var(--gold);color:var(--gold);}
+.pill-wit{border-color:var(--line2);color:var(--txt3);}
+
+/* ══════════════════════════════════════════
+   SCROLLBAR
+══════════════════════════════════════════ */
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--line2);}
+
+/* ══════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.ev-card{animation:fadeUp .4s ease both;}
+
+@media(max-width:768px){
+  .tl-hero{grid-template-columns:1fr;}
+  .board-wrap{grid-template-columns:1fr;}
+  .year-col{display:none;}
+  .data-grid{grid-template-columns:1fr 1fr;}
+  .ev-card{grid-template-columns:80px 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="nav-logo">
+    La <em>Influencia</em>
+    <span class="ver">v0.1 · preview</span>
+  </div>
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="switchView('timeline',this)">Cronología</div>
+    <div class="nav-tab" onclick="switchView('network',this)">Red</div>
+    <div class="nav-tab" onclick="switchView('data',this)">Datos</div>
+  </div>
+  <div class="nav-right">
+    <div class="nav-dot"></div>
+    Modelo de datos activo · 23 eventos · 23 entidades
+  </div>
+</nav>
+
+<!-- ══ VIEW: TIMELINE ══ -->
+<div id="view-timeline" class="view active">
+
+  <div class="tl-hero">
+    <div class="tl-hero-half">
+      <div class="tl-case-pill pill-z">D.P. 77/24 · Juzgado Central Nº 2</div>
+      <div class="tl-case-title">Caso<br><em style="color:var(--red)">Zapatero</em></div>
+      <div class="tl-case-sub">Imputación: 18 may. 2026 · 4 delitos · 88 págs.<br>Declaración: 2 jun. 2026 · 09:00h</div>
+    </div>
+    <div class="tl-hero-half">
+      <div class="tl-case-pill pill-k">Especial 003/0020775/2020 · Tribunal Supremo</div>
+      <div class="tl-case-title">Caso<br><em style="color:var(--blue2)">Koldo</em></div>
+      <div class="tl-case-sub">Visto para sentencia · Fiscalía: 24 + 19,5 + 7 años<br>14 jornadas · ~80 testigos</div>
+    </div>
+  </div>
+
+  <div class="tl-filters">
+    <span class="fl">Caso:</span>
+    <button class="fb on" id="fb-all" onclick="filterBy('case','all',this)">Todos</button>
+    <button class="fb" id="fb-z" onclick="filterBy('case','dp-77-24',this)">Zapatero</button>
+    <button class="fb" id="fb-k" onclick="filterBy('case','caso-koldo',this)">Koldo</button>
+    <div class="fsep"></div>
+    <span class="fl">Tipo:</span>
+    <button class="fb" onclick="filterBy('type','all',this)">Todos</button>
+    <button class="fb" onclick="filterBy('type','contract',this)">Contratos</button>
+    <button class="fb" onclick="filterBy('type','judicial',this)">Judicial</button>
+    <button class="fb" onclick="filterBy('type','police_operation',this)">Operaciones</button>
+    <button class="fb" onclick="filterBy('type','scandal',this)">Escándalos</button>
+    <button class="fb" onclick="filterBy('type','political',this)">Político</button>
+    <div class="fsep"></div>
+    <span class="fl">Impacto:</span>
+    <button class="fb" onclick="filterBy('impact','5',this)">⚡ Crítico</button>
+  </div>
+
+  <div class="board-wrap">
+    <div class="year-col">
+      <div class="year-col-inner" id="year-nav"></div>
+    </div>
+    <div class="events-col" id="events-col"></div>
+  </div>
+
+</div>
+
+<!-- ══ VIEW: NETWORK ══ -->
+<div id="view-network" class="view">
+  <div class="net-top">
+    <div class="net-legend">
+      <div class="leg"><div class="leg-dot" style="background:var(--red)"></div>Caso Zapatero</div>
+      <div class="leg"><div class="leg-dot" style="background:var(--blue2)"></div>Caso Koldo</div>
+      <div class="leg"><div class="leg-dot" style="background:var(--gold)"></div>Ambos casos</div>
+      <div class="leg"><div class="leg-dot" style="background:#e67e22"></div>Colaborador</div>
+      <div class="leg"><div class="leg-dot" style="background:#27ae60"></div>Empresa</div>
+      <div class="leg"><div class="leg-dot" style="background:#7c3aed"></div>Institución</div>
+    </div>
+    <span style="font-family:var(--fm);font-size:.55rem;color:var(--txt3);margin-left:auto;">Arrastra · Zoom · Hover para detalles</span>
+  </div>
+  <svg id="net-svg"></svg>
+  <div class="net-tooltip" id="net-tt"></div>
+</div>
+
+<!-- ══ VIEW: DATA ══ -->
+<div id="view-data" class="view">
+  <div class="data-grid" id="data-stats"></div>
+  <div id="data-tables"></div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     DATA (embedded from JSON model)
+══════════════════════════════════════════ -->
+<script>
+// ── Embedded data model (from data/*.json) ──
+const DATA = {
+
+cases: [
+  {id:"dp-77-24",name:"D.P. 77/2024 — Zapatero / Plus Ultra",color:"#c0392b"},
+  {id:"caso-koldo",name:"Especial 003/2020 — Caso Koldo",color:"#1a5f9e"}
+],
+
+entities: [
+  {id:"zapatero",type:"person",name:"J.L.R. Zapatero",role:"Expresidente del Gobierno (2004–2011)",cases:["dp-77-24"],status:"investigated"},
+  {id:"julio-martinez",type:"person",name:"Julio Martínez Martínez",role:"Administrador de 39 sociedades investigadas",cases:["dp-77-24"],status:"investigated"},
+  {id:"maria-alcazar",type:"person",name:"Mª Gertrudis Alcázar",role:"Documentación ficticia",cases:["dp-77-24"],status:"investigated"},
+  {id:"cristobal-cano",type:"person",name:"Cristóbal Cano",role:"Entramado societario y facturación",cases:["dp-77-24"],status:"investigated"},
+  {id:"abalos",type:"person",name:"José Luis Ábalos",role:"Exministro de Transportes (2018–2021)",cases:["caso-koldo"],status:"accused"},
+  {id:"koldo-garcia",type:"person",name:"Koldo García Izaguirre",role:"Exasesor y exescolta de Ábalos",cases:["caso-koldo"],status:"accused"},
+  {id:"aldama",type:"person",name:"Víctor de Aldama",role:"Empresario. Conseguidor. Culpable confeso",cases:["caso-koldo"],status:"accused"},
+  {id:"santos-cerdan",type:"person",name:"Santos Cerdán",role:"Exsecretario de Organización PSOE",cases:["caso-koldo"],status:"investigated"},
+  {id:"claudio-rivas",type:"person",name:"Claudio Rivas",role:"Socio de Aldama. Pagó el piso de la novia de Ábalos",cases:["caso-koldo"],status:"investigated"},
+  {id:"jessica-rodriguez",type:"person",name:"Jésica Rodríguez",role:"Expareja de Ábalos. Testigo",cases:["caso-koldo"],status:"witness"},
+  {id:"calama",type:"person",name:"José Luis Calama",role:"Juez JCI Nº2 — caso Zapatero",cases:["dp-77-24"],status:"judge"},
+  {id:"leopoldo-puente",type:"person",name:"Leopoldo Puente",role:"Magistrado TS — caso Koldo",cases:["caso-koldo"],status:"judge"},
+  {id:"plus-ultra",type:"company",name:"Plus Ultra Líneas Aéreas",role:"Aerolínea venezolana. Recibió 53M€",cases:["dp-77-24"],status:"investigated"},
+  {id:"soluciones-gestion",type:"company",name:"Soluciones de Gestión SL",role:"54M€ facturados en 2020. De 0€ en 2019.",cases:["caso-koldo"],status:"investigated"},
+  {id:"soc-a",type:"company",name:"Sociedad Instrumental A",role:"Una de 39 sociedades. Sin actividad real.",cases:["dp-77-24"],status:"investigated"},
+  {id:"jci-2",type:"institution",name:"JCI Nº 2 Madrid",role:"Juzgado instructor caso Zapatero",cases:["dp-77-24"],status:"judge"},
+  {id:"tribunal-supremo",type:"institution",name:"Tribunal Supremo — Sala 2ª",role:"Enjuiciamiento caso Koldo",cases:["caso-koldo"],status:"judge"},
+  {id:"udef",type:"institution",name:"UDEF — Policía Nacional",role:"Informes 1907/26 y 1908/26",cases:["dp-77-24"],status:"judge"},
+  {id:"uco",type:"institution",name:"UCO — Guardia Civil",role:"Atestado 233pp + informe 490pp",cases:["caso-koldo"],status:"judge"},
+  {id:"puertos-estado",type:"institution",name:"Puertos del Estado",role:"Adjudicó 24,2M€ sin concurso",cases:["caso-koldo"],status:"investigated"},
+  {id:"adif",type:"institution",name:"Adif",role:"Adjudicó 12,5M€ sin concurso",cases:["caso-koldo"],status:"investigated"},
+  {id:"fondo-solvencia",type:"institution",name:"FASEE — Fondo de Solvencia",role:"Vehículo del rescate a Plus Ultra",cases:["dp-77-24"],status:"judge"},
+  {id:"cuenta-offshore-ivb",type:"account",name:"Cuentas Islas Vírgenes Brit.",role:"Destino offshore de fondos",cases:["dp-77-24"],status:"investigated"}
+],
+
+relations: [
+  {id:"rel-001",from:"zapatero",to:"julio-martinez",type:"coordinates",label:"coordina operativa",cases:["dp-77-24"]},
+  {id:"rel-002",from:"zapatero",to:"plus-ultra",type:"influences",label:"presiona para el rescate",cases:["dp-77-24"]},
+  {id:"rel-003",from:"julio-martinez",to:"soc-a",type:"controls",label:"administra 39 sociedades",cases:["dp-77-24"]},
+  {id:"rel-004",from:"julio-martinez",to:"cuenta-offshore-ivb",type:"transfers",label:"transfiere a offshore",cases:["dp-77-24"]},
+  {id:"rel-005",from:"maria-alcazar",to:"soc-a",type:"produces_documents",label:"documentación ficticia",cases:["dp-77-24"]},
+  {id:"rel-006",from:"fondo-solvencia",to:"plus-ultra",type:"transfers",label:"53M€ rescate",cases:["dp-77-24"],amount:{value:53000000}},
+  {id:"rel-007",from:"abalos",to:"koldo-garcia",type:"employs",label:"asesor personal",cases:["caso-koldo"]},
+  {id:"rel-008",from:"koldo-garcia",to:"aldama",type:"coordinates",label:"canaliza encargos",cases:["caso-koldo"]},
+  {id:"rel-009",from:"aldama",to:"soluciones-gestion",type:"controls",label:"controla adjudicaciones",cases:["caso-koldo"]},
+  {id:"rel-010",from:"puertos-estado",to:"soluciones-gestion",type:"awards_contract",label:"24,2M€ sin concurso",cases:["caso-koldo"],amount:{value:24200000}},
+  {id:"rel-011",from:"adif",to:"soluciones-gestion",type:"awards_contract",label:"12,5M€ sin concurso",cases:["caso-koldo"],amount:{value:12500000}},
+  {id:"rel-012",from:"aldama",to:"abalos",type:"pays",label:"~4M€ en comisiones",cases:["caso-koldo"],amount:{value:4000000}},
+  {id:"rel-013",from:"claudio-rivas",to:"jessica-rodriguez",type:"pays",label:"paga alquiler del piso",cases:["caso-koldo"]},
+  {id:"rel-014",from:"udef",to:"zapatero",type:"investigates",label:"informes 1907 y 1908/26",cases:["dp-77-24"]},
+  {id:"rel-015",from:"uco",to:"koldo-garcia",type:"investigates",label:"atestado 233pp + 490pp",cases:["caso-koldo"]},
+  {id:"rel-016",from:"calama",to:"zapatero",type:"imputes",label:"auto imputación 18/05/2026",cases:["dp-77-24"]},
+  {id:"rel-017",from:"leopoldo-puente",to:"abalos",type:"processes",label:"procesamiento + prisión",cases:["caso-koldo"]},
+  {id:"rel-018",from:"koldo-garcia",to:"santos-cerdan",type:"coordinates",label:"informe UCO 490pp",cases:["caso-koldo"]},
+  {id:"rel-019",from:"zapatero",to:"plus-ultra",type:"advises",label:"asesora empresario vinculado",cases:["dp-77-24","caso-koldo"]}
+],
+
+sources: {
+  "udef-1907-26":        {type:"police_report",subtype:"UDEF",title:"Informe UDEF 1907/26"},
+  "udef-1908-26":        {type:"police_report",subtype:"UDEF",title:"Informe UDEF 1908/26"},
+  "auto-imputacion-zapatero-2026":{type:"judicial_order",title:"Auto imputación Zapatero · 88 pp.",url:null},
+  "auto-procesamiento-koldo-2025":{type:"judicial_order",title:"Auto procesamiento Koldo · nov. 2025",url:"https://www.poderjudicial.es"},
+  "cgpj-nota-juicio-oral-dic-2025":{type:"judicial_order",title:"Auto juicio oral — Koldo · dic. 2025",url:"https://www.poderjudicial.es"},
+  "sentencia-ts-plus-ultra-2021":{type:"judicial_order",title:"Sentencia TS · anulación Plus Ultra · 2021",url:"https://www.poderjudicial.es"},
+  "uco-atestado-233pp":  {type:"police_report",subtype:"UCO",title:"Atestado UCO 233 pp."},
+  "uco-490pp-2025":      {type:"police_report",subtype:"UCO",title:"Informe UCO 490 pp. (Santos Cerdán)"},
+  "uco-informe-2025":    {type:"police_report",subtype:"UCO",title:"Informe UCO — Parador Teruel"},
+  "newtral-guia-koldo-2024":{type:"press",title:"Guía caso Koldo — Newtral",url:"https://www.newtral.es/guia-caso-koldo/20240303/"},
+  "wikipedia-koldo-case":{type:"reference",title:"Koldo Case — Wikipedia",url:"https://en.wikipedia.org/wiki/Koldo_Case"},
+  "wikipedia-caso-abalos":{type:"reference",title:"Caso Ábalos — Wikipedia",url:"https://es.wikipedia.org/wiki/Caso_%C3%81balos"},
+  "wikipedia-santos-cerdan":{type:"reference",title:"Santos Cerdán — Wikipedia",url:"https://en.wikipedia.org/wiki/Santos_Cerd%C3%A1n"},
+  "el-espanol-parador-teruel-may-2026":{type:"press",title:"El Español — Parador Teruel (may. 2026)",url:"https://www.elespanol.com"},
+  "telemadrid-parador-10-may-2026":{type:"press",title:"Telemadrid — Parador Teruel (10 may 2026)",url:"https://www.telemadrid.es/programas/telenoticias-fin-de-semana/Los-nuevos-detalles-sobre-la-presunta-fiesta-de-Abalos-en-el-Parador-de-Teruel-durante-la-pandemia-2-2887531238--20260510030835.html"},
+  "el-liberal-parador-11-may-2026":{type:"press",title:"El Liberal — Parador Teruel (11 may 2026)",url:"https://www.elliberal.cat/2026/05/11/una-investigacion-apunta-a-un-presunto-operativo-de-traslado-de-mujeres-al-parador-de-teruel-durante-un-viaje-de-abalos-en-2020/"},
+  "vozpopuli-juicio-mascarillas-2026":{type:"press",title:"Voz Pópuli — Juicio Mascarillas 2026",url:"https://www.vozpopuli.com/espana/juicio-a-abalos-koldo-y-aldama-por-el-caso-mascarillas-en-directo-declaraciones-en-el-supremo-y-reacciones.html"},
+  "estrelladigital-juicio-2026":{type:"press",title:"Estrella Digital — Visto para sentencia",url:"https://www.estrelladigital.es/articulo/tribunales/juicio-abalos-koldo-aldama-queda-visto-sentencia-entre-acusaciones-cruzadas-reproches-investigacion/20260507114645446264.html"},
+  "infobae-soto-real-2025":{type:"press",title:"Infobae — Ábalos entra en Soto del Real",url:"https://www.infobae.com/espana/2026/01/14/estos-son-los-siete-magistrados-que-formaran-el-tribunal-que-juzgara-a-abalos-koldo-y-aldama-dos-de-ellos-condenaron-al-exfiscal-general-del-estado/"},
+  "euronews-19-feb-2026":{type:"press",title:"Euronews — PP fuerza comparecencia Zapatero",url:"https://es.euronews.com"},
+  "declaracion-aldama-juicio-2026":{type:"press",title:"Infobae — Aldama: 4M€ entregados",url:"https://www.infobae.com/espana/2026/04/29/juicio-a-abalos-koldo-y-aldama-por-el-caso-mascarillas-en-directo-declaraciones-y-ultima-hora-desde-el-tribunal-supremo/"},
+  "boe-14-mar-2020":{type:"official",title:"BOE — RD 463/2020 Estado de Alarma",url:"https://www.boe.es/eli/es/rd/2020/03/14/463"},
+  "prensa-general-jun-2018":{type:"press",title:"Gobierno Sánchez: composición (jun. 2018)"},
+  "el-confidencial-plus-ultra-2020":{type:"press",title:"El Confidencial — Rescate Plus Ultra",url:"https://www.elconfidencial.com"},
+  "declaracion-abalos-juicio-2026":{type:"press",title:"El Español — Declaración Ábalos en juicio",url:"https://www.elespanol.com"},
+  "prensa-general-jul-2021":{type:"press",title:"Cese de Ábalos como ministro (jul. 2021)"},
+  "prensa-op-delorme-feb-2024":{type:"press",title:"Operación Delorme — feb. 2024"},
+  "cgpj-nota-prensa-nov-2025":{type:"official",title:"CGPJ — Auto procesamiento nov. 2025",url:"https://www.poderjudicial.es"},
+  "auto-prision-koldo-2025":{type:"judicial_order",title:"Auto prisión provisional Ábalos + Koldo"},
+  "prensa-juicio-abr-2026":{type:"press",title:"Arranque juicio Koldo — abr. 2026"},
+  "infobae-abalos-declaracion-2026":{type:"press",title:"Infobae — Aldama declara 4M€",url:"https://www.infobae.com/espana/2026/04/29/juicio-a-abalos-koldo-y-aldama-por-el-caso-mascarillas-en-directo-declaraciones-y-ultima-hora-desde-el-tribunal-supremo/"},
+  "estrelladigital-sentencia-2026":{type:"press",title:"Estrella Digital — visto para sentencia",url:"https://www.estrelladigital.es/articulo/tribunales/juicio-abalos-koldo-aldama-queda-visto-sentencia-entre-acusaciones-cruzadas-reproches-investigacion/20260507114645446264.html"},
+  "el-mundo-zapatero-may-2026":{type:"press",title:"El Mundo — Imputación Zapatero",url:"https://www.elmundo.es"},
+  "el-espanol-registro-ferraz-2026":{type:"press",title:"El Español — Registro oficina Ferraz",url:"https://www.elespanol.com"},
+  "consejo-ministros-jun-2020":{type:"official",title:"SEPI — Rescate Plus Ultra aprobado"}
+},
+
+events: [
+  {id:"ev-001",date:"2018-06-01",date_precision:"month",title:"Pedro Sánchez nombra a Ábalos ministro de Fomento",description:"Ábalos asume la cartera que controla Puertos del Estado y Adif. Koldo García lo acompaña como asesor personal. Se crea el contexto institucional que hace posible la trama de mascarillas.",cases:["caso-koldo"],type:"political",impact:2,entities:["abalos","koldo-garcia","adif","puertos-estado"],relations:["rel-007"],sources:["prensa-general-jun-2018"],verified:true},
+  {id:"ev-002",date:"2020-03-14",date_precision:"day",title:"Decreto de estado de alarma por COVID-19",description:"El Gobierno decreta el estado de alarma. Las restricciones de urgencia en contratación pública permiten adjudicaciones sin concurso. Es el mecanismo legal que ambas tramas aprovechan.",cases:["dp-77-24","caso-koldo"],type:"context",impact:5,entities:["fondo-solvencia"],relations:[],sources:["boe-14-mar-2020"],verified:true},
+  {id:"ev-003",date:"2020-03-21",date_precision:"day",title:"Puertos del Estado adjudica 24,2M€ a Soluciones de Gestión — sin concurso",description:"8 millones de mascarillas adjudicadas de urgencia a una empresa que facturó 0€ en 2019. La UCO determinará después que la empresa accedió a información privilegiada gracias a Koldo.",cases:["caso-koldo"],type:"contract",impact:5,entities:["puertos-estado","soluciones-gestion","koldo-garcia","aldama","abalos"],relations:["rel-010","rel-008","rel-009"],sources:["newtral-guia-koldo-2024","wikipedia-koldo-case"],verified:true},
+  {id:"ev-004",date:"2020-03-27",date_precision:"day",title:"Adif adjudica 12,5M€ a Soluciones de Gestión — mismo patrón",description:"5 millones de mascarillas. Mismo adjudicatario, misma ausencia de concurso, misma urgencia COVID como cobertura. La UCO calificará esto de patrón sistemático.",cases:["caso-koldo"],type:"contract",impact:4,entities:["adif","soluciones-gestion","koldo-garcia","aldama"],relations:["rel-011","rel-008","rel-009"],sources:["newtral-guia-koldo-2024"],verified:true},
+  {id:"ev-005",date:"2020-06-01",date_precision:"month",title:"El Gobierno aprueba rescate de 53M€ a Plus Ultra",description:"Consejo de Ministros aprueba la ayuda a través del Fondo de Apoyo a la Solvencia. La aerolínea venezolana con <1% de cuota de mercado cumple los requisitos 'de forma ajustada' según técnicos. La UDEF vinculará el proceso a presiones coordinadas por Zapatero.",cases:["dp-77-24"],type:"contract",impact:5,entities:["fondo-solvencia","plus-ultra","zapatero"],relations:["rel-002","rel-006"],sources:["el-confidencial-plus-ultra-2020","udef-1907-26"],verified:true},
+  {id:"ev-006",date:"2020-09-15",date_precision:"day",title:"La noche del Parador de Teruel — viaje oficial, invitadas no oficiales",description:"Ábalos realiza visita institucional a infraestructuras ferroviarias de Teruel con representantes de Adif y del Gobierno de Aragón. La UCO documenta en 2025 el presunto desplazamiento de dos mujeres (22 y 21 años, desde Málaga y Córdoba) coordinado por Koldo García. Una habitación se reservó a nombre del hermano de Koldo como 'sala de espera'. Al día siguiente, Koldo contacta con un mando policial para 'solucionar un problema'.",cases:["caso-koldo"],type:"scandal",impact:4,entities:["abalos","koldo-garcia","adif"],relations:["rel-007"],sources:["el-espanol-parador-teruel-may-2026","telemadrid-parador-10-may-2026","el-liberal-parador-11-may-2026","uco-informe-2025"],verified:"partial",notes:"Recogido en informes UCO 2025 según El Español. Ábalos no acusado específicamente por este evento."},
+  {id:"ev-007",date:"2020-12-01",date_precision:"month",title:"Claudio Rivas comienza a pagar el alquiler del piso de Jésica Rodríguez en Madrid",description:"El socio de Aldama asume el pago del apartamento de la pareja del ministro Ábalos. Documentado en el atestado UCO de 233 páginas. Ábalos lo admitió en juicio pero lo calificó de 'parche provisional'.",cases:["caso-koldo"],type:"corruption",impact:3,entities:["claudio-rivas","jessica-rodriguez","abalos","aldama"],relations:["rel-013"],sources:["uco-atestado-233pp","declaracion-abalos-juicio-2026"],verified:true},
+  {id:"ev-008",date:"2021-06-01",date_precision:"month",title:"Sánchez cesa a Ábalos como ministro sin explicaciones públicas",description:"Ábalos es sustituido en Transportes. No se dan explicaciones oficiales. Koldo García pierde su posición en el ministerio.",cases:["caso-koldo"],type:"political",impact:3,entities:["abalos","koldo-garcia"],relations:["rel-007"],sources:["prensa-general-jul-2021"],verified:true},
+  {id:"ev-009",date:"2021-12-01",date_precision:"month",title:"El Tribunal Supremo anula parcialmente el rescate de Plus Ultra",description:"La Sala Contencioso-Administrativa dictamina que Plus Ultra no cumplía todos los requisitos. Se ordena la devolución parcial. Este fallo abre la vía para investigar quién facilitó el rescate.",cases:["dp-77-24"],type:"judicial",impact:3,entities:["tribunal-supremo","plus-ultra","fondo-solvencia"],relations:["rel-002"],sources:["sentencia-ts-plus-ultra-2021"],verified:true},
+  {id:"ev-010",date:"2022-04-01",date_precision:"month",title:"Fiscalía Anticorrupción abre investigación por contratos de mascarillas",description:"Los fiscales detectan seis contratos sospechosos adjudicados sin licitación a Soluciones de Gestión. La empresa había pasado de 0€ a 54M€ en un año.",cases:["caso-koldo"],type:"investigation",impact:3,entities:["soluciones-gestion","aldama"],relations:["rel-009","rel-010","rel-011"],sources:["wikipedia-koldo-case"],verified:true},
+  {id:"ev-011",date:"2024-01-01",date_precision:"month",title:"Apertura de D.P. 77/2024 — La UDEF investiga la red Zapatero",description:"El Juzgado Central de Instrucción Nº 2 abre diligencias. La UDEF comienza a analizar 39 sociedades vinculadas al entorno de Zapatero. Rastrean transferencias hacia Islas Vírgenes Británicas y operaciones en Venezuela, China y Emiratos.",cases:["dp-77-24"],type:"investigation",impact:3,entities:["jci-2","udef","zapatero","julio-martinez"],relations:["rel-014"],sources:["udef-1907-26","udef-1908-26"],verified:true},
+  {id:"ev-012",date:"2024-02-21",date_precision:"day",title:"Operación Delorme — 20 detenidos, Koldo García arrestado",description:"La Guardia Civil ejecuta registros simultáneos. Koldo García y su esposa Patricia Úriz son detenidos. El caso explota en primera plana.",cases:["caso-koldo"],type:"police_operation",impact:5,entities:["uco","koldo-garcia","abalos"],relations:["rel-015"],sources:["wikipedia-caso-abalos","prensa-op-delorme-feb-2024"],verified:true},
+  {id:"ev-013",date:"2025-06-01",date_precision:"month",title:"Santos Cerdán ingresa en prisión preventiva. UCO presenta 490 páginas",description:"El exnúmero 3 del PSOE entra en Soto del Real. El informe UCO de 490 páginas lo vincula directamente al entramado Koldo-Aldama. La Fiscalía abre la pieza de financiación ilegal del PSOE.",cases:["caso-koldo"],type:"judicial",impact:4,entities:["uco","santos-cerdan","koldo-garcia"],relations:["rel-018"],sources:["uco-490pp-2025","wikipedia-santos-cerdan"],verified:true},
+  {id:"ev-014",date:"2025-11-03",date_precision:"day",title:"Juez Puente dicta auto de procesamiento contra Ábalos, Koldo y Aldama",description:"Auto por organización criminal, cohecho continuado, tráfico de influencias y malversación. Cierra la instrucción de la pieza principal.",cases:["caso-koldo"],type:"judicial",impact:5,entities:["leopoldo-puente","abalos","koldo-garcia","aldama"],relations:["rel-017"],sources:["auto-procesamiento-koldo-2025","cgpj-nota-prensa-nov-2025"],verified:true},
+  {id:"ev-015",date:"2025-11-27",date_precision:"day",title:"Ábalos y Koldo García ingresan en Soto del Real por riesgo 'extremo de fuga'",description:"Furgón policial. Prisión provisional sin fianza. Fianza civil de 60.000€. Primera vez que un exministro español entra en prisión preventiva en esta causa.",cases:["caso-koldo"],type:"judicial",impact:5,entities:["leopoldo-puente","abalos","koldo-garcia"],relations:["rel-017"],sources:["infobae-soto-real-2025","auto-prision-koldo-2025"],verified:true},
+  {id:"ev-016",date:"2025-12-11",date_precision:"day",title:"Juez Puente abre juicio oral en el Tribunal Supremo",description:"Auto de apertura de juicio oral. La Sala Segunda del TS asume el enjuiciamiento. Fianzas de 60.000€ mantenidas. Se designan 7 magistrados.",cases:["caso-koldo"],type:"judicial",impact:4,entities:["tribunal-supremo","leopoldo-puente","abalos","koldo-garcia","aldama"],relations:[],sources:["cgpj-nota-juicio-oral-dic-2025"],verified:true},
+  {id:"ev-017",date:"2026-02-19",date_precision:"day",title:"PP fuerza comparecencia de Zapatero en comisión Koldo del Senado",description:"Euronews informa que el PP exige que Zapatero comparezca por haber asesorado a un empresario de su entorno personal vinculado a Plus Ultra. Primer nexo documental entre ambos casos.",cases:["dp-77-24","caso-koldo"],type:"political",impact:3,entities:["zapatero","plus-ultra"],relations:["rel-019"],sources:["euronews-19-feb-2026"],verified:true},
+  {id:"ev-018",date:"2026-04-07",date_precision:"day",title:"Arranca el juicio oral en el Tribunal Supremo — caso Koldo",description:"Primera sesión. 7 magistrados. Fiscalía pide 24 años para Ábalos, 19,5 para Koldo, 7 para Aldama. Se prevén 14 jornadas y ~80 testigos.",cases:["caso-koldo"],type:"judicial",impact:5,entities:["tribunal-supremo","abalos","koldo-garcia","aldama"],relations:[],sources:["prensa-juicio-abr-2026"],verified:true},
+  {id:"ev-019",date:"2026-04-29",date_precision:"day",title:"Declaran Aldama, Koldo y Ábalos — jornada clave en el Supremo",description:"Aldama se declara culpable de 3 delitos. Afirma haber entregado 4M€. Koldo niega haber cobrado. Ábalos niega todo y llama al proceso 'inquisitorial'. La UCO declara que Ábalos tomó 'la decisión última' de duplicar la compra de mascarillas.",cases:["caso-koldo"],type:"trial",impact:5,entities:["tribunal-supremo","abalos","koldo-garcia","aldama","uco"],relations:["rel-012"],sources:["vozpopuli-juicio-mascarillas-2026","estrelladigital-juicio-2026","infobae-abalos-declaracion-2026"],verified:true},
+  {id:"ev-020",date:"2026-05-07",date_precision:"day",title:"El juicio Koldo queda visto para sentencia — 14 jornadas, 80 testigos",description:"Última sesión con informes finales. Fiscalía mantiene sus peticiones. El tribunal deberá decidir si existió organización criminal.",cases:["caso-koldo"],type:"judicial",impact:4,entities:["tribunal-supremo","abalos","koldo-garcia","aldama"],relations:[],sources:["estrelladigital-sentencia-2026","vozpopuli-juicio-mascarillas-2026"],verified:true},
+  {id:"ev-021",date:"2026-05-18",date_precision:"day",title:"El juez Calama imputa formalmente a Zapatero — 4 delitos, 88 páginas",description:"Auto de imputación: organización criminal, tráfico de influencias, blanqueo de capitales y falsedad documental. Se acuerda registro en 5 domicilios. Primera imputación formal de un expresidente del Gobierno español.",cases:["dp-77-24"],type:"judicial",impact:5,entities:["calama","jci-2","udef","zapatero"],relations:["rel-016"],sources:["auto-imputacion-zapatero-2026","el-mundo-zapatero-may-2026"],verified:true},
+  {id:"ev-022",date:"2026-05-19",date_precision:"day",title:"Policía Nacional registra la oficina de Ferraz y 4 domicilios más",description:"Registros simultáneos en 5 puntos de Madrid y Las Rozas. Se intervienen dispositivos electrónicos, documentación contable, criptoactivos y correos. La UCO recibe apoyo de la agencia HSI (EEUU).",cases:["dp-77-24"],type:"police_operation",impact:4,entities:["udef","zapatero","julio-martinez"],relations:["rel-001"],sources:["el-espanol-registro-ferraz-2026"],verified:true},
+  {id:"ev-023",date:"2026-06-02",date_precision:"day",title:"Zapatero citado a declarar como investigado — 09:00h",description:"Declaración fijada ante el juez Calama. Tiene derecho a asistencia letrada y acceso completo a los informes UDEF. Pendiente: si comparece o se acoge a su derecho a no declarar.",cases:["dp-77-24"],type:"judicial",impact:4,entities:["calama","zapatero"],relations:["rel-016"],sources:["auto-imputacion-zapatero-2026"],verified:true,pending:true}
+]
+
+}; // end DATA
+
+// ══════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════
+const TYPE_LABELS = {
+  contract:'Contrato',judicial:'Judicial',political:'Político',
+  police_operation:'Operación',investigation:'Investigación',
+  scandal:'Escándalo',trial:'Juicio oral',corruption:'Corrupción',
+  context:'Contexto',money_transfer:'Transferencia'
+};
+const CASE_COLOR = {'dp-77-24':'r','caso-koldo':'b'};
+
+function caseClass(ev){
+  const z=ev.cases.includes('dp-77-24'), k=ev.cases.includes('caso-koldo');
+  return z&&k?'case-both':z?'case-z':'case-k';
+}
+function dayColor(ev){
+  const z=ev.cases.includes('dp-77-24'), k=ev.cases.includes('caso-koldo');
+  return z&&k?'':'CASE_COLOR[ev.cases[0]]'===undefined?'r':z?'r':'b';
+}
+function formatDate(ev){
+  const d=new Date(ev.date+'T00:00:00');
+  if(ev.date_precision==='year') return {top:d.getFullYear(),bot:''};
+  if(ev.date_precision==='month') return {top:d.toLocaleDateString('es-ES',{month:'short'}).toUpperCase(),bot:d.getFullYear()};
+  return {top:d.getDate()+' '+d.toLocaleDateString('es-ES',{month:'short'}).toUpperCase(),bot:d.getFullYear()};
+}
+function srcBadgeClass(s){
+  if(!s) return 'src-press';
+  if(s.type==='judicial_order') return 'src-jud';
+  if(s.type==='police_report'&&s.subtype==='UDEF') return 'src-udef';
+  if(s.type==='police_report'&&s.subtype==='UCO') return 'src-uco';
+  if(s.type==='official') return 'src-official';
+  return 'src-press';
+}
+function srcBadgeLabel(s){
+  if(!s) return 'Prensa';
+  if(s.type==='judicial_order') return 'Auto';
+  if(s.type==='police_report'&&s.subtype==='UDEF') return 'UDEF';
+  if(s.type==='police_report'&&s.subtype==='UCO') return 'UCO';
+  if(s.type==='official') return 'Oficial';
+  if(s.type==='reference') return 'Ref.';
+  return 'Prensa';
+}
+function entName(id){ const e=DATA.entities.find(x=>x.id===id); return e?e.name:id; }
+
+// ══════════════════════════════════════════
+// VIEW SWITCHER
+// ══════════════════════════════════════════
+function switchView(v, el){
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(x=>{x.classList.remove('active');x.classList.remove('active-b');});
+  document.getElementById('view-'+v).classList.add('active');
+  if(v==='network') el.classList.add('active-b'); else el.classList.add('active');
+  if(v==='network') buildNetwork();
+  if(v==='data') buildData();
+}
+
+// ══════════════════════════════════════════
+// TIMELINE
+// ══════════════════════════════════════════
+let activeFilters = {case:'all', type:'all', impact:'all'};
+
+function filterBy(dim, val, btn){
+  activeFilters[dim] = val;
+  // reset buttons in group
+  btn.parentElement.querySelectorAll('.fb').forEach(b=>{
+    b.classList.remove('on','on-b');
+  });
+  if(val==='caso-koldo') btn.classList.add('on-b');
+  else btn.classList.add('on');
+  renderTimeline();
+}
+
+function renderTimeline(){
+  const col = document.getElementById('events-col');
+  const yearNav = document.getElementById('year-nav');
+  col.innerHTML=''; yearNav.innerHTML='';
+
+  const evs = DATA.events.filter(ev=>{
+    if(activeFilters.case!=='all' && !ev.cases.includes(activeFilters.case)) return false;
+    if(activeFilters.type!=='all' && ev.type!==activeFilters.type) return false;
+    if(activeFilters.impact!=='all' && ev.impact<parseInt(activeFilters.impact)) return false;
+    return true;
+  }).sort((a,b)=>a.date.localeCompare(b.date));
+
+  // year nav
+  const years = [...new Set(evs.map(e=>e.date.slice(0,4)))];
+  years.forEach(y=>{
+    const cnt = evs.filter(e=>e.date.startsWith(y)).length;
+    const yb = document.createElement('div');
+    yb.className='year-block';
+    yb.innerHTML=`<div class="year-num">${y}</div><div class="year-count">${cnt} evento${cnt!==1?'s':''}</div>`;
+    yb.onclick=()=>{ document.getElementById('year-'+y)?.scrollIntoView({behavior:'smooth'}); };
+    yearNav.appendChild(yb);
+  });
+
+  // events
+  let lastYear='';
+  evs.forEach((ev,i)=>{
+    const year = ev.date.slice(0,4);
+    if(year!==lastYear){
+      const anchor = document.createElement('div');
+      anchor.id='year-'+year;
+      col.appendChild(anchor);
+      lastYear=year;
+    }
+    const fd = formatDate(ev);
+    const isZ = ev.cases.includes('dp-77-24'), isK = ev.cases.includes('caso-koldo');
+    const dayCol = isZ&&isK?'r':isZ?'r':'b';
+
+    const card = document.createElement('div');
+    card.className=`ev-card ${caseClass(ev)}`;
+    card.style.animationDelay=(i*30)+'ms';
+
+    // case tags
+    let caseTags='';
+    if(isZ) caseTags+=`<span class="etag etag-z">Zapatero</span>`;
+    if(isK) caseTags+=`<span class="etag etag-k">Koldo</span>`;
+    if(isZ&&isK) caseTags=`<span class="etag etag-both">Ambos casos</span>`;
+
+    // verified tag
+    let verTag='';
+    if(ev.verified===true) verTag=`<span class="etag etag-verified">✓ Verificado</span>`;
+    else if(ev.verified==='partial') verTag=`<span class="etag etag-partial">~ Parcial</span>`;
+    if(ev.pending) verTag+=`<span class="etag etag-pending">⏳ Pendiente</span>`;
+
+    // impact dots
+    let impDots='';
+    for(let n=1;n<=5;n++) impDots+=`<div class="imp-seg ${n<=ev.impact?(dayCol==='r'?'on-r':'on-b'):''}"></div>`;
+
+    // sources
+    let srcHtml='';
+    (ev.sources||[]).forEach(sid=>{
+      const s=DATA.sources[sid];
+      const url = s&&s.url;
+      const tag=`<span class="src-badge ${srcBadgeClass(s)}">${srcBadgeLabel(s)}</span>`;
+      if(url) srcHtml+=`<a class="src-chip" href="${url}" target="_blank">${tag} ${s?s.title:sid}</a>`;
+      else srcHtml+=`<div class="src-chip">${tag} ${s?s.title:sid}</div>`;
+    });
+
+    // entities
+    let entHtml='';
+    (ev.entities||[]).slice(0,6).forEach(eid=>{
+      entHtml+=`<div class="ent-chip">${entName(eid)}</div>`;
+    });
+
+    card.innerHTML=`
+      <div class="ev-date">
+        <div class="ev-day ${dayCol}">${fd.top}</div>
+        <div class="ev-mon">${fd.bot}</div>
+      </div>
+      <div class="ev-main">
+        <div class="ev-header">
+          <div class="ev-tags">
+            <span class="etag etag-type">${TYPE_LABELS[ev.type]||ev.type}</span>
+            ${caseTags}
+            ${verTag}
+          </div>
+        </div>
+        <div class="ev-title">${ev.title}</div>
+        <div class="ev-impact">${impDots}</div>
+        <div class="ev-desc">${ev.description.replace(/</g,'&lt;').replace(/>/g,'&gt;')}${ev.notes?'<br><br><em style="color:var(--txt3);font-size:.8rem;">Nota: '+ev.notes+'</em>':''}</div>
+        <div class="ev-sources">${srcHtml}</div>
+        ${entHtml?`<div class="ev-entities"><span style="font-family:var(--fm);font-size:.5rem;letter-spacing:.1em;color:var(--txt3);text-transform:uppercase;margin-right:.3rem;">Actores:</span>${entHtml}</div>`:''}
+      </div>
+      <div class="ev-toggle">▼</div>
+    `;
+
+    card.addEventListener('click', e=>{
+      if(e.target.tagName==='A') return;
+      card.classList.toggle('expanded');
+    });
+
+    col.appendChild(card);
+  });
+
+  if(evs.length===0){
+    col.innerHTML=`<div style="padding:4rem 3vw;font-family:var(--fm);font-size:.7rem;color:var(--txt3);">Sin resultados para los filtros seleccionados.</div>`;
+  }
+}
+
+// ══════════════════════════════════════════
+// NETWORK (D3)
+// ══════════════════════════════════════════
+let networkBuilt=false;
+function buildNetwork(){
+  if(networkBuilt) return; networkBuilt=true;
+  const svg=d3.select('#net-svg');
+  const W=svg.node().clientWidth, H=svg.node().clientHeight;
+  const tt=document.getElementById('net-tt');
+
+  const colorMap={};
+  DATA.entities.forEach(e=>{
+    const z=e.cases.includes('dp-77-24'), k=e.cases.includes('caso-koldo');
+    if(e.type==='institution'||e.status==='judge') colorMap[e.id]='#7c3aed';
+    else if(e.type==='account') colorMap[e.id]='#b8960c';
+    else if(e.type==='company') colorMap[e.id]='#27ae60';
+    else if(z&&k) colorMap[e.id]='#b8960c';
+    else if(z) colorMap[e.id]='#c0392b';
+    else colorMap[e.id]='#1a5f9e';
+  });
+  const sizeMap=e=>{
+    if(['zapatero','abalos'].includes(e.id)) return 20;
+    if(['koldo-garcia','aldama','julio-martinez'].includes(e.id)) return 15;
+    if(e.type==='company'||e.type==='institution') return 12;
+    return 10;
+  };
+
+  const nodes=DATA.entities.map(e=>({...e}));
+  const links=DATA.relations.map(r=>({source:r.from,target:r.to,label:r.label,type:r.type}));
+
+  const defs=svg.append('defs');
+  const glow=defs.append('filter').attr('id','glow3');
+  glow.append('feGaussianBlur').attr('stdDeviation','4').attr('result','b');
+  const fm=glow.append('feMerge');
+  fm.append('feMergeNode').attr('in','b');
+  fm.append('feMergeNode').attr('in','SourceGraphic');
+
+  const sim=d3.forceSimulation(nodes)
+    .force('link',d3.forceLink(links).id(d=>d.id).distance(120))
+    .force('charge',d3.forceManyBody().strength(-300))
+    .force('center',d3.forceCenter(W/2,H/2))
+    .force('x',d3.forceX(d=>d.cases.includes('dp-77-24')&&!d.cases.includes('caso-koldo')?W*.3:d.cases.includes('caso-koldo')&&!d.cases.includes('dp-77-24')?W*.7:W*.5).strength(.06))
+    .force('collide',d3.forceCollide().radius(d=>sizeMap(d)+18));
+
+  const zoom=d3.zoom().scaleExtent([.3,3]).on('zoom',e=>g.attr('transform',e.transform));
+  svg.call(zoom);
+  const g=svg.append('g');
+
+  // divider
+  g.append('line').attr('x1',W/2).attr('y1',0).attr('x2',W/2).attr('y2',H)
+    .attr('stroke','#1f1f1f').attr('stroke-width',1).attr('stroke-dasharray','4,4');
+  g.append('text').attr('x',W*.25).attr('y',24)
+    .attr('text-anchor','middle').attr('fill','#2d2d2d')
+    .attr('font-family','IBM Plex Mono,monospace').attr('font-size',10)
+    .text('← Caso Zapatero');
+  g.append('text').attr('x',W*.75).attr('y',24)
+    .attr('text-anchor','middle').attr('fill','#2d2d2d')
+    .attr('font-family','IBM Plex Mono,monospace').attr('font-size',10)
+    .text('Caso Koldo →');
+
+  const linkEl=g.append('g').selectAll('line').data(links).join('line')
+    .attr('stroke','#2d2d2d').attr('stroke-width',d=>d.type==='transfers'||d.type==='pays'?2:1)
+    .attr('stroke-dasharray',d=>d.type==='investigates'?'3,3':null);
+
+  const nodeG=g.append('g').selectAll('g').data(nodes).join('g')
+    .style('cursor','pointer')
+    .call(d3.drag()
+      .on('start',(e,d)=>{if(!e.active)sim.alphaTarget(.3).restart();d.fx=d.x;d.fy=d.y;})
+      .on('drag',(e,d)=>{d.fx=e.x;d.fy=e.y;})
+      .on('end',(e,d)=>{if(!e.active)sim.alphaTarget(0);d.fx=null;d.fy=null;})
+    );
+
+  nodeG.append('circle')
+    .attr('r',d=>sizeMap(d))
+    .attr('fill',d=>colorMap[d.id])
+    .attr('fill-opacity',.1)
+    .attr('stroke',d=>colorMap[d.id])
+    .attr('stroke-width',1.5)
+    .attr('filter',d=>['zapatero','abalos'].includes(d.id)?'url(#glow3)':null);
+
+  nodeG.append('text')
+    .attr('text-anchor','middle').attr('dy',d=>sizeMap(d)+13)
+    .attr('fill','#666').attr('font-size',d=>['zapatero','abalos'].includes(d.id)?10:8)
+    .attr('font-family','IBM Plex Mono,monospace')
+    .text(d=>d.name.split(' ').slice(-1)[0]);
+
+  nodeG.on('mouseover',(e,d)=>{
+    const z=d.cases.includes('dp-77-24'),k=d.cases.includes('caso-koldo');
+    tt.style.opacity='1';
+    tt.innerHTML=`
+      <div class="tt-name">${d.name}</div>
+      <div class="tt-role">${d.role}</div>
+      <div class="tt-case ${z&&k?'':'z'?'r':'b'}">${z&&k?'Ambos casos':z?'Caso Zapatero':'Caso Koldo'}</div>
+    `;
+  }).on('mousemove',e=>{
+    tt.style.left=(e.clientX+14)+'px';
+    tt.style.top=(e.clientY+14)+'px';
+  }).on('mouseout',()=>tt.style.opacity='0');
+
+  sim.on('tick',()=>{
+    linkEl.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y)
+          .attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+    nodeG.attr('transform',d=>`translate(${Math.max(20,Math.min(W-20,d.x))},${Math.max(20,Math.min(H-20,d.y))})`);
+  });
+}
+
+// ══════════════════════════════════════════
+// DATA VIEW
+// ══════════════════════════════════════════
+function buildData(){
+  const statsEl=document.getElementById('data-stats');
+  const tablesEl=document.getElementById('data-tables');
+  if(statsEl.children.length) return;
+
+  const stats=[
+    {n:DATA.cases.length,l:'Casos judiciales',c:'var(--red)'},
+    {n:DATA.entities.length,l:'Entidades',c:'var(--blue2)'},
+    {n:DATA.relations.length,l:'Relaciones',c:'var(--gold)'},
+    {n:DATA.events.length,l:'Eventos',c:'var(--green)'},
+  ];
+  stats.forEach(s=>{
+    statsEl.innerHTML+=`<div class="data-stat"><div class="ds-num" style="color:${s.c}">${s.n}</div><div class="ds-label">${s.l}</div></div>`;
+  });
+
+  // Entities table
+  const statusPill={investigated:'pill-inv',accused:'pill-acc',judge:'pill-jud',witness:'pill-wit'};
+  let entRows='';
+  DATA.entities.forEach(e=>{
+    const tpill=`pill-${e.type}`;
+    const spill=statusPill[e.status]||'pill-wit';
+    entRows+=`<tr>
+      <td>${e.id}</td>
+      <td>${e.name}</td>
+      <td><span class="pill ${tpill}">${e.type}</span></td>
+      <td><span class="pill ${spill}">${e.status}</span></td>
+      <td>${e.cases.map(c=>`<span class="pill" style="border-color:${c==='dp-77-24'?'var(--red)':'var(--blue)'};color:${c==='dp-77-24'?'var(--red)':'var(--blue2)'}">${c}</span>`).join(' ')}</td>
+      <td style="color:var(--txt3);font-size:.6rem;">${e.role}</td>
+    </tr>`;
+  });
+
+  let relRows='';
+  DATA.relations.forEach(r=>{
+    relRows+=`<tr>
+      <td>${r.id}</td>
+      <td>${r.from}</td>
+      <td style="color:var(--txt3);">→ ${r.type}</td>
+      <td>${r.to}</td>
+      <td style="color:var(--txt2);font-size:.6rem;">${r.label}</td>
+      <td>${r.amount?'€'+r.amount.value.toLocaleString('es-ES'):''}</td>
+    </tr>`;
+  });
+
+  tablesEl.innerHTML=`
+    <div class="data-section">
+      <div class="data-section-header">
+        <span class="data-section-title">Entidades</span>
+        <span class="data-section-count">${DATA.entities.length} registros · entities.json</span>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>id</th><th>Nombre</th><th>Tipo</th><th>Estado</th><th>Casos</th><th>Rol</th></tr></thead>
+        <tbody>${entRows}</tbody>
+      </table>
+    </div>
+    <div class="data-section">
+      <div class="data-section-header">
+        <span class="data-section-title">Relaciones</span>
+        <span class="data-section-count">${DATA.relations.length} registros · relations.json</span>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>id</th><th>Origen</th><th>Tipo</th><th>Destino</th><th>Etiqueta</th><th>Importe</th></tr></thead>
+        <tbody>${relRows}</tbody>
+      </table>
+    </div>
+  `;
+}
+
+// ══ INIT ══
+renderTimeline();
+</script>
+</body>
+</html>

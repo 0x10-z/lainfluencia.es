@@ -1,0 +1,127 @@
+---
+import Base from '../layouts/Base.astro'
+import SourceChip from '../components/SourceChip.astro'
+import CaseTag from '../components/CaseTag.astro'
+
+import sourcesData from '../data/sources.json'
+import type { Source, SourceType } from '../types'
+import { getSourceTypeLabel } from '../utils'
+
+const sources = sourcesData.sources as Source[]
+
+const ORDER: SourceType[] = ['judicial_order', 'police_report', 'official', 'press', 'fact_check', 'reference']
+
+const grouped = ORDER.reduce((acc, t) => {
+  acc[t] = sources.filter(s => s.type === t)
+  return acc
+}, {} as Record<string, Source[]>)
+
+const AVAILABILITY_LABEL: Record<string, string> = {
+  public: 'Público',
+  partial: 'Parcial',
+  restricted: 'Restringido',
+}
+
+const AVAILABILITY_COLOR: Record<string, string> = {
+  public: 'var(--green)',
+  partial: 'var(--gold)',
+  restricted: 'var(--red)',
+}
+---
+
+<Base
+  title="Documentos"
+  description="Fuentes documentales del Caso Zapatero y el Caso Koldo: autos judiciales, informes policiales y prensa verificada."
+>
+  <div class="container" style="padding-top: 2.5rem; padding-bottom: 4rem;">
+    <div style="margin-bottom: 2.5rem;">
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--txt3);text-transform:uppercase;letter-spacing:0.08em;margin:0 0 0.5rem;">
+        Fuentes documentales
+      </p>
+      <h1 style="font-size:clamp(1.8rem,4vw,2.8rem);margin:0 0 0.5rem;">
+        {sources.length} documentos
+      </h1>
+      <p style="font-size:0.9rem;color:var(--txt2);margin:0;">
+        Autos judiciales, informes policiales, hemeroteca y documentos oficiales.
+      </p>
+    </div>
+
+    <!-- Resumen por tipo -->
+    <div style="display:flex;flex-wrap:wrap;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:3rem;">
+      {ORDER.filter(t => grouped[t].length > 0).map(t => (
+        <div style="background:var(--bg2);padding:1rem 1.5rem;flex:1;min-width:140px;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;color:var(--txt);margin-bottom:4px;">
+            {grouped[t].length}
+          </div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--txt3);text-transform:uppercase;letter-spacing:0.05em;">
+            {getSourceTypeLabel(t)}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Grupos por tipo -->
+    {ORDER.filter(t => grouped[t].length > 0).map(t => (
+      <section style="margin-bottom: 3rem;">
+        <div style="display:flex;align-items:baseline;gap:1rem;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--line);">
+          <h2 style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:var(--txt2);text-transform:uppercase;letter-spacing:0.07em;margin:0;font-weight:500;">
+            {getSourceTypeLabel(t)}
+          </h2>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--txt3);">
+            {grouped[t].length}
+          </span>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:1px;background:var(--line);">
+          {grouped[t].map(src => (
+            <div style="background:var(--bg2);padding:1rem 1.25rem;">
+              <div style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:start;justify-content:space-between;">
+                <div style="min-width:0;flex:1;">
+                  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:0.4rem;">
+                    <SourceChip source={src} />
+                  </div>
+                  <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin-top:0.5rem;">
+                    {(src.issuer || src.publisher || src.author) && (
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--txt3);">
+                        {src.issuer ?? src.publisher ?? src.author}
+                      </span>
+                    )}
+                    {src.date && (
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--txt3);">
+                        {src.date}
+                      </span>
+                    )}
+                    {src.pages && (
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--txt3);">
+                        {src.pages} pp.
+                      </span>
+                    )}
+                  </div>
+                  {src.notes && (
+                    <p style="font-size:0.8rem;color:var(--txt3);font-style:italic;margin:0.5rem 0 0;line-height:1.5;">
+                      {src.notes}
+                    </p>
+                  )}
+                  {src.availability_note && (
+                    <p style="font-size:0.78rem;color:var(--txt3);margin:0.4rem 0 0;">
+                      {src.availability_note}
+                    </p>
+                  )}
+                </div>
+
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">
+                  <span style={`font-family:'IBM Plex Mono',monospace;font-size:0.65rem;padding:2px 8px;border-radius:999px;border:1px solid ${AVAILABILITY_COLOR[src.availability]};color:${AVAILABILITY_COLOR[src.availability]};`}>
+                    {AVAILABILITY_LABEL[src.availability]}
+                  </span>
+                  <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;">
+                    {src.cases.map(c => <CaseTag caseId={c} />)}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</Base>
