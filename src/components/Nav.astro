@@ -11,53 +11,69 @@ const pathname = Astro.url.pathname
 
 <header style="
   position: sticky; top: 0; z-index: 100;
-  background: var(--bg);
+  background: var(--bg2);
   border-bottom: 1px solid var(--line);
+  box-shadow: 0 1px 0 var(--line);
 ">
-  <div class="container" style="display: flex; align-items: center; justify-content: space-between; height: 52px;">
+  <div class="container" style="display: flex; align-items: center; justify-content: space-between; height: 54px;">
     <a href="/" style="
       font-family: 'Playfair Display', serif;
       font-size: 1.1rem;
       font-weight: 900;
-      color: var(--txt);
-      letter-spacing: -0.02em;
+      color: var(--ink);
+      letter-spacing: -0.01em;
       text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     ">
-      La <span style="color: var(--red);">Influencia</span>
+      <span style="
+        display: inline-block;
+        width: 8px; height: 8px;
+        background: var(--red);
+        border-radius: 50%;
+        flex-shrink: 0;
+      "></span>
+      La Influencia
     </a>
 
-    <nav style="display: flex; align-items: center; gap: 0.25rem;">
-      {nav.map(({ href, label }) => (
-        <a
-          href={href}
-          style={`
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.75rem;
-            color: ${pathname === href ? 'var(--txt)' : 'var(--txt2)'};
-            padding: 6px 12px;
-            border: 1px solid ${pathname === href ? 'var(--line2)' : 'transparent'};
-            text-decoration: none;
-            letter-spacing: 0.03em;
-            transition: color 0.15s;
-          `}
-        >
-          {label}
-        </a>
-      ))}
+    <nav style="display: flex; align-items: center; gap: 0;">
+      {nav.map(({ href, label }) => {
+        const active = pathname === href || (href !== '/' && pathname.startsWith(href))
+        return (
+          <a
+            href={href}
+            style={`
+              font-family: 'IBM Plex Mono', monospace;
+              font-size: 0.72rem;
+              color: ${active ? 'var(--ink)' : 'var(--txt2)'};
+              padding: 6px 14px;
+              text-decoration: none;
+              letter-spacing: 0.03em;
+              border-bottom: ${active ? '2px solid var(--red)' : '2px solid transparent'};
+              transition: color 0.15s;
+            `}
+          >
+            {label}
+          </a>
+        )
+      })}
       <a
         href="/buscar"
         aria-label="Buscar"
         style="
           font-family: 'IBM Plex Mono', monospace;
-          font-size: 0.75rem;
+          font-size: 0.8rem;
           color: var(--txt2);
           padding: 6px 12px;
           text-decoration: none;
-          border: 1px solid var(--line2);
-          letter-spacing: 0.03em;
+          margin-left: 4px;
+          border: 1px solid var(--line);
+          letter-spacing: 0.02em;
+          background: var(--bg3);
         "
       >
-        ⌕
+        ⌕ Buscar
       </a>
     </nav>
   </div>

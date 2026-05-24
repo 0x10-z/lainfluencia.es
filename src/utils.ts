@@ -69,7 +69,7 @@ export function getImpactLabel(impact: number): string {
 
 export function getImpactColor(impact: number): string {
   if (impact === 5) return 'var(--red)'
-  if (impact === 4) return '#e67e22'
+  if (impact === 4) return '#c0621a'
   if (impact === 3) return 'var(--gold)'
   if (impact === 2) return 'var(--green)'
   return 'var(--txt3)'

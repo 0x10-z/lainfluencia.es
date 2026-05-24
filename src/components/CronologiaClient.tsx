@@ -52,10 +52,11 @@ export default function CronologiaClient({ events, entities, sources, tipos }: P
     fontSize: '0.75rem',
     padding: '6px 10px',
     background: 'var(--bg2)',
-    border: '1px solid var(--line2)',
-    color: 'var(--txt2)',
+    border: '1px solid var(--line)',
+    color: 'var(--txt)',
     cursor: 'pointer',
     outline: 'none',
+    borderRadius: '0',
   } as React.CSSProperties
 
   const lbl = {
@@ -98,7 +99,7 @@ export default function CronologiaClient({ events, entities, sources, tipos }: P
         {(caso !== 'todos' || tipo !== 'todos' || impactoMin > 1) && (
           <button
             onClick={() => { setCaso('todos'); setTipo('todos'); setImpactoMin(1) }}
-            style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.72rem', color: 'var(--txt3)', background: 'none', border: '1px solid var(--line)', padding: '6px 12px', cursor: 'pointer' }}
+            style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.72rem', color: 'var(--txt2)', background: 'var(--bg3)', border: '1px solid var(--line)', padding: '6px 12px', cursor: 'pointer' }}
           >
             Limpiar ✕
           </button>
@@ -126,6 +127,7 @@ export default function CronologiaClient({ events, entities, sources, tipos }: P
               style={{
                 background: 'var(--bg2)',
                 borderLeft: `3px solid ${borderColor}`,
+                borderBottom: '1px solid var(--line)',
                 opacity: ev.pending ? 0.7 : 1,
               }}
             >

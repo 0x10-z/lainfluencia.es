@@ -44,21 +44,20 @@ const fullTitle = title === 'La Influencia' ? title : `${title} — La Influenci
   <main>
     <slot />
   </main>
-  <footer>
+  <footer style="margin-top: 4rem; background: var(--bg3); border-top: 1px solid var(--line);">
     <div class="container">
-      <hr class="separator" />
-      <div style="padding: 2rem 0; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: start;">
-        <div>
-          <p style="font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--txt3); margin: 0 0 0.5rem;">
-            La imputación o procesamiento no implica condena.<br />
+      <div style="padding: 2rem 0; display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: space-between; align-items: start;">
+        <div style="max-width: 480px;">
+          <p style="font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--txt2); margin: 0 0 0.4rem; line-height: 1.6;">
+            La imputación o procesamiento no implica condena.
             Todos los investigados son inocentes hasta sentencia firme.
           </p>
-          <p style="font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--txt3); margin: 0;">
-            Código y datos auditables. Fuentes documentadas en cada hecho.
+          <p style="font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--txt3); margin: 0;">
+            Fuentes documentadas en cada hecho. Datos auditables.
           </p>
         </div>
-        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--txt3); text-align: right;">
-          <p style="margin: 0;">La Influencia</p>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--txt3); text-align: right; line-height: 1.8;">
+          <p style="margin: 0; font-weight: 500; color: var(--txt2);">La Influencia</p>
           <p style="margin: 0;">Periodismo de datos · España</p>
         </div>
       </div>

@@ -9,261 +9,260 @@ import entitiesData from '../data/entities.json'
 import sourcesData from '../data/sources.json'
 
 import type { Event, Entity, Source, Case } from '../types'
+import { formatDate } from '../utils'
 
 const cases = casesData.cases as Case[]
 const events = eventsData.events as Event[]
 const entities = entitiesData.entities as Entity[]
 const sources = sourcesData.sources as Source[]
 
-// Eventos de mayor impacto para el hero
-const topEvents = events
+// Sólo caso Zapatero
+const caseZ = cases.find(c => c.id === 'dp-77-24')!
+const eventsZ = events
+  .filter(e => e.cases.includes('dp-77-24'))
+  .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+
+const entitiesZ = entities.filter(e => e.cases.includes('dp-77-24'))
+const sourcesZ = sources.filter(s => s.cases.includes('dp-77-24'))
+
+// Top 4 más impactantes
+const topEvents = eventsZ
   .filter(e => !e.pending)
   .sort((a, b) => b.impact - a.impact)
-  .slice(0, 3)
+  .slice(0, 4)
 
-// Cifras clave
-const stats = {
-  events: events.length,
-  entities: entities.length,
-  sources: sources.length,
-  investigated: entities.filter(e => e.status === 'investigated').length,
-  accused: entities.filter(e => e.status === 'accused').length,
-}
+// Último evento cronológico
+const lastEvent = [...eventsZ].filter(e => !e.pending).at(-1)
 ---
 
 <Base
   title="La Influencia"
-  description="Periodismo de investigación sobre el Caso Zapatero y el Caso Koldo. Datos verificados, fuentes documentadas."
+  description="Investigación sobre el Caso Zapatero y Plus Ultra. Datos verificados, fuentes documentadas."
 >
+  <!-- Banda superior de contexto -->
+  <div style="background: var(--red); color: white; padding: 8px 0; border-bottom: 1px solid #9a1f15;">
+    <div class="container" style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.06em; text-transform:uppercase; opacity:0.85;">
+        Caso activo
+      </span>
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:0.72rem; font-weight:500;">
+        D.P. 77/2024 — {caseZ.court}
+      </span>
+      {lastEvent && (
+        <span style="margin-left:auto; font-family:'IBM Plex Mono',monospace; font-size:0.68rem; opacity:0.85;">
+          Último hecho: {formatDate(lastEvent.date, lastEvent.date_precision)}
+        </span>
+      )}
+    </div>
+  </div>
+
   <!-- Hero -->
-  <section style="
-    border-bottom: 1px solid var(--line);
-    padding: 5rem 0 4rem;
-  ">
-    <div class="container">
-      <p style="
-        font-family: 'IBM Plex Mono', monospace;
-        font-size: 0.75rem;
-        color: var(--txt3);
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        margin: 0 0 1.5rem;
-      ">
-        Periodismo de investigación · España
-      </p>
+  <section style="background: var(--bg2); border-bottom: 2px solid var(--ink); padding: 4rem 0 3.5rem;">
+    <div class="container" style="max-width: 780px;">
+
+      <div style="margin-bottom: 1.25rem;">
+        <CaseTag caseId="dp-77-24" />
+      </div>
 
       <h1 style="
-        font-family: 'Playfair Display', serif;
-        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        font-size: clamp(2.2rem, 5.5vw, 3.8rem);
         font-weight: 900;
-        line-height: 1.05;
+        line-height: 1.08;
         margin: 0 0 1.5rem;
-        max-width: 820px;
-        color: var(--txt);
+        color: var(--ink);
+        letter-spacing: -0.02em;
       ">
-        La red de influencia<br />
-        <em style="color: var(--txt2); font-style: italic;">que el dinero público</em><br />
-        no debería comprar
+        Cómo el expresidente<br />
+        <em style="color: var(--red); font-style: italic;">Zapatero</em> se convirtió<br />
+        en investigado por la UDEF
       </h1>
 
       <p style="
         font-size: 1.1rem;
         color: var(--txt2);
-        max-width: 600px;
-        line-height: 1.65;
-        margin: 0 0 2.5rem;
+        max-width: 620px;
+        line-height: 1.7;
+        margin: 0 0 2rem;
+        font-family: 'Source Serif 4', serif;
       ">
-        Dos casos judiciales. Decenas de investigados. Millones en contratos públicos.
-        Este sitio documenta los hechos verificados con sus fuentes, construyendo
-        una cronología auditable de la corrupción política en España.
+        Un juzgado de Madrid investiga al expresidente del Gobierno por organización criminal,
+        tráfico de influencias, blanqueo de capitales y falsedad documental vinculados
+        al rescate de la aerolínea Plus Ultra con fondos públicos.
       </p>
 
-      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
         <a
           href="/cronologia"
           style="
             font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.85rem;
-            color: var(--txt);
-            border: 1px solid var(--line2);
-            padding: 10px 20px;
+            font-size: 0.82rem;
+            color: white;
+            background: var(--red);
+            padding: 10px 22px;
             text-decoration: none;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.03em;
+            font-weight: 500;
           "
         >
-          Ver cronología →
+          Ver cronología completa →
         </a>
         <a
           href="/red"
           style="
             font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: var(--txt2);
             border: 1px solid var(--line);
-            padding: 10px 20px;
+            padding: 10px 22px;
             text-decoration: none;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.03em;
+            background: var(--bg3);
           "
         >
-          Ver red de relaciones
+          Red de relaciones
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Cifras clave -->
-  <section style="border-bottom: 1px solid var(--line); padding: 3rem 0;">
+  <!-- Cifras del caso -->
+  <section style="border-bottom: 1px solid var(--line); background: var(--bg3);">
     <div class="container">
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0; border: 1px solid var(--line);">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
         {[
-          { n: stats.events, label: 'Hechos documentados' },
-          { n: stats.entities, label: 'Actores identificados' },
-          { n: stats.sources, label: 'Fuentes verificadas' },
-          { n: stats.investigated, label: 'Investigados' },
-          { n: cases.length, label: 'Casos judiciales' },
-        ].map((s, i) => (
+          { n: eventsZ.length,    label: 'Hechos documentados',  sub: 'caso Zapatero' },
+          { n: entitiesZ.length,  label: 'Actores identificados', sub: 'personas y empresas' },
+          { n: sourcesZ.length,   label: 'Fuentes verificadas',   sub: 'autos, informes, prensa' },
+          { n: caseZ.charges.length, label: 'Cargos imputados',  sub: 'por el juez Calama' },
+        ].map((s, i, arr) => (
           <div style={`
-            padding: 1.5rem;
-            border-right: ${i < 4 ? '1px solid var(--line)' : 'none'};
+            padding: 1.75rem 1.5rem;
+            border-right: ${i < arr.length - 1 ? '1px solid var(--line)' : 'none'};
             text-align: center;
           `}>
             <div style="
               font-family: 'Playfair Display', serif;
-              font-size: 2.5rem;
+              font-size: 2.8rem;
               font-weight: 900;
-              color: var(--txt);
+              color: var(--ink);
               line-height: 1;
-              margin-bottom: 0.4rem;
+              margin-bottom: 0.3rem;
             ">
               {s.n}
             </div>
-            <div style="
-              font-family: 'IBM Plex Mono', monospace;
-              font-size: 0.68rem;
-              color: var(--txt3);
-              text-transform: uppercase;
-              letter-spacing: 0.05em;
-            ">
+            <div style="font-size: 0.85rem; color: var(--txt2); margin-bottom: 2px; font-weight: 600;">
               {s.label}
             </div>
+            <div style="font-family:'IBM Plex Mono',monospace; font-size: 0.66rem; color: var(--txt3); text-transform: uppercase; letter-spacing: 0.04em;">
+              {s.sub}
+            </div>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- Los casos -->
+  <!-- Resumen del caso -->
   <section style="border-bottom: 1px solid var(--line); padding: 4rem 0;">
-    <div class="container">
-      <h2 style="
-        font-size: 0.75rem;
-        font-family: 'IBM Plex Mono', monospace;
-        color: var(--txt3);
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        margin: 0 0 2rem;
-        font-weight: 400;
-      ">
-        Los casos
-      </h2>
+    <div class="container" style="display: grid; grid-template-columns: 1fr 300px; gap: 4rem; align-items: start;">
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0; border: 1px solid var(--line);">
-        {cases.map((c, i) => (
-          <div style={`
-            padding: 2rem;
-            border-right: ${i === 0 ? '1px solid var(--line)' : 'none'};
-            border-left: 3px solid ${c.color};
-          `}>
-            <div style="margin-bottom: 1rem;">
-              <CaseTag caseId={c.id} />
-            </div>
-            <h3 style="
-              font-family: 'Playfair Display', serif;
-              font-size: 1.2rem;
-              font-weight: 700;
+      <div>
+        <p style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.07em; margin:0 0 1rem;">
+          El caso
+        </p>
+        <h2 style="font-size: 1.7rem; margin: 0 0 1.25rem; line-height: 1.2;">
+          Un rescate de 53 millones bajo sospecha
+        </h2>
+        <div style="font-size: 0.97rem; color: var(--txt2); line-height: 1.75; display: flex; flex-direction: column; gap: 1rem;">
+          <p style="margin:0;">
+            En junio de 2020, en plena pandemia, el Gobierno de Pedro Sánchez aprobó un rescate
+            de <strong style="color:var(--ink);">53 millones de euros</strong> para Plus Ultra, una aerolínea venezolana con apenas
+            cuatro aviones que había facturado pérdidas. La UDEF determinó que la operación
+            fue posible gracias a la red de influencias del expresidente Zapatero.
+          </p>
+          <p style="margin:0;">
+            El juez José Luis Calama, del Juzgado Central de Instrucción Nº 2, formalizó la
+            imputación de Zapatero el <strong style="color:var(--ink);">18 de mayo de 2026</strong> en un auto de 88 páginas.
+            Le imputa cuatro delitos: organización criminal, tráfico de influencias,
+            blanqueo de capitales y falsedad documental.
+          </p>
+          <p style="margin:0;">
+            La investigación sitúa a Julio Martínez, amigo personal de Zapatero, como operador
+            de la red a través de 39 sociedades investigadas. Los informes UDEF documentan
+            pagos de la empresa venezolana PDVSA a sociedades vinculadas a la familia del expresidente.
+          </p>
+        </div>
+        <a href="/cronologia" style="
+          display: inline-block;
+          margin-top: 1.5rem;
+          font-family:'IBM Plex Mono',monospace;
+          font-size:0.75rem;
+          color: var(--red);
+          letter-spacing: 0.04em;
+          text-decoration: none;
+          border-bottom: 1px solid var(--red);
+          padding-bottom: 1px;
+        ">
+          Seguir en la cronología →
+        </a>
+      </div>
+
+      <!-- Panel lateral: cargos -->
+      <div style="background: var(--bg3); border: 1px solid var(--line); padding: 1.5rem;">
+        <p style="font-family:'IBM Plex Mono',monospace; font-size:0.68rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.06em; margin:0 0 1rem;">
+          Cargos imputados
+        </p>
+        <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:0;">
+          {caseZ.charges.map((charge, i) => (
+            <li style={`
+              font-size: 0.88rem;
               color: var(--txt);
-              margin: 0 0 0.5rem;
-              line-height: 1.3;
-            ">
-              {c.name}
-            </h3>
-            <p style="font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--txt3); margin: 0 0 1rem;">
-              {c.court}
-            </p>
-            <div>
-              <p style="font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--txt3); text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.5rem;">
-                Cargos
-              </p>
-              <ul style="margin: 0; padding: 0; list-style: none;">
-                {c.charges.map(charge => (
-                  <li style="font-size: 0.85rem; color: var(--txt2); padding: 3px 0; border-bottom: 1px solid var(--line);">
-                    {charge}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        ))}
+              padding: 0.6rem 0;
+              border-bottom: ${i < caseZ.charges.length - 1 ? '1px solid var(--line)' : 'none'};
+              display: flex;
+              align-items: start;
+              gap: 8px;
+            `}>
+              <span style="color:var(--red); margin-top:2px; flex-shrink:0;">—</span>
+              {charge}
+            </li>
+          ))}
+        </ul>
+        <div style="margin-top:1rem; padding-top:1rem; border-top:1px solid var(--line);">
+          <p style="font-family:'IBM Plex Mono',monospace; font-size:0.68rem; color:var(--txt3); margin:0 0 4px;">
+            Juez instructor
+          </p>
+          <p style="font-size:0.85rem; color:var(--txt); margin:0; font-weight:600;">
+            José Luis Calama Teixeira
+          </p>
+          <p style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:var(--txt3); margin:4px 0 0;">
+            JCI Nº 2 · Madrid
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Narrativa intro -->
-  <section style="border-bottom: 1px solid var(--line); padding: 4rem 0;">
-    <div class="container" style="max-width: 720px;">
-      <h2 style="
-        font-family: 'Playfair Display', serif;
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: var(--txt);
-        margin: 0 0 1.5rem;
-        line-height: 1.3;
-      ">
-        Cómo funciona este sitio
-      </h2>
-
-      <div style="font-size: 0.95rem; color: var(--txt2); line-height: 1.75;">
-        <p>
-          Cada hecho documentado en esta investigación proviene de una fuente verificable:
-          autos judiciales, informes de la UDEF o la UCO, o prensa contrastada.
-          No hay interpretaciones sin respaldo documental.
-        </p>
-        <p>
-          Los datos están organizados en cinco capas: los <strong style="color:var(--txt);">casos</strong> como marco jurídico,
-          las <strong style="color:var(--txt);">entidades</strong> como actores, las <strong style="color:var(--txt);">relaciones</strong> como vínculos documentados,
-          los <strong style="color:var(--txt);">eventos</strong> como hechos cronológicos y las <strong style="color:var(--txt);">fuentes</strong> como evidencias.
-        </p>
-        <p>
-          El código fuente y los datos son públicos y auditables. Si encuentras un error o tienes
-          nueva documentación, el proceso para contribuir está explicado en el repositorio.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Eventos destacados -->
-  <section style="padding: 4rem 0;">
+  <!-- Hechos clave -->
+  <section style="padding: 4rem 0; border-bottom: 1px solid var(--line);">
     <div class="container">
       <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2rem;">
-        <h2 style="
-          font-size: 0.75rem;
-          font-family: 'IBM Plex Mono', monospace;
-          color: var(--txt3);
-          text-transform: uppercase;
-          letter-spacing: 0.08em;
-          margin: 0;
-          font-weight: 400;
-        ">
-          Hechos de mayor impacto
-        </h2>
+        <div>
+          <p style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.07em; margin:0 0 0.25rem;">
+            Hechos documentados
+          </p>
+          <h2 style="font-size: 1.5rem; margin: 0;">Los momentos más relevantes</h2>
+        </div>
         <a href="/cronologia" style="
-          font-family: 'IBM Plex Mono', monospace;
-          font-size: 0.72rem;
-          color: var(--txt3);
-          text-decoration: none;
-          letter-spacing: 0.04em;
+          font-family:'IBM Plex Mono',monospace;
+          font-size:0.72rem;
+          color:var(--txt3);
+          text-decoration:none;
+          letter-spacing:0.03em;
+          border-bottom:1px solid var(--line);
+          padding-bottom:1px;
         ">
-          Ver todos →
+          Ver los {eventsZ.length} eventos →
         </a>
       </div>
 
@@ -271,6 +270,36 @@ const stats = {
         {topEvents.map(event => (
           <EventCard event={event} entities={entities} sources={sources} expandable={true} />
         ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Cómo funciona -->
+  <section style="padding: 4rem 0; background: var(--bg3); border-bottom: 1px solid var(--line);">
+    <div class="container" style="max-width: 680px;">
+      <p style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.07em; margin:0 0 1rem;">
+        Metodología
+      </p>
+      <h2 style="font-size: 1.5rem; margin: 0 0 1.25rem;">Datos verificados, fuentes abiertas</h2>
+      <div style="font-size: 0.93rem; color: var(--txt2); line-height: 1.75; display:flex; flex-direction:column; gap:0.9rem;">
+        <p style="margin:0;">
+          Cada hecho publicado tiene al menos una fuente documental: un auto judicial,
+          un informe de la UDEF o la UCO, o prensa contrastada. No se publica ningún
+          dato sin respaldo verificable.
+        </p>
+        <p style="margin:0;">
+          El modelo de datos es público y auditable. Los cinco archivos JSON que alimentan
+          este sitio son la fuente de verdad — cualquier persona puede revisarlos,
+          corregirlos o ampliarlos.
+        </p>
+      </div>
+      <div style="display:flex; gap:1rem; margin-top:1.5rem; flex-wrap:wrap;">
+        <a href="/documentos" style="font-family:'IBM Plex Mono',monospace; font-size:0.75rem; color:var(--red); text-decoration:none; border-bottom:1px solid var(--red); padding-bottom:1px; letter-spacing:0.03em;">
+          Ver todas las fuentes →
+        </a>
+        <a href="/red" style="font-family:'IBM Plex Mono',monospace; font-size:0.75rem; color:var(--txt3); text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:1px; letter-spacing:0.03em;">
+          Explorar la red de relaciones →
+        </a>
       </div>
     </div>
   </section>
