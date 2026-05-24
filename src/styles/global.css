@@ -5,31 +5,31 @@
 @tailwind utilities;
 
 /* ─────────────────────────────────────────────
-   TOKENS
+   TOKENS — papel archival, tinta oscura
 ───────────────────────────────────────────── */
 :root {
-  --bg:      #070707;
-  --bg2:     #0d0d0d;
-  --bg3:     #131313;
-  --bg4:     #1a1a1a;
-  --card:    #0f0f0f;
+  --bg:      #f5f1ea;
+  --bg2:     #ede9e1;
+  --bg3:     #e5e0d7;
+  --bg4:     #ddd8ce;
+  --card:    #faf8f4;
 
-  --txt:     #ece8df;
-  --txt2:    #9a9589;
-  --txt3:    #4a4740;
+  --txt:     #18160f;
+  --txt2:    #4a4538;
+  --txt3:    #9a9080;
 
-  --line:    #1f1f1f;
-  --line2:   #2d2d2d;
+  --line:    #d8d2c6;
+  --line2:   #c8c2b4;
 
-  --red:     #c0392b;
-  --red2:    #8b1a12;
-  --red-bg:  rgba(192,57,43,0.08);
-  --gold:    #b8960c;
-  --gold-bg: rgba(184,150,12,0.08);
-  --green:   #27a050;
-  --blue:    #1a5f9e;
-  --blue2:   #5ba3d9;
-  --blue-bg: rgba(26,95,158,0.08);
+  --red:     #a82318;
+  --red2:    #7a1710;
+  --red-bg:  rgba(168,35,24,0.07);
+  --gold:    #7d6008;
+  --gold-bg: rgba(125,96,8,0.07);
+  --green:   #1a5c32;
+  --blue:    #1a4070;
+  --blue2:   #2a6aab;
+  --blue-bg: rgba(26,64,112,0.07);
 
   --ft: 'Playfair Display', Georgia, serif;
   --fm: 'IBM Plex Mono', 'Courier New', monospace;
@@ -68,14 +68,14 @@ code, .mono {
 }
 
 /* ─────────────────────────────────────────────
-   GRAIN OVERLAY — textura de archivo
+   GRAIN OVERLAY — textura de papel archival
 ───────────────────────────────────────────── */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  opacity: 0.028;
+  opacity: 0.04;
   pointer-events: none;
   z-index: 999;
 }
@@ -96,7 +96,7 @@ body::before {
   right: 0;
   z-index: 500;
   height: 52px;
-  background: rgba(7,7,7,0.92);
+  background: rgba(245,241,234,0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--line);
@@ -289,7 +289,7 @@ body::before {
   top: calc(100% + 0px);
   right: 0;
   width: 440px;
-  background: rgba(10,10,10,0.98);
+  background: rgba(245,241,234,0.98);
   border: 1px solid var(--line2);
   border-top: none;
   backdrop-filter: blur(20px);

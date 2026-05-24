@@ -18,7 +18,7 @@ interface Props {
 function highlight(text: string, query: string): string {
   if (!query) return text
   const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi')
-  return text.replace(re, '<mark style="background:rgba(192,57,43,0.3);color:#ece8df;">$1</mark>')
+  return text.replace(re, '<mark style="background:rgba(168,35,24,0.18);color:var(--txt);">$1</mark>')
 }
 
 export default function NavSearch({ events, entities }: Props) {
