@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro'
 import type { Event, Entity, Case } from '../types'
-import { formatDate, getImpactColor, getImpactLabel, getStatusColor, getStatusLabel } from '../utils'
+import { formatDate } from '../utils'
 
 import casesData    from '../data/cases.json'
 import eventsData   from '../data/events.json'
@@ -14,16 +14,7 @@ const entities  = entitiesData.entities as Entity[]
 const eventsZ   = allEvents.filter(e => e.cases.includes('dp-77-24'))
 const entitiesZ = entities.filter(e => e.cases.includes('dp-77-24'))
 
-const latest = [...eventsZ]
-  .filter(e => !e.pending)
-  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-  .slice(0, 8)
-
 const critical = allEvents.filter(e => e.impact === 5 && !e.pending && e.cases.includes('dp-77-24'))
-  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-
-const investigated = entitiesZ
-  .filter(e => e.type === 'person' && ['investigated','accused','convicted'].includes(e.status))
 
 const pending = eventsZ.find(e => e.pending)
 ---
@@ -161,125 +152,6 @@ const pending = eventsZ.find(e => e.pending)
     </div>
   </section>
 
-  <!-- ── CUERPO: EVENTOS + ACTORES ──────────────────── -->
-  <section style="display:grid;grid-template-columns:1fr 300px;border-bottom:1px solid var(--line);">
-
-    <!-- Eventos recientes -->
-    <div style="border-right:1px solid var(--line);">
-      <div style="
-        padding:1rem 3vw;border-bottom:1px solid var(--line);
-        display:flex;align-items:baseline;justify-content:space-between;
-      ">
-        <span style="font-family:var(--fm);font-size:0.5rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--txt3);">
-          Últimos eventos
-        </span>
-        <a href="/cronologia" style="font-family:var(--fm);font-size:0.5rem;letter-spacing:0.08em;color:var(--txt3);text-transform:uppercase;">
-          Ver cronología →
-        </a>
-      </div>
-
-      {latest.map((ev, i) => {
-        const ic = getImpactColor(ev.impact)
-        return (
-          <button
-            data-open-event={ev.id}
-            class="event-row"
-            style={`
-              display:grid;grid-template-columns:72px 1fr;
-              width:100%;text-align:left;cursor:pointer;
-              border:none;background:transparent;
-              border-bottom:1px solid var(--line);
-              border-left:2px solid ${ev.impact >= 4 ? 'var(--red)' : 'var(--line2)'};
-              padding:0;
-            `}>
-            <div style="
-              padding:1rem;border-right:1px solid var(--line);
-              background:var(--bg2);display:flex;flex-direction:column;
-              justify-content:center;gap:4px;
-            ">
-              <time style="font-family:var(--fm);font-size:0.55rem;color:var(--txt3);letter-spacing:0.04em;line-height:1.5;display:block;">
-                {formatDate(ev.date, ev.date_precision)}
-              </time>
-              <div style="display:flex;gap:2px;">
-                {[1,2,3,4,5].map(n => (
-                  <span style={`width:10px;height:2px;border-radius:1px;background:${n<=ev.impact ? ic : 'var(--line2)'};display:block;`} />
-                ))}
-              </div>
-            </div>
-            <div style="padding:1rem 1.25rem;display:flex;align-items:center;transition:background 0.15s;">
-              <span style="font-family:var(--ft);font-size:0.9rem;font-weight:700;color:var(--txt);line-height:1.3;">
-                {ev.title}
-              </span>
-            </div>
-          </button>
-        )
-      })}
-    </div>
-
-    <!-- Lateral: investigados + críticos -->
-    <div>
-      <div style="border-bottom:1px solid var(--line);">
-        <div style="padding:1rem 1.5rem;border-bottom:1px solid var(--line);">
-          <span style="font-family:var(--fm);font-size:0.5rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--txt3);">
-            Investigados
-          </span>
-        </div>
-        {investigated.map((ent, i) => {
-          const sc = getStatusColor(ent.status)
-          const sl = getStatusLabel(ent.status)
-          return (
-            <button
-              data-open-entity={ent.id}
-              class="entity-row"
-              style={`
-                display:flex;align-items:center;justify-content:space-between;
-                gap:8px;padding:0.8rem 1.5rem;width:100%;text-align:left;
-                border:none;background:transparent;cursor:pointer;
-                border-bottom:${i < investigated.length-1 ? '1px solid var(--line)' : 'none'};
-              `}>
-              <div style="min-width:0;">
-                <div style="font-family:var(--ft);font-size:0.85rem;font-weight:700;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
-                  {ent.name}
-                </div>
-                <div style="font-family:var(--fm);font-size:0.5rem;color:var(--txt3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;letter-spacing:0.03em;">
-                  {ent.role.slice(0,40)}{ent.role.length>40?'…':''}
-                </div>
-              </div>
-              <span class="status-pill" style={`border-color:${sc};color:${sc};flex-shrink:0;`}>{sl}</span>
-            </button>
-          )
-        })}
-      </div>
-
-      <div>
-        <div style="padding:1rem 1.5rem;border-bottom:1px solid var(--line);">
-          <span style="font-family:var(--fm);font-size:0.5rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--txt3);">
-            Máximo impacto
-          </span>
-        </div>
-        {critical.slice(0,5).map((ev, i, arr) => (
-          <button
-            data-open-event={ev.id}
-            class="event-row"
-            style={`
-              display:block;width:100%;text-align:left;cursor:pointer;
-              border:none;background:transparent;
-              padding:0.8rem 1.5rem;
-              border-bottom:${i < arr.length-1 ? '1px solid var(--line)' : 'none'};
-              border-left:2px solid var(--red);
-            `}>
-            <div style="font-family:var(--fm);font-size:0.48rem;color:var(--red);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.3rem;">
-              {formatDate(ev.date, ev.date_precision)}
-            </div>
-            <div style="font-family:var(--ft);font-size:0.82rem;font-weight:700;color:var(--txt);line-height:1.3;text-align:left;">
-              {ev.title}
-            </div>
-          </button>
-        ))}
-      </div>
-    </div>
-  </section>
-
   <!-- Disclaimer -->
   <section style="padding:1.5rem 3vw;">
     <p style="font-family:var(--fm);font-size:0.52rem;color:var(--txt3);letter-spacing:0.05em;line-height:1.8;max-width:680px;">
@@ -293,23 +165,4 @@ const pending = eventsZ.find(e => e.pending)
 <style>
   .metric-link { transition: background 0.15s; }
   .metric-link:hover { background: var(--bg2); }
-  .event-row:hover > div:last-child { background: var(--bg2) !important; }
-  .event-row:hover { background: var(--bg2) !important; }
-  .entity-row:hover { background: var(--bg2) !important; }
 </style>
-
-<script>
-  // Conectar botones de index al sidebar global
-  document.querySelectorAll('[data-open-event]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = (btn as HTMLElement).dataset.openEvent!
-      window.openDetailSidebar?.('event', id)
-    })
-  })
-  document.querySelectorAll('[data-open-entity]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = (btn as HTMLElement).dataset.openEntity!
-      window.openDetailSidebar?.('entity', id)
-    })
-  })
-</script>
