@@ -1,8 +1,7 @@
 ---
 import type { Event, Entity, Source } from '../types'
-import { formatDate, getCaseClass, getEventTypeLabel, getSourceById, getEntityById } from '../utils'
+import { formatDate, getEventTypeLabel, getSourceById, getEntityById } from '../utils'
 import ImpactBar from './ImpactBar.astro'
-import CaseTag from './CaseTag.astro'
 import SourceChip from './SourceChip.astro'
 
 interface Props {
@@ -13,7 +12,6 @@ interface Props {
 }
 
 const { event, entities, sources, expandable = true } = Astro.props
-const caseClass = getCaseClass(event.cases)
 const dateStr = formatDate(event.date, event.date_precision)
 const typeLabel = getEventTypeLabel(event.type)
 
@@ -23,14 +21,11 @@ const eventEntities = event.entities.map(id => getEntityById(id, entities)).filt
 const verifiedIcon = event.verified === true ? '✓ verificado' : event.verified === 'partial' ? '~ parcial' : '? sin verificar'
 const verifiedColor = event.verified === true ? 'var(--green)' : event.verified === 'partial' ? 'var(--gold)' : 'var(--txt3)'
 
-const accentColor = event.cases.includes('dp-77-24') && event.cases.includes('caso-koldo')
-  ? 'var(--gold)'
-  : event.cases.includes('dp-77-24') ? 'var(--red)'
-  : 'var(--blue2)'
+const accentColor = 'var(--red)'
 ---
 
 <article
-  class={`event-card ${caseClass} fade-up`}
+  class="event-card fade-up"
   style={`
     background: var(--bg2);
     border: 1px solid var(--line);
@@ -73,7 +68,6 @@ const accentColor = event.cases.includes('dp-77-24') && event.cases.includes('ca
         ">
           {typeLabel}
         </span>
-        {event.cases.map(c => <CaseTag caseId={c} />)}
       </div>
       <span
         title={verifiedIcon}

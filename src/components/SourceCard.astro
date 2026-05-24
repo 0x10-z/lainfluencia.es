@@ -1,0 +1,335 @@
+---
+import type { Source } from '../types'
+
+interface Props {
+  source: Source
+}
+
+const { source } = Astro.props
+
+const isPress = (source.type === 'press' || source.type === 'fact_check') && !!source.url
+
+interface OGData {
+  image: string | null
+  description: string | null
+  siteName: string | null
+}
+
+let og: OGData = { image: null, description: null, siteName: null }
+
+if (isPress && source.url) {
+  try {
+    const res = await fetch(source.url, {
+      signal: AbortSignal.timeout(5000),
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; LaInfluencia/1.0)' },
+    })
+    if (res.ok) {
+      const html = await res.text()
+      const meta = (prop: string) => {
+        const m = html.match(new RegExp(`<meta[^>]+(?:property|name)=["']${prop}["'][^>]+content=["']([^"']+)["']`, 'i'))
+          ?? html.match(new RegExp(`<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["']${prop}["']`, 'i'))
+        return m?.[1] ?? null
+      }
+      og.image       = meta('og:image') ?? meta('twitter:image')
+      og.description = meta('og:description') ?? meta('description') ?? meta('twitter:description')
+      og.siteName    = meta('og:site_name')
+    }
+  } catch {
+    // timeout o error de red — usamos fallback
+  }
+}
+
+const AVAILABILITY_LABEL: Record<string, string> = {
+  public: 'Público', partial: 'Parcial', restricted: 'Restringido',
+}
+const AVAILABILITY_COLOR: Record<string, string> = {
+  public: 'var(--green)', partial: 'var(--gold)', restricted: 'var(--red)',
+}
+
+const TYPE_ICON: Record<string, string> = {
+  judicial_order: '⚖',
+  police_report:  '🔍',
+  official:       '📋',
+  press:          '📰',
+  fact_check:     '✓',
+  reference:      '📎',
+}
+
+const TYPE_LABEL: Record<string, string> = {
+  judicial_order: 'Auto judicial',
+  police_report:  source.subtype ? `Informe ${source.subtype}` : 'Informe policial',
+  official:       'Documento oficial',
+  press:          source.publisher ?? 'Prensa',
+  fact_check:     'Verificación',
+  reference:      'Referencia',
+}
+
+const badgeColor =
+  source.type === 'judicial_order' ? 'var(--gold)'
+  : source.type === 'police_report' && source.subtype === 'UDEF' ? 'var(--red)'
+  : source.type === 'police_report' && source.subtype === 'UCO'  ? 'var(--blue2)'
+  : source.type === 'official'  ? 'var(--green)'
+  : source.type === 'fact_check' ? 'var(--blue2)'
+  : 'var(--line2)'
+
+const availColor = AVAILABILITY_COLOR[source.availability] ?? 'var(--txt3)'
+const availLabel = AVAILABILITY_LABEL[source.availability] ?? source.availability
+---
+
+{isPress && og.image ? (
+  <!-- Card de prensa con imagen OG -->
+  <div class="source-card source-card--press">
+    {source.url ? (
+      <a href={source.url} target="_blank" rel="noopener noreferrer" class="source-card__link">
+        <div class="source-card__img-wrap">
+          <img src={og.image} alt="" loading="lazy" class="source-card__img" />
+        </div>
+        <div class="source-card__body">
+          <div class="source-card__meta">
+            <span class="source-card__publisher">{og.siteName ?? source.publisher ?? ''}</span>
+            {source.date && <span class="source-card__date">{source.date}</span>}
+            <span class="source-card__avail" style={`border-color:${availColor};color:${availColor}`}>{availLabel}</span>
+          </div>
+          <p class="source-card__title">{source.title}</p>
+          {og.description && <p class="source-card__desc">{og.description.slice(0, 120)}{og.description.length > 120 ? '…' : ''}</p>}
+          <span class="source-card__cta">Abrir fuente ↗</span>
+        </div>
+      </a>
+    ) : (
+      <div class="source-card__link">
+        <div class="source-card__img-wrap">
+          <img src={og.image} alt="" loading="lazy" class="source-card__img" />
+        </div>
+        <div class="source-card__body">
+          <div class="source-card__meta">
+            <span class="source-card__publisher">{og.siteName ?? source.publisher ?? ''}</span>
+            {source.date && <span class="source-card__date">{source.date}</span>}
+            <span class="source-card__avail" style={`border-color:${availColor};color:${availColor}`}>{availLabel}</span>
+          </div>
+          <p class="source-card__title">{source.title}</p>
+          {og.description && <p class="source-card__desc">{og.description.slice(0, 120)}{og.description.length > 120 ? '…' : ''}</p>}
+        </div>
+      </div>
+    )}
+  </div>
+) : isPress ? (
+  <!-- Card de prensa sin imagen (fetch fallido) -->
+  <div class="source-card source-card--press-fallback">
+    {source.url ? (
+      <a href={source.url} target="_blank" rel="noopener noreferrer" class="source-card__link source-card__link--flat">
+        <div class="source-card__icon" style={`border-color:${badgeColor};color:${badgeColor}`}>
+          {TYPE_ICON[source.type]}
+        </div>
+        <div class="source-card__body">
+          <div class="source-card__meta">
+            <span class="source-card__publisher">{source.publisher ?? TYPE_LABEL[source.type]}</span>
+            {source.date && <span class="source-card__date">{source.date}</span>}
+            <span class="source-card__avail" style={`border-color:${availColor};color:${availColor}`}>{availLabel}</span>
+          </div>
+          <p class="source-card__title">{source.title}</p>
+          {source.notes && <p class="source-card__desc">{source.notes}</p>}
+          <span class="source-card__cta">Abrir fuente ↗</span>
+        </div>
+      </a>
+    ) : (
+      <div class="source-card__link source-card__link--flat">
+        <div class="source-card__icon" style={`border-color:${badgeColor};color:${badgeColor}`}>
+          {TYPE_ICON[source.type]}
+        </div>
+        <div class="source-card__body">
+          <div class="source-card__meta">
+            <span class="source-card__publisher">{source.publisher ?? TYPE_LABEL[source.type]}</span>
+            {source.date && <span class="source-card__date">{source.date}</span>}
+            <span class="source-card__avail" style={`border-color:${availColor};color:${availColor}`}>{availLabel}</span>
+          </div>
+          <p class="source-card__title">{source.title}</p>
+          {source.notes && <p class="source-card__desc">{source.notes}</p>}
+        </div>
+      </div>
+    )}
+  </div>
+) : (
+  <!-- Card de documento oficial/judicial/policial -->
+  <div class="source-card source-card--doc">
+    <div class="source-card__doc-accent" style={`background:${badgeColor}`}></div>
+    <div class="source-card__doc-body">
+      <div class="source-card__meta">
+        <span class="source-card__badge" style={`border-color:${badgeColor};color:${badgeColor}`}>
+          {TYPE_ICON[source.type]} {TYPE_LABEL[source.type]}
+        </span>
+        {source.date && <span class="source-card__date">{source.date}</span>}
+        {source.pages && <span class="source-card__date">{source.pages} pp.</span>}
+        <span class="source-card__avail" style={`border-color:${availColor};color:${availColor}`}>{availLabel}</span>
+      </div>
+      <p class="source-card__title">{source.title}</p>
+      {(source.issuer ?? source.publisher) && (
+        <p class="source-card__publisher" style="margin-top:0.2rem">{source.issuer ?? source.publisher}</p>
+      )}
+      {source.notes && <p class="source-card__desc">{source.notes}</p>}
+      {source.availability_note && <p class="source-card__desc" style="font-style:italic">{source.availability_note}</p>}
+      {source.url && (
+        <a href={source.url} target="_blank" rel="noopener noreferrer" class="source-card__cta source-card__cta--link">
+          Abrir documento ↗
+        </a>
+      )}
+    </div>
+  </div>
+)}
+
+<style>
+  .source-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: box-shadow 0.15s;
+  }
+  .source-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+
+  /* ── PRESS con imagen ── */
+  .source-card--press .source-card__link {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+  }
+
+  .source-card__img-wrap {
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: var(--bg3);
+    flex-shrink: 0;
+  }
+
+  .source-card__img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s;
+  }
+  .source-card--press:hover .source-card__img { transform: scale(1.03); }
+
+  /* ── PRESS flat (sin imagen) ── */
+  .source-card--press-fallback .source-card__link--flat {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    text-decoration: none;
+    color: inherit;
+    align-items: flex-start;
+  }
+
+  .source-card__icon {
+    font-size: 1.4rem;
+    width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid; border-radius: 8px;
+    flex-shrink: 0;
+    background: var(--bg2);
+  }
+
+  /* ── DOC oficial/judicial ── */
+  .source-card--doc {
+    display: flex;
+  }
+
+  .source-card__doc-accent {
+    width: 4px;
+    flex-shrink: 0;
+  }
+
+  .source-card__doc-body {
+    padding: 1rem 1.1rem;
+    flex: 1;
+  }
+
+  /* ── BODY compartido ── */
+  .source-card__body {
+    padding: 0.85rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    flex: 1;
+  }
+
+  .source-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .source-card__publisher {
+    font-family: var(--fm);
+    font-size: 0.52rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--txt3);
+    font-weight: 500;
+  }
+
+  .source-card__date {
+    font-family: var(--fm);
+    font-size: 0.5rem;
+    color: var(--txt3);
+    letter-spacing: 0.06em;
+  }
+
+  .source-card__avail {
+    font-family: var(--fm);
+    font-size: 0.44rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: 999px;
+    border: 1px solid;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-left: auto;
+  }
+
+  .source-card__badge {
+    font-family: var(--fm);
+    font-size: 0.48rem;
+    padding: 0.12rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .source-card__title {
+    font-family: var(--ft);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--txt);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  .source-card__desc {
+    font-family: var(--fb);
+    font-size: 0.72rem;
+    color: var(--txt3);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .source-card__cta {
+    font-family: var(--fm);
+    font-size: 0.48rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--txt3);
+    margin-top: 0.3rem;
+  }
+
+  .source-card__cta--link {
+    text-decoration: none;
+    display: inline-block;
+    transition: color 0.15s;
+  }
+  .source-card__cta--link:hover { color: var(--txt); }
+</style>

@@ -1,7 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro'
 import ImpactBar from '../../components/ImpactBar.astro'
-import CaseTag from '../../components/CaseTag.astro'
 import SourceChip from '../../components/SourceChip.astro'
 import EntityCard from '../../components/EntityCard.astro'
 
@@ -35,8 +34,7 @@ const typeLabel = getEventTypeLabel(event.type)
 const verifiedLabel = event.verified === true ? 'Verificado' : event.verified === 'partial' ? 'Verificación parcial' : 'Pendiente'
 const verifiedColor = event.verified === true ? 'var(--green)' : event.verified === 'partial' ? 'var(--gold)' : 'var(--txt3)'
 
-const borderColor = event.cases.includes('dp-77-24') && event.cases.includes('caso-koldo')
-  ? 'var(--gold)' : event.cases.includes('dp-77-24') ? 'var(--red)' : 'var(--blue)'
+const borderColor = 'var(--red)'
 
 const ogDesc = event.description.slice(0, 160)
 ---
@@ -71,7 +69,6 @@ const ogDesc = event.description.slice(0, 160)
       <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:1.5rem;">
         <ImpactBar impact={event.impact} />
         <span style="color:var(--line2);">|</span>
-        {event.cases.map(c => <CaseTag caseId={c} />)}
       </div>
 
       <p style="font-size:1rem;color:var(--txt2);line-height:1.7;margin:0;">

@@ -1,5 +1,12 @@
 import type { Entity, Event, Relation, Source } from './types'
 
+export function getEntityPhoto(entity: Entity): string | null {
+  if (entity.photo) return entity.photo
+  // Busca jpg o svg en public/personas/
+  // En build time Astro sirve /personas/{id}.jpg o .svg
+  return `/personas/${entity.id}.jpg`
+}
+
 const MONTHS_ES = [
   'ene.', 'feb.', 'mar.', 'abr.', 'may.', 'jun.',
   'jul.', 'ago.', 'sep.', 'oct.', 'nov.', 'dic.',
@@ -12,20 +19,6 @@ export function formatDate(date: string, precision: string): string {
   return `${day} ${MONTHS_ES[month - 1]} ${year}`
 }
 
-export function getCaseColor(caseId: string): string {
-  if (caseId === 'dp-77-24') return 'var(--red)'
-  if (caseId === 'caso-koldo') return 'var(--blue)'
-  return 'var(--gold)'
-}
-
-export function getCaseClass(cases: string[]): string {
-  const hasZ = cases.includes('dp-77-24')
-  const hasK = cases.includes('caso-koldo')
-  if (hasZ && hasK) return 'case-both'
-  if (hasZ) return 'case-z'
-  if (hasK) return 'case-k'
-  return ''
-}
 
 export function getEntityById(id: string, entities: Entity[]): Entity | undefined {
   return entities.find(e => e.id === id)

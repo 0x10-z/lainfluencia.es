@@ -1,14 +1,19 @@
 ---
 import Base from '../layouts/Base.astro'
 import GraphD3 from '../components/GraphD3.tsx'
+import DetailSidebar from '../components/DetailSidebar.tsx'
 
 import entitiesData from '../data/entities.json'
 import relationsData from '../data/relations.json'
+import eventsData from '../data/events.json'
+import sourcesData from '../data/sources.json'
 
-import type { Entity, Relation } from '../types'
+import type { Entity, Relation, Event, Source } from '../types'
 
 const allEntities = entitiesData.entities as Entity[]
 const allRelations = relationsData.relations as Relation[]
+const events = eventsData.events as Event[]
+const sources = sourcesData.sources as Source[]
 // Solo relaciones del Caso Zapatero (excluir las exclusivas del Caso Koldo)
 const relations = allRelations.filter(r => r.cases.includes('dp-77-24'))
 // Solo entidades presentes en esas relaciones o en el Caso Zapatero
@@ -29,32 +34,23 @@ const entities = allEntities.filter(e => e.cases.includes('dp-77-24') || related
       {entities.length} actores · {relations.length} vínculos documentados
     </h1>
     <p style="font-size:0.85rem;color:var(--txt2);margin:0;">
-      Arrastra para mover nodos. Rueda para hacer zoom. Pulsa un nodo para ver su ficha.
+      Arrastra para mover nodos. Rueda para hacer zoom. Pulsa un nodo para abrir su ficha.
     </p>
   </div>
 
   <!-- Leyenda -->
   <div class="container" style="padding: 0.75rem 0; border-bottom: 1px solid var(--line);">
-    <div style="display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center;">
-      {[
-        { color: 'var(--red)', label: 'Caso Zapatero' },
-        { color: 'var(--txt3)', label: 'Sin caso directo' },
-      ].map(({ color, label }) => (
-        <span style="display:flex;align-items:center;gap:6px;">
-          <span style={`width:10px;height:10px;border-radius:50%;border:1.5px solid ${color};background:${color}33;display:inline-block;`} />
-          <span style="font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--txt2);">{label}</span>
-        </span>
-      ))}
-      <span style="margin-left:auto;font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--txt3);">
-        Líneas continuas = verificado · Líneas discontinuas = parcial
-      </span>
-    </div>
+    <span style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--txt3);">
+      Líneas continuas = verificado · Líneas discontinuas = parcial
+    </span>
   </div>
 
   <!-- Grafo -->
   <div style="height: calc(100vh - 200px); min-height: 500px; border-bottom: 1px solid var(--line);">
     <GraphD3 entities={entities} relations={relations} client:load />
   </div>
+
+  <DetailSidebar events={events} entities={allEntities} relations={allRelations} sources={sources} client:load />
 
   <!-- Lista de relaciones -->
   <div class="container" style="padding: 3rem 0;">
@@ -65,10 +61,8 @@ const entities = allEntities.filter(e => e.cases.includes('dp-77-24') || related
       {relations.map(r => {
         const from = entities.find(e => e.id === r.from)
         const to = entities.find(e => e.id === r.to)
-        const borderColor = r.cases.includes('dp-77-24') && r.cases.includes('caso-koldo')
-          ? 'var(--gold)' : r.cases.includes('dp-77-24') ? 'var(--red)' : 'var(--blue)'
         return (
-          <div style={`background:var(--bg2);border-left:3px solid ${borderColor};padding:0.85rem 1.25rem;display:flex;flex-wrap:wrap;gap:1rem;align-items:center;`}>
+          <div style={`background:var(--bg2);border-left:3px solid var(--red);padding:0.85rem 1.25rem;display:flex;flex-wrap:wrap;gap:1rem;align-items:center;`}>
             <a href={from ? `/personajes/${from.id}` : '#'} style="font-size:0.88rem;color:var(--txt);text-decoration:none;font-weight:600;">
               {from?.name ?? r.from}
             </a>

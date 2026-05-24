@@ -108,6 +108,7 @@ body::before {
   flex: 1;
   padding-top: 52px;
   min-width: 0;
+  min-height: 0;
   background: var(--bg);
 }
 
@@ -170,12 +171,6 @@ body::before {
   display: inline-block;
 }
 
-/* ─────────────────────────────────────────────
-   CASE ACCENT LINE
-───────────────────────────────────────────── */
-.case-z    { border-left: 3px solid var(--red); }
-.case-k    { border-left: 3px solid var(--blue); }
-.case-both { border-left: 3px solid var(--gold); }
 
 /* ─────────────────────────────────────────────
    IMPACT BAR
@@ -331,20 +326,6 @@ body::before {
   line-height: 1.65;
 }
 
-/* ─────────────────────────────────────────────
-   BLINK — indicador activo
-───────────────────────────────────────────── */
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.25; }
-}
-.blink-dot {
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: var(--green);
-  display: inline-block;
-  animation: blink 2.5s ease infinite;
-}
 
 /* ─────────────────────────────────────────────
    RESPONSIVE

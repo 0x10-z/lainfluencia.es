@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import type { Event, Entity, Relation, Source } from '../types'
-import { formatDate, getImpactColor, getImpactLabel, getEventTypeLabel, getStatusColor, getStatusLabel, getSourceById, getEntityById, getCaseColor } from '../utils'
+import { formatDate, getImpactColor, getImpactLabel, getEventTypeLabel, getStatusColor, getStatusLabel, getSourceById, getEntityById } from '../utils'
 
 interface Props {
   events: Event[]
@@ -14,10 +14,6 @@ type PanelData =
   | { kind: 'entity'; item: Entity }
   | null
 
-const CASE_LABELS: Record<string, string> = {
-  'dp-77-24': 'Zapatero',
-  'caso-koldo': 'Koldo',
-}
 const TYPE_ICON: Record<string, string> = {
   person: '◉', company: '▣', institution: '⬡', account: '◈',
 }
@@ -176,8 +172,7 @@ function EventPanel({ event, entities, relations, sources, pill, openPanel }: {
   const impColor = getImpactColor(event.impact)
   const verColor = event.verified === true ? 'var(--green)' : event.verified === 'partial' ? 'var(--gold)' : 'var(--txt3)'
   const verLabel = event.verified === true ? '✓ verificado' : event.verified === 'partial' ? '~ parcial' : '? sin verificar'
-  const accentColor = event.cases.includes('dp-77-24') && event.cases.includes('caso-koldo')
-    ? 'var(--gold)' : event.cases.includes('dp-77-24') ? 'var(--red)' : 'var(--blue2)'
+  const accentColor = 'var(--red)'
   const evEntities = event.entities.map(id => getEntityById(id, entities)).filter(Boolean) as Entity[]
   const evSources = event.sources.map(id => getSourceById(id, sources)).filter(Boolean) as Source[]
   const evRelations = (event.relations ?? []).map(rid => relations.find(r => r.id === rid)).filter(Boolean) as Relation[]
@@ -189,7 +184,6 @@ function EventPanel({ event, entities, relations, sources, pill, openPanel }: {
         <span style={{ fontFamily: 'var(--fm)', fontSize: '0.65rem', color: accentColor, letterSpacing: '0.06em' }}>
           {formatDate(event.date, event.date_precision)}
         </span>
-        {event.cases.map(c => pill(getCaseColor(c), CASE_LABELS[c] ?? c))}
         {pill('var(--txt3)', getEventTypeLabel(event.type))}
         {event.pending && pill('var(--gold)', 'pendiente')}
       </div>
@@ -266,12 +260,10 @@ function EventPanel({ event, entities, relations, sources, pill, openPanel }: {
             {evRelations.map(r => {
               const from = entities.find(e => e.id === r.from)
               const to = entities.find(e => e.id === r.to)
-              const rc = r.cases.includes('dp-77-24') && r.cases.includes('caso-koldo')
-                ? 'var(--gold)' : r.cases.includes('dp-77-24') ? 'var(--red)' : 'var(--blue2)'
               return (
                 <div key={r.id} style={{
                   background: 'var(--bg2)', borderRadius: '8px',
-                  padding: '0.7rem 0.85rem', borderLeft: `2px solid ${rc}`,
+                  padding: '0.7rem 0.85rem', borderLeft: `2px solid var(--red)`,
                   fontSize: '0.78rem',
                 }}>
                   <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0.4rem' }}>
@@ -316,9 +308,7 @@ function EntityPanel({ entity, events, entities, relations, sources, pill, openP
 }) {
   const statusColor = getStatusColor(entity.status)
   const statusLabel = getStatusLabel(entity.status)
-  const accentColor = entity.cases.includes('dp-77-24') && entity.cases.includes('caso-koldo')
-    ? 'var(--gold)' : entity.cases.includes('dp-77-24') ? 'var(--red)'
-    : entity.cases.includes('caso-koldo') ? 'var(--blue2)' : 'var(--line2)'
+  const accentColor = 'var(--red)'
 
   const entityEvents = events.filter(ev => ev.entities.includes(entity.id))
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
@@ -326,29 +316,50 @@ function EntityPanel({ entity, events, entities, relations, sources, pill, openP
 
   return (
     <div>
-      {/* Tags */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', alignItems: 'center', marginBottom: '1rem' }}>
-        <span style={{ fontFamily: 'var(--fm)', fontSize: '0.55rem', color: 'var(--txt3)' }}>
-          {TYPE_ICON[entity.type]} {TYPE_LABEL_ENT[entity.type]}
-        </span>
-        {pill(statusColor, statusLabel)}
-        {entity.cases.map(c => pill(getCaseColor(c), CASE_LABELS[c] ?? c))}
+      {/* Cabecera: foto + nombre */}
+      <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', marginBottom: '1rem' }}>
+        <EntityThumbSidebar entity={entity} />
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', alignItems: 'center', marginBottom: '0.4rem' }}>
+            <span style={{ fontFamily: 'var(--fm)', fontSize: '0.5rem', color: 'var(--txt3)' }}>
+              {TYPE_LABEL_ENT[entity.type]}
+            </span>
+            {pill(statusColor, statusLabel)}
+          </div>
+          <h2 style={{
+            fontFamily: 'var(--ft)', fontSize: '1.2rem', fontWeight: 700,
+            color: 'var(--txt)', lineHeight: 1.15, letterSpacing: '-0.01em',
+            borderLeft: `3px solid ${accentColor}`, paddingLeft: '0.6rem', margin: 0,
+          }}>
+            {entity.name}
+          </h2>
+        </div>
       </div>
 
-      {/* Nombre */}
-      <h2 style={{
-        fontFamily: 'var(--ft)', fontSize: '1.4rem', fontWeight: 700,
-        color: 'var(--txt)', lineHeight: 1.15, letterSpacing: '-0.01em',
-        marginBottom: entity.aliases?.length ? '0.3rem' : '0.8rem',
-        borderLeft: `3px solid ${accentColor}`, paddingLeft: '0.75rem',
-      }}>
-        {entity.name}
-      </h2>
-
       {entity.aliases?.length > 0 && (
-        <p style={{ fontFamily: 'var(--fm)', fontSize: '0.6rem', color: 'var(--txt3)', marginBottom: '0.8rem', paddingLeft: '0.75rem' }}>
-          También conocido como: {entity.aliases.join(', ')}
+        <p style={{ fontFamily: 'var(--fm)', fontSize: '0.6rem', color: 'var(--txt3)', marginBottom: '0.6rem', paddingLeft: '0.6rem' }}>
+          También: {entity.aliases.join(', ')}
         </p>
+      )}
+
+      {entity.wikipedia && (
+        <a
+          href={entity.wikipedia}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: '0.35rem',
+            fontFamily: 'var(--fm)', fontSize: '0.52rem', letterSpacing: '0.06em',
+            color: 'var(--txt3)', textDecoration: 'none',
+            border: '1px solid var(--line2)', borderRadius: '999px',
+            padding: '0.2rem 0.65rem', marginBottom: '0.9rem',
+            transition: 'color 0.15s, border-color 0.15s',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.color = 'var(--txt)'; e.currentTarget.style.borderColor = 'var(--txt3)' }}
+          onMouseLeave={e => { e.currentTarget.style.color = 'var(--txt3)'; e.currentTarget.style.borderColor = 'var(--line2)' }}
+        >
+          <span style={{ opacity: 0.7 }}>W</span> Wikipedia ↗
+        </a>
       )}
 
       <p style={{ fontFamily: 'var(--fb)', fontSize: '0.88rem', color: 'var(--txt2)', lineHeight: 1.65, marginBottom: '1rem' }}>
@@ -386,12 +397,10 @@ function EntityPanel({ entity, events, entities, relations, sources, pill, openP
               const isFrom = r.from === entity.id
               const otherId = isFrom ? r.to : r.from
               const other = entities.find(e => e.id === otherId)
-              const rc = r.cases.includes('dp-77-24') && r.cases.includes('caso-koldo')
-                ? 'var(--gold)' : r.cases.includes('dp-77-24') ? 'var(--red)' : 'var(--blue2)'
               return (
                 <div key={r.id} style={{
                   background: 'var(--bg2)', borderRadius: '8px',
-                  padding: '0.7rem 0.85rem', borderLeft: `2px solid ${rc}`,
+                  padding: '0.7rem 0.85rem', borderLeft: `2px solid var(--red)`,
                 }}>
                   <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0.35rem', marginBottom: r.description ? '0.35rem' : 0 }}>
                     {isFrom ? (
@@ -431,8 +440,6 @@ function EntityPanel({ entity, events, entities, relations, sources, pill, openP
           <SectionLabel>Aparece en · {entityEvents.length} evento{entityEvents.length !== 1 ? 's' : ''}</SectionLabel>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
             {entityEvents.map(ev => {
-              const evAccent = ev.cases.includes('dp-77-24') && ev.cases.includes('caso-koldo')
-                ? 'var(--gold)' : ev.cases.includes('dp-77-24') ? 'var(--red)' : 'var(--blue2)'
               return (
                 <button
                   key={ev.id}
@@ -440,14 +447,14 @@ function EntityPanel({ entity, events, entities, relations, sources, pill, openP
                   style={{
                     display: 'block', width: '100%', textAlign: 'left',
                     background: 'var(--bg2)', borderRadius: '8px',
-                    border: '1px solid var(--line)', borderLeft: `2px solid ${evAccent}`,
+                    border: '1px solid var(--line)', borderLeft: `2px solid var(--red)`,
                     padding: '0.7rem 0.85rem', cursor: 'pointer',
                     transition: 'background 0.15s',
                   }}
                   onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg3)')}
                   onMouseLeave={e => (e.currentTarget.style.background = 'var(--bg2)')}
                 >
-                  <div style={{ fontFamily: 'var(--fm)', fontSize: '0.55rem', color: evAccent, marginBottom: '0.25rem', letterSpacing: '0.04em' }}>
+                  <div style={{ fontFamily: 'var(--fm)', fontSize: '0.55rem', color: 'var(--red)', marginBottom: '0.25rem', letterSpacing: '0.04em' }}>
                     {formatDate(ev.date, ev.date_precision)}
                   </div>
                   <div style={{ fontFamily: 'var(--ft)', fontSize: '0.85rem', fontWeight: 700, color: 'var(--txt)', lineHeight: 1.25 }}>
@@ -503,6 +510,32 @@ function SourceRow({ source }: { source: Source }) {
         onMouseLeave={e => (e.currentTarget.style.background = 'var(--bg2)')}
       >{content}</a>
     : <div style={{ display: 'flex', padding: '0.4rem 0.6rem', background: 'var(--bg2)', borderRadius: '6px' }}>{content}</div>
+}
+
+function EntityThumbSidebar({ entity }: { entity: Entity }) {
+  const isRound = entity.type === 'person'
+  const [src, setSrc] = useState(`/personas/${entity.id}.jpg`)
+
+  return (
+    <div style={{
+      width: '64px', height: '64px', flexShrink: 0,
+      borderRadius: isRound ? '50%' : '10px',
+      overflow: 'hidden',
+      background: 'var(--bg3)', border: '1px solid var(--line)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+    }}>
+      {src ? (
+        <img
+          src={src}
+          alt={entity.name}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          onError={() => setSrc('')}
+        />
+      ) : (
+        <span style={{ fontSize: '1.8rem', color: 'var(--txt3)' }}>{TYPE_ICON[entity.type]}</span>
+      )}
+    </div>
+  )
 }
 
 const linkBtn: React.CSSProperties = {

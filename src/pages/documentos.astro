@@ -1,126 +1,244 @@
 ---
 import Base from '../layouts/Base.astro'
-import SourceChip from '../components/SourceChip.astro'
-import CaseTag from '../components/CaseTag.astro'
 
 import sourcesData from '../data/sources.json'
+import ogCache     from '../data/og-cache.json'
 import type { Source, SourceType } from '../types'
 import { getSourceTypeLabel } from '../utils'
 
 const sources = sourcesData.sources as Source[]
+const og = ogCache as Record<string, { image: string | null; title: string | null; description: string | null; siteName: string | null } | null>
 
 const ORDER: SourceType[] = ['judicial_order', 'police_report', 'official', 'press', 'fact_check', 'reference']
 
 const grouped = ORDER.reduce((acc, t) => {
-  acc[t] = sources.filter(s => s.type === t)
+  acc[t] = sources.filter(s => s.type === t && s.cases.includes('dp-77-24'))
   return acc
 }, {} as Record<string, Source[]>)
 
 const AVAILABILITY_LABEL: Record<string, string> = {
-  public: 'Público',
-  partial: 'Parcial',
-  restricted: 'Restringido',
+  public: 'Público', partial: 'Parcial', restricted: 'Restringido',
+}
+const AVAILABILITY_COLOR: Record<string, string> = {
+  public: 'var(--green)', partial: 'var(--gold)', restricted: 'var(--red)',
 }
 
-const AVAILABILITY_COLOR: Record<string, string> = {
-  public: 'var(--green)',
-  partial: 'var(--gold)',
-  restricted: 'var(--red)',
+const BADGE_COLOR: Record<string, string> = {
+  judicial_order: 'var(--gold)',
+  official:       'var(--green)',
+  fact_check:     'var(--blue2)',
+  press:          'var(--line2)',
+  reference:      'var(--line2)',
+}
+
+const TYPE_ICON: Record<string, string> = {
+  judicial_order: '⚖',
+  police_report:  '◎',
+  official:       '▣',
+  press:          '◈',
+  fact_check:     '✓',
+  reference:      '↗',
+}
+
+const HOMEPAGE_RE = /^https?:\/\/[^/]+\/?$/
+
+function badgeColor(src: Source): string {
+  if (src.type === 'police_report') {
+    if (src.subtype === 'UDEF') return 'var(--red)'
+    if (src.subtype === 'UCO')  return 'var(--blue2)'
+    return 'var(--txt3)'
+  }
+  return BADGE_COLOR[src.type] ?? 'var(--line2)'
+}
+
+function badgeLabel(src: Source): string {
+  if (src.type === 'police_report') return `Informe ${src.subtype ?? 'policial'}`
+  return getSourceTypeLabel(src.type)
 }
 ---
 
 <Base
-  title="Documentos"
-  description="Fuentes documentales del Caso Zapatero y el Caso Koldo: autos judiciales, informes policiales y prensa verificada."
+  title="Archivo"
+  description="Fuentes documentales del Caso Zapatero: autos judiciales, informes policiales y prensa verificada."
 >
-  <div class="container" style="padding-top: 2.5rem; padding-bottom: 4rem;">
-    <div style="margin-bottom: 2.5rem;">
-      <p style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--txt3);text-transform:uppercase;letter-spacing:0.08em;margin:0 0 0.5rem;">
-        Fuentes documentales
-      </p>
-      <h1 style="font-size:clamp(1.8rem,4vw,2.8rem);margin:0 0 0.5rem;">
-        {sources.length} documentos
-      </h1>
-      <p style="font-size:0.9rem;color:var(--txt2);margin:0;">
-        Autos judiciales, informes policiales, hemeroteca y documentos oficiales.
-      </p>
+  <!-- Cabecera -->
+  <div style="padding:2rem 3vw 1.5rem; border-bottom:1px solid var(--line);">
+    <div style="font-family:var(--fm); font-size:0.5rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.18em; margin-bottom:0.5rem;">
+      Archivo · Fuentes documentales
     </div>
+    <h1 style="font-family:var(--ft); font-size:clamp(1.8rem,4vw,2.8rem); font-weight:900; letter-spacing:-0.025em; margin-bottom:0.4rem; line-height:1.05;">
+      {sources.filter(s => s.cases.includes('dp-77-24')).length} documentos verificados
+    </h1>
+    <p style="font-family:var(--fb); font-size:0.85rem; color:var(--txt2); margin:0; max-width:520px; line-height:1.6;">
+      Autos judiciales, informes policiales, documentos oficiales y hemeroteca verificada.
+    </p>
+  </div>
 
-    <!-- Resumen por tipo -->
-    <div style="display:flex;flex-wrap:wrap;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:3rem;">
-      {ORDER.filter(t => grouped[t].length > 0).map(t => (
-        <div style="background:var(--bg2);padding:1rem 1.5rem;flex:1;min-width:140px;">
-          <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;color:var(--txt);margin-bottom:4px;">
-            {grouped[t].length}
-          </div>
-          <div style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--txt3);text-transform:uppercase;letter-spacing:0.05em;">
-            {getSourceTypeLabel(t)}
-          </div>
-        </div>
-      ))}
-    </div>
-
-    <!-- Grupos por tipo -->
+  <!-- Resumen por tipo -->
+  <div style="display:flex; flex-wrap:wrap; gap:0; border-bottom:1px solid var(--line);">
     {ORDER.filter(t => grouped[t].length > 0).map(t => (
-      <section style="margin-bottom: 3rem;">
-        <div style="display:flex;align-items:baseline;gap:1rem;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--line);">
-          <h2 style="font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--txt2);text-transform:uppercase;letter-spacing:0.07em;margin:0;font-weight:500;">
+      <a href={`#tipo-${t}`} style="
+        display:block; padding:1rem 1.5rem; flex:1; min-width:120px;
+        border-right:1px solid var(--line); text-decoration:none;
+        transition:background 0.15s;
+      "
+      onmouseover="this.style.background='var(--bg2)'"
+      onmouseout="this.style.background=''">
+        <div style={`font-family:var(--ft);font-size:1.6rem;font-weight:900;color:${BADGE_COLOR[t] ?? badgeColor({type:t} as any)};line-height:1;margin-bottom:0.2rem;`}>
+          {grouped[t].length}
+        </div>
+        <div style="font-family:var(--fm);font-size:0.46rem;color:var(--txt3);text-transform:uppercase;letter-spacing:0.1em;">
+          {getSourceTypeLabel(t)}
+        </div>
+      </a>
+    ))}
+  </div>
+
+  <!-- Grupos por tipo -->
+  <div style="padding:0 0 4rem;">
+    {ORDER.filter(t => grouped[t].length > 0).map(t => (
+      <section id={`tipo-${t}`} style="border-bottom:1px solid var(--line);">
+        <!-- Cabecera de sección -->
+        <div style="display:flex; align-items:center; gap:0.75rem; padding:1.25rem 3vw; border-bottom:1px solid var(--line); background:var(--bg2); position:sticky; top:52px; z-index:50;">
+          <span style={`font-family:var(--fm);font-size:0.9rem;color:${badgeColor({type:t,subtype:undefined} as any)}`}>{TYPE_ICON[t]}</span>
+          <span style="font-family:var(--fm);font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--txt2);">
             {getSourceTypeLabel(t)}
-          </h2>
-          <span style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--txt3);">
-            {grouped[t].length}
+          </span>
+          <span style="font-family:var(--fm);font-size:0.5rem;color:var(--txt3);margin-left:0.25rem;">
+            · {grouped[t].length}
           </span>
         </div>
 
-        <div style="display:flex;flex-direction:column;gap:1px;background:var(--line);">
-          {grouped[t].map(src => (
-            <div style="background:var(--bg2);padding:1rem 1.25rem;">
-              <div style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:start;justify-content:space-between;">
-                <div style="min-width:0;flex:1;">
-                  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:0.4rem;">
-                    <SourceChip source={src} />
-                  </div>
-                  <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin-top:0.5rem;">
-                    {(src.issuer || src.publisher || src.author) && (
-                      <span style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--txt3);">
-                        {src.issuer ?? src.publisher ?? src.author}
-                      </span>
-                    )}
-                    {src.date && (
-                      <span style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--txt3);">
-                        {src.date}
-                      </span>
-                    )}
-                    {src.pages && (
-                      <span style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--txt3);">
-                        {src.pages} pp.
-                      </span>
-                    )}
-                  </div>
-                  {src.notes && (
-                    <p style="font-size:0.8rem;color:var(--txt3);font-style:italic;margin:0.5rem 0 0;line-height:1.5;">
-                      {src.notes}
-                    </p>
-                  )}
-                  {src.availability_note && (
-                    <p style="font-size:0.78rem;color:var(--txt3);margin:0.4rem 0 0;">
-                      {src.availability_note}
-                    </p>
-                  )}
-                </div>
+        {/* ── PRENSA: grid de cards con OG preview ── */}
+        {(t === 'press' || t === 'fact_check') ? (
+          <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:0; border-left:1px solid var(--line);">
+            {grouped[t].map(src => {
+              const ogData = og[src.id]
+              const hasOG  = ogData && (ogData.image || ogData.title)
+              const isHomepage = src.url && HOMEPAGE_RE.test(src.url)
+              const availColor = AVAILABILITY_COLOR[src.availability] ?? 'var(--txt3)'
+              const availLabel = AVAILABILITY_LABEL[src.availability] ?? src.availability
+              const bc = badgeColor(src)
 
-                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">
-                  <span style={`font-family:'DM Mono',monospace;font-size:0.65rem;padding:2px 8px;border-radius:999px;border:1px solid ${AVAILABILITY_COLOR[src.availability]};color:${AVAILABILITY_COLOR[src.availability]};`}>
-                    {AVAILABILITY_LABEL[src.availability]}
-                  </span>
-                  <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;">
-                    {src.cases.map(c => <CaseTag caseId={c} />)}
+              return (
+                <div style="border-right:1px solid var(--line); border-bottom:1px solid var(--line); display:flex; flex-direction:column;">
+                  {src.url && !isHomepage ? (
+                    <a href={src.url} target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;text-decoration:none;color:inherit;flex:1;transition:background 0.15s;"
+                      onmouseover="this.style.background='var(--bg2)'"
+                      onmouseout="this.style.background=''">
+                      {/* Imagen OG */}
+                      {hasOG && ogData?.image && (
+                        <div style="aspect-ratio:16/9;overflow:hidden;background:var(--bg3);flex-shrink:0;">
+                          <img src={ogData.image} alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
+                        </div>
+                      )}
+                      {/* Sin imagen — franja de color */}
+                      {(!hasOG || !ogData?.image) && (
+                        <div style={`height:4px;background:${bc};flex-shrink:0;`} />
+                      )}
+                      <div style="padding:0.9rem 1rem; flex:1; display:flex; flex-direction:column; gap:0.35rem;">
+                        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:0.4rem;">
+                          <span style="font-family:var(--fm);font-size:0.48rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--txt3);">
+                            {ogData?.siteName ?? src.publisher ?? badgeLabel(src)}
+                          </span>
+                          {src.date && <span style="font-family:var(--fm);font-size:0.46rem;color:var(--txt3);">{src.date}</span>}
+                          <span style={`font-family:var(--fm);font-size:0.42rem;padding:0.08rem 0.4rem;border-radius:999px;border:1px solid ${availColor};color:${availColor};margin-left:auto;`}>
+                            {availLabel}
+                          </span>
+                        </div>
+                        <p style="font-family:var(--ft);font-size:0.88rem;font-weight:700;color:var(--txt);line-height:1.3;letter-spacing:-0.01em;margin:0;">
+                          {ogData?.title ?? src.title}
+                        </p>
+                        {(ogData?.description ?? src.notes) && (
+                          <p style="font-family:var(--fb);font-size:0.72rem;color:var(--txt3);line-height:1.45;margin:0;">
+                            {(ogData?.description ?? src.notes ?? '').slice(0, 110)}{((ogData?.description ?? src.notes ?? '').length > 110) ? '…' : ''}
+                          </p>
+                        )}
+                        <span style="font-family:var(--fm);font-size:0.46rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--txt3);margin-top:auto;padding-top:0.3rem;">
+                          Abrir fuente ↗
+                        </span>
+                      </div>
+                    </a>
+                  ) : (
+                    /* Homepage genérica — sin enlace útil, solo info */
+                    <div style="display:flex;flex-direction:column;flex:1;">
+                      <div style={`height:4px;background:${bc};flex-shrink:0;`} />
+                      <div style="padding:0.9rem 1rem; flex:1; display:flex; flex-direction:column; gap:0.35rem;">
+                        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:0.4rem;">
+                          <span style="font-family:var(--fm);font-size:0.48rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--txt3);">
+                            {src.publisher ?? badgeLabel(src)}
+                          </span>
+                          {src.date && <span style="font-family:var(--fm);font-size:0.46rem;color:var(--txt3);">{src.date}</span>}
+                          <span style={`font-family:var(--fm);font-size:0.42rem;padding:0.08rem 0.4rem;border-radius:999px;border:1px solid ${availColor};color:${availColor};margin-left:auto;`}>
+                            {availLabel}
+                          </span>
+                        </div>
+                        <p style="font-family:var(--ft);font-size:0.88rem;font-weight:700;color:var(--txt);line-height:1.3;letter-spacing:-0.01em;margin:0;">
+                          {src.title}
+                        </p>
+                        {src.notes && (
+                          <p style="font-family:var(--fb);font-size:0.72rem;color:var(--txt3);line-height:1.45;margin:0;">
+                            {src.notes}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        ) : (
+          /* ── DOCUMENTOS OFICIALES/JUDICIALES: lista ── */
+          <div style="display:flex;flex-direction:column;">
+            {grouped[t].map(src => {
+              const bc = badgeColor(src)
+              const availColor = AVAILABILITY_COLOR[src.availability] ?? 'var(--txt3)'
+              const availLabel = AVAILABILITY_LABEL[src.availability] ?? src.availability
+              return (
+                <div style={`display:flex; border-bottom:1px solid var(--line); border-left:3px solid ${bc};`}>
+                  <div style="padding:1rem 1.25rem 1rem 1.5rem; flex:1; display:flex; flex-direction:column; gap:0.3rem;">
+                    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;">
+                      <span style={`font-family:var(--fm);font-size:0.48rem;padding:0.12rem 0.5rem;border-radius:4px;border:1px solid ${bc};color:${bc};letter-spacing:0.08em;text-transform:uppercase;`}>
+                        {badgeLabel(src)}
+                      </span>
+                      {src.date && <span style="font-family:var(--fm);font-size:0.5rem;color:var(--txt3);">{src.date}</span>}
+                      {src.pages && <span style="font-family:var(--fm);font-size:0.5rem;color:var(--txt3);">{src.pages} pp.</span>}
+                      <span style={`font-family:var(--fm);font-size:0.44rem;padding:0.1rem 0.45rem;border-radius:999px;border:1px solid ${availColor};color:${availColor};margin-left:auto;`}>
+                        {availLabel}
+                      </span>
+                    </div>
+                    <p style="font-family:var(--ft);font-size:0.95rem;font-weight:700;color:var(--txt);line-height:1.3;letter-spacing:-0.01em;margin:0;">
+                      {src.title}
+                    </p>
+                    {(src.issuer ?? src.publisher) && (
+                      <span style="font-family:var(--fm);font-size:0.5rem;color:var(--txt3);letter-spacing:0.04em;">
+                        {src.issuer ?? src.publisher}
+                      </span>
+                    )}
+                    {src.notes && (
+                      <p style="font-family:var(--fb);font-size:0.78rem;color:var(--txt3);line-height:1.5;margin:0;font-style:italic;">
+                        {src.notes}
+                      </p>
+                    )}
+                    {src.availability_note && (
+                      <p style="font-family:var(--fb);font-size:0.75rem;color:var(--txt3);margin:0;">{src.availability_note}</p>
+                    )}
+                    {src.url && (
+                      <a href={src.url} target="_blank" rel="noopener noreferrer"
+                        style="font-family:var(--fm);font-size:0.48rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--txt3);text-decoration:none;margin-top:0.2rem;transition:color 0.15s;"
+                        onmouseover="this.style.color='var(--txt)'"
+                        onmouseout="this.style.color='var(--txt3)'"
+                      >
+                        Abrir documento ↗
+                      </a>
+                    )}
                   </div>
                 </div>
-              </div>
-            </div>
-          ))}
-        </div>
+              )
+            })}
+          </div>
+        )}
       </section>
     ))}
   </div>

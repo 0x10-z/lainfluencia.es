@@ -20,7 +20,8 @@
         "PSOE",
         "expresidente"
       ],
-      "notes": "Vértice de la red según la UDEF. Coordina desde su oficina en calle Ferraz, Madrid."
+      "notes": "Vértice de la red según la UDEF. Coordina desde su oficina en calle Ferraz, Madrid.",
+      "wikipedia": "https://es.wikipedia.org/wiki/Jos%C3%A9_Luis_Rodr%C3%ADguez_Zapatero"
     },
     {
       "id": "julio-martinez",
@@ -36,7 +37,8 @@
         "operador",
         "sociedades-offshore"
       ],
-      "notes": "Amigo personal de Zapatero. Gestiona las sociedades instrumentales."
+      "notes": "Amigo personal de Zapatero. Gestiona las sociedades instrumentales.",
+      "wikipedia": "https://es.wikipedia.org/wiki/Julio_Mart%C3%ADnez_Pr%C3%A1danos"
     },
     {
       "id": "maria-alcazar",
@@ -51,7 +53,8 @@
       "tags": [
         "falsedad-documental"
       ],
-      "notes": "Elabora contratos, facturas e informes para cubrir servicios inexistentes."
+      "notes": "Elabora contratos, facturas e informes para cubrir servicios inexistentes.",
+      "wikipedia": "https://es.wikipedia.org/wiki/La_casa_de_las_dos_palmas"
     },
     {
       "id": "cristobal-cano",
@@ -67,7 +70,8 @@
         "blanqueo",
         "facturación"
       ],
-      "notes": "Coordina transferencias entre empresas para dificultar el rastreo."
+      "notes": "Coordina transferencias entre empresas para dificultar el rastreo.",
+      "wikipedia": "https://es.wikipedia.org/wiki/Crist%C3%B3bal_Delgado_G%C3%B3mez"
     },
     {
       "id": "abalos",
@@ -87,7 +91,8 @@
         "ministro",
         "preso-preventivo"
       ],
-      "notes": "En Soto del Real desde nov. 2025 por riesgo extremo de fuga. Fiscalía pide 24 años."
+      "notes": "En Soto del Real desde nov. 2025 por riesgo extremo de fuga. Fiscalía pide 24 años.",
+      "wikipedia": "https://es.wikipedia.org/wiki/Jos%C3%A9_Luis_%C3%81balos"
     },
     {
       "id": "koldo-garcia",
@@ -107,7 +112,8 @@
         "asesor",
         "preso-preventivo"
       ],
-      "notes": "Alias 'Goblin' en las comunicaciones interceptadas. Preso desde nov. 2025."
+      "notes": "Alias 'Goblin' en las comunicaciones interceptadas. Preso desde nov. 2025.",
+      "wikipedia": "https://es.wikipedia.org/wiki/Caso_Koldo"
     },
     {
       "id": "aldama",
@@ -126,7 +132,8 @@
         "conseguidor",
         "culpable-confeso"
       ],
-      "notes": "Se declaró culpable de 3 delitos. Colaborador con la Justicia. Pide atenuante."
+      "notes": "Se declaró culpable de 3 delitos. Colaborador con la Justicia. Pide atenuante.",
+      "wikipedia": "https://es.wikipedia.org/wiki/V%C3%ADctor_de_Aldama"
     },
     {
       "id": "santos-cerdan",
@@ -143,7 +150,8 @@
         "PSOE",
         "preso-preventivo"
       ],
-      "notes": "Ingresó en prisión preventiva jun. 2025. Informe UCO 490 pp. lo vincula directamente."
+      "notes": "Ingresó en prisión preventiva jun. 2025. Informe UCO 490 pp. lo vincula directamente.",
+      "wikipedia": "https://es.wikipedia.org/wiki/Santos_Cerd%C3%A1n"
     },
     {
       "id": "claudio-rivas",
@@ -159,7 +167,8 @@
         "empresario",
         "hidrocarburos"
       ],
-      "notes": "Pagó el alquiler del piso de la novia de Ábalos. Vinculado a fraude de 182M€ en hidrocarburos (Villafuel)."
+      "notes": "Pagó el alquiler del piso de la novia de Ábalos. Vinculado a fraude de 182M€ en hidrocarburos (Villafuel).",
+      "wikipedia": "https://es.wikipedia.org/wiki/Rolando_Rivas%2C_taxista"
     },
     {
       "id": "jessica-rodriguez",
@@ -174,7 +183,8 @@
       "tags": [
         "testigo"
       ],
-      "notes": "Su piso en Madrid era pagado por Claudio Rivas. Declaró en el juicio."
+      "notes": "Su piso en Madrid era pagado por Claudio Rivas. Declaró en el juicio.",
+      "wikipedia": "https://es.wikipedia.org/wiki/Pedro_Ignacio_Rodr%C3%ADguez"
     },
     {
       "id": "calama",
@@ -273,6 +283,7 @@
       "cases": [
         "dp-77-24"
       ],
+      "status": "judge",
       "tags": [
         "juzgado",
         "audiencia-nacional"
@@ -307,6 +318,7 @@
       "cases": [
         "dp-77-24"
       ],
+      "status": "prosecutor",
       "tags": [
         "policía",
         "investigador"
@@ -369,6 +381,7 @@
       "cases": [
         "dp-77-24"
       ],
+      "status": "investigated",
       "tags": [
         "fondo-público",
         "covid"
@@ -384,6 +397,7 @@
       "cases": [
         "dp-77-24"
       ],
+      "status": "investigated",
       "jurisdiction": "Islas Vírgenes Británicas",
       "tags": [
         "offshore",

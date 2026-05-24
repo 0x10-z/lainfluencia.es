@@ -1,6 +1,5 @@
 ---
 import Base from '../../layouts/Base.astro'
-import CaseTag from '../../components/CaseTag.astro'
 import EventCard from '../../components/EventCard.astro'
 
 import entitiesData from '../../data/entities.json'
@@ -38,9 +37,7 @@ const TYPE_LABEL: Record<string, string> = {
   person: 'Persona', company: 'Empresa', institution: 'Institución', account: 'Cuenta',
 }
 
-const borderColor = entity.cases.includes('dp-77-24') && entity.cases.includes('caso-koldo')
-  ? 'var(--gold)' : entity.cases.includes('dp-77-24') ? 'var(--red)'
-  : entity.cases.includes('caso-koldo') ? 'var(--blue)' : 'var(--line2)'
+const borderColor = 'var(--red)'
 ---
 
 <Base
@@ -63,7 +60,6 @@ const borderColor = entity.cases.includes('dp-77-24') && entity.cases.includes('
         <span class="status-pill" style={`background:${statusColor}20;color:${statusColor};border:1px solid ${statusColor}40;`}>
           {statusLabel}
         </span>
-        {entity.cases.map(c => <CaseTag caseId={c} />)}
       </div>
 
       <h1 style="font-size:clamp(1.6rem,4vw,2.5rem);margin:0 0 0.5rem;line-height:1.2;">
@@ -74,6 +70,17 @@ const borderColor = entity.cases.includes('dp-77-24') && entity.cases.includes('
         <p style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:var(--txt3);margin:0 0 0.75rem;">
           También: {entity.aliases.join(', ')}
         </p>
+      )}
+
+      {entity.wikipedia && (
+        <a
+          href={entity.wikipedia}
+          target="_blank"
+          rel="noopener noreferrer"
+          style="display:inline-flex;align-items:center;gap:0.35rem;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--txt3);text-decoration:none;border:1px solid var(--line2);padding:0.2rem 0.75rem;margin-bottom:1rem;"
+        >
+          W Wikipedia ↗
+        </a>
       )}
 
       <p style="font-size:1rem;color:var(--txt2);margin:0 0 1rem;line-height:1.6;">
@@ -114,10 +121,8 @@ const borderColor = entity.cases.includes('dp-77-24') && entity.cases.includes('
           {entityRelations.map(r => {
             const other = r.from === id ? entities.find(e => e.id === r.to) : entities.find(e => e.id === r.from)
             const isFrom = r.from === id
-            const bc = r.cases.includes('dp-77-24') && r.cases.includes('caso-koldo')
-              ? 'var(--gold)' : r.cases.includes('dp-77-24') ? 'var(--red)' : 'var(--blue)'
             return (
-              <div style={`background:var(--bg2);border-left:3px solid ${bc};padding:0.85rem 1.25rem;`}>
+              <div style="background:var(--bg2);border-left:3px solid var(--red);padding:0.85rem 1.25rem;">
                 <div style="display:flex;flex-wrap:wrap;align-items:center;gap:0.75rem;margin-bottom:0.4rem;">
                   {isFrom ? (
                     <>

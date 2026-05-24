@@ -1,7 +1,6 @@
 ---
 import type { Entity } from '../types'
 import { getStatusLabel, getStatusColor } from '../utils'
-import CaseTag from './CaseTag.astro'
 
 interface Props {
   entity: Entity
@@ -67,7 +66,6 @@ const typeIcon: Record<string, string> = {
         <span class="status-pill" style={`border-color: ${statusColor}; color: ${statusColor};`}>
           {statusLabel}
         </span>
-        {entity.cases.map(c => <CaseTag caseId={c} />)}
       </div>
     </div>
   </div>

@@ -67,11 +67,13 @@ export interface Entity {
   aliases: string[]
   role: string
   cases: string[]
-  status: EntityStatus
+  status?: EntityStatus
   tags: string[]
   notes?: string
   registration?: string
   jurisdiction?: string
+  photo?: string
+  wikipedia?: string
 }
 
 export interface Relation {

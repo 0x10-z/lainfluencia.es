@@ -24,11 +24,7 @@ interface Link extends d3.SimulationLinkDatum<Node> {
 }
 
 function nodeColor(node: Node): string {
-  const hasZ = node.cases.includes('dp-77-24')
-  const hasK = node.cases.includes('caso-koldo')
-  if (hasZ && hasK) return '#b8960c'
-  if (hasZ) return '#c0392b'
-  if (hasK) return '#1a5f9e'
+  if (node.cases.includes('dp-77-24')) return '#c0392b'
   return '#4a4740'
 }
 
@@ -96,10 +92,6 @@ export default function GraphD3({ entities, relations }: Props) {
       .force('collide', d3.forceCollide<Node>().radius(d => nodeRadius(d) + 12))
       // Separación suave por caso: Zapatero a la izquierda, Koldo a la derecha
       .force('x', d3.forceX<Node>(d => {
-        const hasZ = d.cases.includes('dp-77-24')
-        const hasK = d.cases.includes('caso-koldo')
-        if (hasZ && !hasK) return W * 0.3
-        if (hasK && !hasZ) return W * 0.7
         return W * 0.5
       }).strength(0.06))
       .force('y', d3.forceY<Node>(H / 2).strength(0.04))
@@ -129,19 +121,41 @@ export default function GraphD3({ entities, relations }: Props) {
           })
       )
 
+    // Definir clip-path circular para fotos
+    const defs = svg.append('defs')
+    nodes.forEach(d => {
+      defs.append('clipPath')
+        .attr('id', `clip-${d.id}`)
+        .append('circle')
+        .attr('r', nodeRadius(d))
+    })
+
     node.append('circle')
       .attr('r', d => nodeRadius(d))
-      .attr('fill', d => nodeColor(d) + '33')
+      .attr('fill', d => nodeColor(d) + '22')
       .attr('stroke', d => nodeColor(d))
       .attr('stroke-width', 1.5)
+
+    // Imagen para todos los nodos
+    node.append('image')
+      .attr('href', d => `/personas/${d.id}.jpg`)
+      .attr('x', d => -nodeRadius(d))
+      .attr('y', d => -nodeRadius(d))
+      .attr('width', d => nodeRadius(d) * 2)
+      .attr('height', d => nodeRadius(d) * 2)
+      .attr('clip-path', d => `url(#clip-${d.id})`)
+      .attr('preserveAspectRatio', 'xMidYMid slice')
+      .on('error', function(this: SVGImageElement) {
+        d3.select(this).remove()
+      })
 
     node.append('text')
       .text(d => d.name.split(' ').slice(0, 2).join(' '))
       .attr('dy', d => nodeRadius(d) + 12)
       .attr('text-anchor', 'middle')
-      .attr('font-family', "'DM Mono', monospace")
+      .attr('font-family', "'IBM Plex Mono', monospace")
       .attr('font-size', '9px')
-      .attr('fill', '#9a9589')
+      .attr('fill', '#7a7264')
       .attr('pointer-events', 'none')
 
     // Tooltip hover
@@ -152,10 +166,7 @@ export default function GraphD3({ entities, relations }: Props) {
         t.style.display = 'block'
         t.innerHTML = `
           <div style="font-weight:700;font-size:0.85rem;color:var(--txt);margin-bottom:4px;">${d.name}</div>
-          <div style="font-size:0.75rem;color:var(--txt2);margin-bottom:4px;">${d.role}</div>
-          <div style="display:flex;gap:6px;flex-wrap:wrap;">
-            ${d.cases.map(c => `<span style="font-size:0.62rem;padding:2px 6px;border-radius:999px;border:1px solid ${c === 'dp-77-24' ? 'var(--red)' : 'var(--blue)'};color:${c === 'dp-77-24' ? 'var(--red)' : 'var(--blue2)'};">${c === 'dp-77-24' ? 'Zapatero' : 'Koldo'}</span>`).join('')}
-          </div>
+          <div style="font-size:0.75rem;color:var(--txt2);">${d.role}</div>
         `
         t.style.left = (event.pageX + 12) + 'px'
         t.style.top = (event.pageY - 10) + 'px'
@@ -173,7 +184,7 @@ export default function GraphD3({ entities, relations }: Props) {
         d3.select(event.currentTarget).select('circle').attr('stroke-width', 1.5)
       })
       .on('click', (_, d) => {
-        window.location.href = `/personajes/${d.id}`
+        window.openDetailSidebar?.('entity', d.id)
       })
 
     sim.on('tick', () => {

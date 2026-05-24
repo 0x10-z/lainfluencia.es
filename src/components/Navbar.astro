@@ -1,18 +1,10 @@
 ---
-import eventsData from '../data/events.json'
-import entitiesData from '../data/entities.json'
-import type { Event, Entity } from '../types'
-import NavSearch from './NavSearch.tsx'
-
-const events = eventsData.events as Event[]
-const entities = entitiesData.entities as Entity[]
-
 const pathname = Astro.url.pathname
 
 const nav = [
   { href: '/',            label: 'Inicio' },
-  { href: '/cronologia',  label: 'Cronología' },
-  { href: '/personajes',  label: 'Actores' },
+  { href: '/cronologia',  label: 'Los hechos' },
+  { href: '/personajes',  label: 'Personajes' },
   { href: '/red',         label: 'Red' },
   { href: '/documentos',  label: 'Archivo' },
 ]
@@ -24,86 +16,183 @@ const isActive = (href: string) =>
 <nav class="topnav">
 
   <!-- Identidad -->
-  <a href="/" style="
-    display: flex;
-    align-items: baseline;
-    gap: 0.6rem;
-    padding: 0 2rem;
-    height: 52px;
-    text-decoration: none;
-    flex-shrink: 0;
-    border-right: 1px solid var(--line);
-  ">
-    <span style="
-      font-family: var(--ft);
-      font-size: 1.35rem;
-      font-weight: 900;
-      color: var(--txt);
-      letter-spacing: -0.01em;
-      line-height: 1;
-    ">
-      La <em style="color:var(--red);font-style:italic;">Influencia</em>
+  <a href="/" class="nav-logo">
+    <span class="nav-logo-name">
+      La <em>Influencia</em>
     </span>
-    <span style="
-      font-family: var(--fm);
-      font-size: 0.44rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--txt3);
-      border: 1px solid var(--line2);
-      padding: 0.1rem 0.35rem;
-      border-radius: 3px;
-      position: relative;
-      top: -1px;
-    ">
-      archivo
-    </span>
+    <span class="nav-logo-badge">archivo</span>
   </a>
 
-  <!-- Nav links — centrados -->
-  <div style="
-    display: flex;
-    align-items: stretch;
-    height: 52px;
-    flex: 1;
-    padding: 0 1rem;
-  ">
+  <!-- Nav links — desktop -->
+  <div class="nav-links">
     {nav.map(({ href, label }) => (
-      <a href={href} style={`
-        display: flex;
-        align-items: center;
-        padding: 0 1.1rem;
-        font-family: var(--fm);
-        font-size: 0.55rem;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        color: ${isActive(href) ? 'var(--txt)' : 'var(--txt3)'};
-        border-bottom: 1px solid ${isActive(href) ? 'var(--red)' : 'transparent'};
-        border-top: 1px solid transparent;
-        text-decoration: none;
-        white-space: nowrap;
-        transition: color 0.2s;
-      `}>
+      <a href={href} class={`nav-link ${isActive(href) ? 'nav-link--active' : ''}`}>
         {label}
       </a>
     ))}
   </div>
 
-  <!-- Indicador + búsqueda -->
-  <div style="display: flex; align-items: center; gap: 0.6rem; padding-right: 0.5rem;">
-    <span style="
-      font-family: var(--fm);
-      font-size: 0.48rem;
-      letter-spacing: 0.12em;
-      color: var(--txt3);
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    ">
-      <span class="blink-dot" />
-      activo
-    </span>
-    <NavSearch events={events} entities={entities} client:load />
-  </div>
+
+  <!-- Hamburguesa — móvil -->
+  <button class="nav-burger" id="nav-burger" aria-label="Abrir menú" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
 </nav>
+
+<!-- Menú móvil overlay -->
+<div class="nav-mobile-menu" id="nav-mobile-menu" aria-hidden="true">
+  <div class="nav-mobile-inner">
+    {nav.map(({ href, label }) => (
+      <a href={href} class={`nav-mobile-link ${isActive(href) ? 'nav-mobile-link--active' : ''}`}>
+        {label}
+        {isActive(href) && <span class="nav-mobile-dot" />}
+      </a>
+    ))}
+  </div>
+</div>
+
+<style>
+  /* ── LOGO ── */
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0 1.5rem; height: 52px;
+    text-decoration: none; flex-shrink: 0;
+    border-right: 1px solid var(--line);
+  }
+
+  .nav-logo-name {
+    font-family: var(--ft); font-size: 1.35rem; font-weight: 900;
+    color: var(--txt); letter-spacing: -0.01em; line-height: 1;
+  }
+
+  .nav-logo-name em { color: var(--red); font-style: italic; }
+
+  .nav-logo-badge {
+    font-family: var(--fm); font-size: 0.44rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--txt3);
+    border: 1px solid var(--line2); padding: 0.1rem 0.35rem;
+    border-radius: 3px; position: relative; top: -1px;
+  }
+
+  /* ── NAV LINKS ── */
+  .nav-links {
+    display: flex; align-items: stretch;
+    height: 52px; flex: 1; padding: 0 1rem;
+  }
+
+  .nav-link {
+    display: flex; align-items: center; padding: 0 1.1rem;
+    font-family: var(--fm); font-size: 0.55rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--txt3);
+    border-bottom: 1px solid transparent; border-top: 1px solid transparent;
+    text-decoration: none; white-space: nowrap; transition: color 0.2s;
+  }
+
+  .nav-link--active {
+    color: var(--txt);
+    border-bottom-color: var(--red);
+  }
+
+  /* ── HAMBURGUESA ── */
+  .nav-burger {
+    display: none;
+    flex-direction: column; justify-content: center;
+    gap: 5px; padding: 0 1.25rem; height: 52px;
+    background: transparent; border: none; cursor: pointer;
+    margin-left: auto;
+  }
+
+  .nav-burger span {
+    display: block; width: 22px; height: 2px;
+    background: var(--txt); border-radius: 2px;
+    transition: transform 0.25s, opacity 0.25s;
+    transform-origin: center;
+  }
+
+  .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity: 0; }
+  .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ── MENÚ MÓVIL ── */
+  .nav-mobile-menu {
+    display: none;
+    position: fixed; top: 52px; left: 0; right: 0; bottom: 0;
+    background: rgba(242,237,228,0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 490;
+    flex-direction: column; justify-content: space-between;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s;
+  }
+
+  .nav-mobile-menu.open {
+    opacity: 1; pointer-events: auto;
+  }
+
+  .nav-mobile-inner {
+    display: flex; flex-direction: column;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-mobile-link {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 6vw;
+    font-family: var(--ft); font-size: 1.6rem; font-weight: 700;
+    color: var(--txt3); text-decoration: none;
+    border-bottom: 1px solid var(--line);
+    transition: color 0.15s, background 0.15s;
+  }
+
+  .nav-mobile-link:last-child { border-bottom: none; }
+
+  .nav-mobile-link--active { color: var(--txt); }
+
+  .nav-mobile-link:hover { background: var(--bg2); color: var(--txt); }
+
+  .nav-mobile-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--red); flex-shrink: 0;
+  }
+
+  .nav-mobile-footer {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 1.5rem 6vw;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .nav-links  { display: none; }
+    .nav-burger { display: flex; }
+    .nav-mobile-menu { display: flex; }
+    .nav-logo { border-right: none; }
+  }
+</style>
+
+<script>
+  const burger = document.getElementById('nav-burger')!
+  const menu   = document.getElementById('nav-mobile-menu')!
+
+  burger.addEventListener('click', () => {
+    const open = burger.classList.toggle('open')
+    menu.classList.toggle('open', open)
+    burger.setAttribute('aria-expanded', String(open))
+    menu.setAttribute('aria-hidden', String(!open))
+    document.body.style.overflow = open ? 'hidden' : ''
+  })
+
+  // Cerrar al navegar
+  menu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      burger.classList.remove('open')
+      menu.classList.remove('open')
+      burger.setAttribute('aria-expanded', 'false')
+      menu.setAttribute('aria-hidden', 'true')
+      document.body.style.overflow = ''
+    })
+  })
+</script>

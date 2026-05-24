@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { Event } from '../types'
-import { formatDate, getImpactLabel, getImpactColor, getCaseColor } from '../utils'
+import { formatDate, getImpactLabel, getImpactColor } from '../utils'
 
 interface Props {
   events: Event[]
@@ -14,18 +14,6 @@ const TYPE_LABELS: Record<string, string> = {
   context: 'Contexto', money_transfer: 'Transferencia',
 }
 
-const CASE_LABELS: Record<string, string> = {
-  'dp-77-24': 'Zapatero',
-  'caso-koldo': 'Koldo',
-}
-
-function getAccentColor(cases: string[]): string {
-  if (cases.includes('dp-77-24') && cases.includes('caso-koldo')) return 'var(--gold)'
-  if (cases.includes('dp-77-24')) return 'var(--red)'
-  if (cases.includes('caso-koldo')) return 'var(--blue2)'
-  return 'var(--line2)'
-}
-
 function getYear(date: string) { return date.slice(0, 4) }
 
 function openSidebar(id: string) {
@@ -33,12 +21,10 @@ function openSidebar(id: string) {
 }
 
 export default function CronologiaClient({ events, tipos }: Props) {
-  const [caso, setCaso] = useState('todos')
   const [tipo, setTipo] = useState('todos')
   const [impactoMin, setImpactoMin] = useState(1)
 
   const filtered = events.filter(ev => {
-    if (caso !== 'todos' && !ev.cases.includes(caso)) return false
     if (tipo !== 'todos' && ev.type !== tipo) return false
     if (ev.impact < impactoMin) return false
     return true
@@ -90,14 +76,6 @@ export default function CronologiaClient({ events, tipos }: Props) {
         position: 'sticky', top: '52px', zIndex: 100,
       }}>
         <div>
-          <label style={lblStyle}>Caso</label>
-          <select value={caso} onChange={e => setCaso(e.target.value)} style={selStyle}>
-            <option value="todos">Todos los casos</option>
-            <option value="dp-77-24">D.P. 77/24 — Zapatero</option>
-            <option value="caso-koldo">Esp. 003 — Koldo</option>
-          </select>
-        </div>
-        <div>
           <label style={lblStyle}>Tipo de hecho</label>
           <select value={tipo} onChange={e => setTipo(e.target.value)} style={selStyle}>
             <option value="todos">Todos</option>
@@ -112,9 +90,9 @@ export default function CronologiaClient({ events, tipos }: Props) {
             style={{ width: '90px', accentColor: 'var(--red)', display: 'block', marginTop: '8px' }}
           />
         </div>
-        {(caso !== 'todos' || tipo !== 'todos' || impactoMin > 1) && (
+        {(tipo !== 'todos' || impactoMin > 1) && (
           <button
-            onClick={() => { setCaso('todos'); setTipo('todos'); setImpactoMin(1) }}
+            onClick={() => { setTipo('todos'); setImpactoMin(1) }}
             style={{
               fontFamily: 'var(--fm)', fontSize: '0.52rem', letterSpacing: '0.08em',
               textTransform: 'uppercase', color: 'var(--txt3)',
@@ -166,7 +144,7 @@ export default function CronologiaClient({ events, tipos }: Props) {
               <div key={year}>
                 <div id={`year-${year}`} style={{ height: 0 }} />
                 {items.map(ev => {
-                  const accent = getAccentColor(ev.cases)
+                  const accent = 'var(--red)'
                   const impColor = getImpactColor(ev.impact)
 
                   return (
@@ -210,15 +188,6 @@ export default function CronologiaClient({ events, tipos }: Props) {
                           }}>
                             {TYPE_LABELS[ev.type] ?? ev.type}
                           </span>
-                          {ev.cases.map(c => (
-                            <span key={c} style={{
-                              fontFamily: 'var(--fm)', fontSize: '0.46rem', letterSpacing: '0.08em',
-                              textTransform: 'uppercase', padding: '0.15rem 0.55rem',
-                              borderRadius: '999px', border: `1px solid ${getCaseColor(c)}`, color: getCaseColor(c),
-                            }}>
-                              {CASE_LABELS[c] ?? c}
-                            </span>
-                          ))}
                         </div>
 
                         {/* Título */}

@@ -16,7 +16,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const DATA = path.join(__dirname, '../data');
+const DATA = path.join(__dirname, '../src/data');
 
 function load(file) {
   const raw = fs.readFileSync(path.join(DATA, file), 'utf8');
