@@ -46,34 +46,6 @@
       "url": null
     },
     {
-      "id": "auto-procesamiento-koldo-2025",
-      "type": "judicial_order",
-      "subtype": "auto_procesamiento",
-      "title": "Auto de procesamiento — Especial 003/0020775/2020",
-      "issuer": "Tribunal Supremo — Sala 2ª — Juez Leopoldo Puente",
-      "date": "2025-11-03",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "partial",
-      "availability_note": "Extractos en Libertad Digital y nota del CGPJ",
-      "url": "https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Tribunal-Supremo/Noticias-Judiciales/"
-    },
-    {
-      "id": "cgpj-nota-juicio-oral-dic-2025",
-      "type": "judicial_order",
-      "subtype": "auto_juicio_oral",
-      "title": "Auto de apertura de juicio oral — Caso Koldo",
-      "issuer": "Tribunal Supremo — Sala 2ª — Juez Leopoldo Puente",
-      "date": "2025-12-11",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "public",
-      "availability_note": "Nota de prensa oficial del CGPJ",
-      "url": "https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Tribunal-Supremo/Oficina-de-Comunicacion/Notas-de-prensa/"
-    },
-    {
       "id": "sentencia-ts-plus-ultra-2021",
       "type": "judicial_order",
       "subtype": "sentencia",
@@ -87,194 +59,16 @@
       "url": "https://www.poderjudicial.es"
     },
     {
-      "id": "uco-atestado-233pp",
-      "type": "police_report",
-      "subtype": "UCO",
-      "title": "Atestado UCO — Caso Koldo (233 páginas)",
-      "issuer": "Unidad Central Operativa — Guardia Civil",
-      "date": "2024",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "partial",
-      "availability_note": "Fragmentos filtrados a medios de comunicación",
-      "url": null
-    },
-    {
-      "id": "uco-490pp-2025",
-      "type": "police_report",
-      "subtype": "UCO",
-      "title": "Informe UCO — Vinculación de Santos Cerdán (490 páginas)",
-      "issuer": "Unidad Central Operativa — Guardia Civil",
-      "date": "2025-06",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "partial",
-      "availability_note": "Presentado al Tribunal Supremo. Fragmentos en prensa.",
-      "url": null
-    },
-    {
-      "id": "uco-informe-2025",
-      "type": "police_report",
-      "subtype": "UCO",
-      "title": "Informe UCO — Parador de Teruel (15/09/2020)",
-      "issuer": "Unidad Central Operativa — Guardia Civil",
-      "date": "2025",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "partial",
-      "availability_note": "Referenciado por El Español. No publicado íntegramente.",
-      "url": null
-    },
-    {
-      "id": "newtral-guia-koldo-2024",
-      "type": "press",
-      "subtype": "fact_check",
-      "title": "Guía para no perderse en el caso Koldo",
-      "publisher": "Newtral",
-      "author": null,
-      "date": "2024-03-03",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "public",
-      "url": "https://www.newtral.es/guia-caso-koldo/20240303/"
-    },
-    {
-      "id": "wikipedia-koldo-case",
-      "type": "reference",
-      "title": "Koldo Case",
-      "publisher": "Wikipedia (EN)",
-      "date": "2026",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "public",
-      "url": "https://en.wikipedia.org/wiki/Koldo_Case",
-      "notes": "Fuente estructurada con cronología y contratos. Verificar con fuentes primarias."
-    },
-    {
-      "id": "wikipedia-caso-abalos",
-      "type": "reference",
-      "title": "Caso Ábalos",
-      "publisher": "Wikipedia (ES)",
-      "date": "2026",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "public",
-      "url": "https://es.wikipedia.org/wiki/Caso_%C3%81balos"
-    },
-    {
-      "id": "wikipedia-santos-cerdan",
-      "type": "reference",
-      "title": "Santos Cerdán",
-      "publisher": "Wikipedia (EN)",
-      "date": "2026",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "public",
-      "url": "https://en.wikipedia.org/wiki/Santos_Cerd%C3%A1n"
-    },
-    {
-      "id": "el-espanol-parador-teruel-may-2026",
-      "type": "press",
-      "title": "Nuevos detalles sobre la presunta fiesta de Ábalos en el Parador de Teruel",
-      "publisher": "El Español",
-      "date": "2026-05-10",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "public",
-      "url": "https://www.elespanol.com"
-    },
-    {
-      "id": "telemadrid-parador-10-may-2026",
-      "type": "press",
-      "title": "Los nuevos detalles sobre la presunta fiesta de Ábalos en el Parador de Teruel durante la pandemia",
-      "publisher": "Telemadrid",
-      "date": "2026-05-10",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "public",
-      "url": "https://www.telemadrid.es/programas/telenoticias-fin-de-semana/Los-nuevos-detalles-sobre-la-presunta-fiesta-de-Abalos-en-el-Parador-de-Teruel-durante-la-pandemia-2-2887531238--20260510030835.html"
-    },
-    {
-      "id": "el-liberal-parador-11-may-2026",
-      "type": "press",
-      "title": "Investigación apunta a un presunto operativo de traslado de mujeres al Parador de Teruel",
-      "publisher": "El Liberal",
-      "date": "2026-05-11",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "public",
-      "url": "https://www.elliberal.cat/2026/05/11/una-investigacion-apunta-a-un-presunto-operativo-de-traslado-de-mujeres-al-parador-de-teruel-durante-un-viaje-de-abalos-en-2020/"
-    },
-    {
-      "id": "vozpopuli-juicio-mascarillas-2026",
-      "type": "press",
-      "title": "Juicio a Ábalos, Koldo y Aldama por el 'caso mascarillas', en directo",
-      "publisher": "Voz Pópuli",
-      "date": "2026-04",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "public",
-      "url": "https://www.vozpopuli.com/espana/juicio-a-abalos-koldo-y-aldama-por-el-caso-mascarillas-en-directo-declaraciones-en-el-supremo-y-reacciones.html"
-    },
-    {
-      "id": "estrelladigital-juicio-2026",
-      "type": "press",
-      "title": "El juicio contra Ábalos, Koldo y Aldama queda visto para sentencia",
-      "publisher": "Estrella Digital",
-      "date": "2026-05-07",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "public",
-      "url": "https://www.estrelladigital.es/articulo/tribunales/juicio-abalos-koldo-aldama-queda-visto-sentencia-entre-acusaciones-cruzadas-reproches-investigacion/20260507114645446264.html"
-    },
-    {
-      "id": "infobae-soto-real-2025",
-      "type": "press",
-      "title": "Estos son los siete magistrados que formarán el tribunal que juzgará a Ábalos, Koldo y Aldama",
-      "publisher": "Infobae España",
-      "date": "2026-01-14",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "public",
-      "url": "https://www.infobae.com/espana/2026/01/14/estos-son-los-siete-magistrados-que-formaran-el-tribunal-que-juzgara-a-abalos-koldo-y-aldama-dos-de-ellos-condenaron-al-exfiscal-general-del-estado/"
-    },
-    {
       "id": "euronews-19-feb-2026",
       "type": "press",
       "title": "El PP fuerza la comparecencia de Zapatero por el caso Plus Ultra",
       "publisher": "Euronews España",
       "date": "2026-02-19",
       "cases": [
-        "dp-77-24",
-        "caso-koldo"
+        "dp-77-24"
       ],
       "availability": "public",
       "url": "https://es.euronews.com"
-    },
-    {
-      "id": "declaracion-aldama-juicio-2026",
-      "type": "press",
-      "title": "Aldama afirma que entregó hasta 4 millones de euros a Ábalos y Koldo",
-      "publisher": "Infobae España",
-      "date": "2026-04-29",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "public",
-      "url": "https://www.infobae.com/espana/2026/04/29/juicio-a-abalos-koldo-y-aldama-por-el-caso-mascarillas-en-directo-declaraciones-y-ultima-hora-desde-el-tribunal-supremo/"
     },
     {
       "id": "boe-14-mar-2020",
@@ -283,23 +77,10 @@
       "publisher": "Boletín Oficial del Estado",
       "date": "2020-03-14",
       "cases": [
-        "dp-77-24",
-        "caso-koldo"
+        "dp-77-24"
       ],
       "availability": "public",
       "url": "https://www.boe.es/eli/es/rd/2020/03/14/463"
-    },
-    {
-      "id": "prensa-general-jun-2018",
-      "type": "press",
-      "title": "Gobierno Sánchez: composición del Consejo de Ministros",
-      "publisher": "El País",
-      "date": "2018-06-01",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "public",
-      "url": "https://elpais.com"
     },
     {
       "id": "el-confidencial-plus-ultra-2020",
@@ -312,104 +93,6 @@
       ],
       "availability": "public",
       "url": "https://www.elconfidencial.com"
-    },
-    {
-      "id": "declaracion-abalos-juicio-2026",
-      "type": "press",
-      "title": "Ábalos en el juicio: declaración íntegra y reacciones",
-      "publisher": "El Español",
-      "date": "2026-04-29",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "public",
-      "url": "https://www.elespanol.com"
-    },
-    {
-      "id": "prensa-general-jul-2021",
-      "type": "press",
-      "title": "Sánchez cesa a Ábalos y le sustituye por Raquel Sánchez en Transportes",
-      "publisher": "El Mundo",
-      "date": "2021-07-10",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "public",
-      "url": "https://www.elmundo.es"
-    },
-    {
-      "id": "prensa-op-delorme-feb-2024",
-      "type": "press",
-      "title": "Operación Delorme: 20 detenidos en el caso Koldo",
-      "publisher": "El País",
-      "date": "2024-02-21",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "public",
-      "url": "https://elpais.com"
-    },
-    {
-      "id": "cgpj-nota-prensa-nov-2025",
-      "type": "official",
-      "title": "El juez Puente procesa a Ábalos, Koldo y Aldama por la pieza de mascarillas",
-      "publisher": "CGPJ — Tribunal Supremo",
-      "date": "2025-11-03",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "public",
-      "url": "https://www.poderjudicial.es"
-    },
-    {
-      "id": "auto-prision-koldo-2025",
-      "type": "judicial_order",
-      "subtype": "auto_prision_provisional",
-      "title": "Auto de prisión provisional — Ábalos y Koldo García",
-      "issuer": "Tribunal Supremo — Sala 2ª — Juez Leopoldo Puente",
-      "date": "2025-11-27",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "partial",
-      "availability_note": "Extractos en prensa. Nota CGPJ.",
-      "url": null
-    },
-    {
-      "id": "prensa-juicio-abr-2026",
-      "type": "press",
-      "title": "Arranca el juicio del caso Koldo en el Tribunal Supremo",
-      "publisher": "El Independiente",
-      "date": "2026-04-07",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "public",
-      "url": "https://www.elindependiente.com"
-    },
-    {
-      "id": "infobae-abalos-declaracion-2026",
-      "type": "press",
-      "title": "Aldama afirma que entregó hasta 4 millones de euros a Ábalos y Koldo para financiar donaciones al PSOE",
-      "publisher": "Infobae España",
-      "date": "2026-04-29",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "public",
-      "url": "https://www.infobae.com/espana/2026/04/29/juicio-a-abalos-koldo-y-aldama-por-el-caso-mascarillas-en-directo-declaraciones-y-ultima-hora-desde-el-tribunal-supremo/"
-    },
-    {
-      "id": "estrelladigital-sentencia-2026",
-      "type": "press",
-      "title": "El juicio contra Ábalos, Koldo y Aldama queda visto para sentencia entre acusaciones cruzadas",
-      "publisher": "Estrella Digital",
-      "date": "2026-05-07",
-      "cases": [
-        "caso-koldo"
-      ],
-      "availability": "public",
-      "url": "https://www.estrelladigital.es/articulo/tribunales/juicio-abalos-koldo-aldama-queda-visto-sentencia-entre-acusaciones-cruzadas-reproches-investigacion/20260507114645446264.html"
     },
     {
       "id": "el-mundo-zapatero-may-2026",
@@ -479,8 +162,7 @@
       "publisher": "The Objective",
       "date": "2026-05-20",
       "cases": [
-        "dp-77-24",
-        "caso-koldo"
+        "dp-77-24"
       ],
       "availability": "public",
       "url": "https://theobjective.com/espana/tribunales/2026-05-20/investigacion-plus-ultra-empresarios-venezolanos-koldo-delcy-zapatero/"

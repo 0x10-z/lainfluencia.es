@@ -74,119 +74,6 @@
       "wikipedia": "https://es.wikipedia.org/wiki/Crist%C3%B3bal_Delgado_G%C3%B3mez"
     },
     {
-      "id": "abalos",
-      "type": "person",
-      "name": "José Luis Ábalos Meco",
-      "aliases": [
-        "Ábalos"
-      ],
-      "role": "Exministro de Transportes (2018–2021), exsecretario Organización PSOE",
-      "cases": [
-        "caso-koldo"
-      ],
-      "status": "accused",
-      "tags": [
-        "político",
-        "PSOE",
-        "ministro",
-        "preso-preventivo"
-      ],
-      "notes": "En Soto del Real desde nov. 2025 por riesgo extremo de fuga. Fiscalía pide 24 años.",
-      "wikipedia": "https://es.wikipedia.org/wiki/Jos%C3%A9_Luis_%C3%81balos"
-    },
-    {
-      "id": "koldo-garcia",
-      "type": "person",
-      "name": "Koldo García Izaguirre",
-      "aliases": [
-        "Koldo",
-        "Goblin"
-      ],
-      "role": "Exasesor y exescolta de Ábalos",
-      "cases": [
-        "caso-koldo"
-      ],
-      "status": "accused",
-      "tags": [
-        "intermediario",
-        "asesor",
-        "preso-preventivo"
-      ],
-      "notes": "Alias 'Goblin' en las comunicaciones interceptadas. Preso desde nov. 2025.",
-      "wikipedia": "https://es.wikipedia.org/wiki/Caso_Koldo"
-    },
-    {
-      "id": "aldama",
-      "type": "person",
-      "name": "Víctor Gonzalo de Aldama Delgado",
-      "aliases": [
-        "Aldama"
-      ],
-      "role": "Empresario. Presidente Zamora CF. Conseguidor",
-      "cases": [
-        "caso-koldo"
-      ],
-      "status": "accused",
-      "tags": [
-        "empresario",
-        "conseguidor",
-        "culpable-confeso"
-      ],
-      "notes": "Se declaró culpable de 3 delitos. Colaborador con la Justicia. Pide atenuante.",
-      "wikipedia": "https://es.wikipedia.org/wiki/V%C3%ADctor_de_Aldama"
-    },
-    {
-      "id": "santos-cerdan",
-      "type": "person",
-      "name": "Santos Cerdán García",
-      "aliases": [],
-      "role": "Exsecretario de Organización PSOE (número 3)",
-      "cases": [
-        "caso-koldo"
-      ],
-      "status": "investigated",
-      "tags": [
-        "político",
-        "PSOE",
-        "preso-preventivo"
-      ],
-      "notes": "Ingresó en prisión preventiva jun. 2025. Informe UCO 490 pp. lo vincula directamente.",
-      "wikipedia": "https://es.wikipedia.org/wiki/Santos_Cerd%C3%A1n"
-    },
-    {
-      "id": "claudio-rivas",
-      "type": "person",
-      "name": "Claudio Rivas",
-      "aliases": [],
-      "role": "Empresario. Socio de Aldama",
-      "cases": [
-        "caso-koldo"
-      ],
-      "status": "investigated",
-      "tags": [
-        "empresario",
-        "hidrocarburos"
-      ],
-      "notes": "Pagó el alquiler del piso de la novia de Ábalos. Vinculado a fraude de 182M€ en hidrocarburos (Villafuel).",
-      "wikipedia": "https://es.wikipedia.org/wiki/Rolando_Rivas%2C_taxista"
-    },
-    {
-      "id": "jessica-rodriguez",
-      "type": "person",
-      "name": "Jésica Rodríguez",
-      "aliases": [],
-      "role": "Expareja de Ábalos",
-      "cases": [
-        "caso-koldo"
-      ],
-      "status": "witness",
-      "tags": [
-        "testigo"
-      ],
-      "notes": "Su piso en Madrid era pagado por Claudio Rivas. Declaró en el juicio.",
-      "wikipedia": "https://es.wikipedia.org/wiki/Pedro_Ignacio_Rodr%C3%ADguez"
-    },
-    {
       "id": "calama",
       "type": "person",
       "name": "José Luis Calama Teixeira",
@@ -201,22 +88,6 @@
         "JCI-2"
       ],
       "notes": "Firmó el auto de imputación el 18/05/2026."
-    },
-    {
-      "id": "leopoldo-puente",
-      "type": "person",
-      "name": "Leopoldo Puente",
-      "aliases": [],
-      "role": "Magistrado — Tribunal Supremo, Sala 2ª",
-      "cases": [
-        "caso-koldo"
-      ],
-      "status": "judge",
-      "tags": [
-        "juez",
-        "tribunal-supremo"
-      ],
-      "notes": "Instructor del caso Koldo. Acordó la prisión preventiva de Ábalos y Koldo."
     },
     {
       "id": "plus-ultra",
@@ -235,27 +106,6 @@
       ],
       "registration": "España",
       "notes": "Menos del 1% cuota de mercado. Recibió 53M€ en 2020. TS anuló rescate parcialmente en 2021."
-    },
-    {
-      "id": "soluciones-gestion",
-      "type": "company",
-      "name": "Soluciones de Gestión y Apoyo a Empresas SL",
-      "aliases": [
-        "SGAE",
-        "Sol. de Gestión"
-      ],
-      "role": "Empresa adjudicataria de contratos de mascarillas",
-      "cases": [
-        "caso-koldo"
-      ],
-      "status": "investigated",
-      "tags": [
-        "empresa-pantalla",
-        "mascarillas",
-        "adjudicataria"
-      ],
-      "registration": "España",
-      "notes": "Facturó 0€ en 2019. Casi 54M€ en 2020 tras adjudicaciones sin concurso."
     },
     {
       "id": "soc-a",
@@ -291,23 +141,6 @@
       "notes": "Avenida del Madrono, Madrid. Plaza número 2."
     },
     {
-      "id": "tribunal-supremo",
-      "type": "institution",
-      "name": "Tribunal Supremo — Sala 2ª (Penal)",
-      "aliases": [
-        "TS"
-      ],
-      "role": "Órgano judicial enjuiciador — Caso Koldo",
-      "cases": [
-        "caso-koldo"
-      ],
-      "tags": [
-        "tribunal",
-        "supremo"
-      ],
-      "notes": "7 magistrados. Juzgó el caso Koldo en 14 sesiones (abr–may 2026)."
-    },
-    {
       "id": "udef",
       "type": "institution",
       "name": "UDEF — Unidad de Delincuencia Económica y Fiscal",
@@ -324,51 +157,6 @@
         "investigador"
       ],
       "notes": "Elaboró los informes 1907/26 y 1908/26 sobre el caso Zapatero."
-    },
-    {
-      "id": "uco",
-      "type": "institution",
-      "name": "UCO — Unidad Central Operativa",
-      "aliases": [],
-      "role": "Unidad policial. Guardia Civil",
-      "cases": [
-        "caso-koldo"
-      ],
-      "tags": [
-        "guardia-civil",
-        "investigador"
-      ],
-      "notes": "Elaboró el atestado de 233 páginas y el informe de 490 pp. vinculando a Santos Cerdán."
-    },
-    {
-      "id": "puertos-estado",
-      "type": "institution",
-      "name": "Puertos del Estado",
-      "aliases": [],
-      "role": "Organismo público dependiente del Ministerio de Transportes",
-      "cases": [
-        "caso-koldo"
-      ],
-      "tags": [
-        "administración-pública",
-        "adjudicador"
-      ],
-      "notes": "Adjudicó 24,2M€ a Soluciones de Gestión el 21/03/2020 sin concurso."
-    },
-    {
-      "id": "adif",
-      "type": "institution",
-      "name": "Adif — Administrador de Infraestructuras Ferroviarias",
-      "aliases": [],
-      "role": "Organismo público dependiente del Ministerio de Transportes",
-      "cases": [
-        "caso-koldo"
-      ],
-      "tags": [
-        "administración-pública",
-        "adjudicador"
-      ],
-      "notes": "Adjudicó 12,5M€ a Soluciones de Gestión el 27/03/2020 sin concurso."
     },
     {
       "id": "fondo-solvencia",

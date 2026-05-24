@@ -120,156 +120,6 @@
       }
     },
     {
-      "id": "rel-007",
-      "from": "abalos",
-      "to": "koldo-garcia",
-      "type": "employs",
-      "label": "empleado como asesor personal",
-      "description": "Ábalos nombra a Koldo García como asesor en el Ministerio de Transportes. Antes fue su escolta.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "sources": [
-        "uco-atestado-233pp"
-      ],
-      "verified": true,
-      "period": {
-        "from": "2018-06",
-        "to": "2021-07"
-      }
-    },
-    {
-      "id": "rel-008",
-      "from": "koldo-garcia",
-      "to": "aldama",
-      "type": "coordinates",
-      "label": "canaliza encargos hacia el ministerio",
-      "description": "Koldo actúa como intermediario entre Aldama y las adjudicaciones del Ministerio de Transportes.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "sources": [
-        "uco-atestado-233pp",
-        "auto-procesamiento-koldo-2025"
-      ],
-      "verified": true,
-      "period": {
-        "from": "2019-01",
-        "to": "2021-07"
-      }
-    },
-    {
-      "id": "rel-009",
-      "from": "aldama",
-      "to": "soluciones-gestion",
-      "type": "controls",
-      "label": "controla e impulsa adjudicaciones",
-      "description": "Aldama es el beneficiario real de las adjudicaciones a Soluciones de Gestión, según la UCO.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "sources": [
-        "uco-atestado-233pp"
-      ],
-      "verified": true,
-      "period": {
-        "from": "2019-01",
-        "to": "2021-07"
-      }
-    },
-    {
-      "id": "rel-010",
-      "from": "puertos-estado",
-      "to": "soluciones-gestion",
-      "type": "awards_contract",
-      "label": "adjudica 24,2M€ sin concurso",
-      "description": "8 millones de mascarillas adjudicadas el 21/03/2020 sin licitación previa bajo urgencia COVID.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "sources": [
-        "newtral-guia-koldo-2024"
-      ],
-      "verified": true,
-      "amount": {
-        "value": 24200000,
-        "currency": "EUR",
-        "approximate": false
-      },
-      "period": {
-        "from": "2020-03-21",
-        "to": "2020-03-21"
-      }
-    },
-    {
-      "id": "rel-011",
-      "from": "adif",
-      "to": "soluciones-gestion",
-      "type": "awards_contract",
-      "label": "adjudica 12,5M€ sin concurso",
-      "description": "5 millones de mascarillas adjudicadas el 27/03/2020 sin licitación previa bajo urgencia COVID.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "sources": [
-        "newtral-guia-koldo-2024"
-      ],
-      "verified": true,
-      "amount": {
-        "value": 12500000,
-        "currency": "EUR",
-        "approximate": false
-      },
-      "period": {
-        "from": "2020-03-27",
-        "to": "2020-03-27"
-      }
-    },
-    {
-      "id": "rel-012",
-      "from": "aldama",
-      "to": "abalos",
-      "type": "pays",
-      "label": "entrega hasta 4M€ en comisiones",
-      "description": "Aldama declaró en juicio haber entregado hasta 4 millones de euros a Ábalos y Koldo, parte destinados al PSOE.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "sources": [
-        "declaracion-aldama-juicio-2026"
-      ],
-      "verified": "partial",
-      "amount": {
-        "value": 4000000,
-        "currency": "EUR",
-        "approximate": true
-      },
-      "period": {
-        "from": "2020-01",
-        "to": "2021-07"
-      }
-    },
-    {
-      "id": "rel-013",
-      "from": "claudio-rivas",
-      "to": "jessica-rodriguez",
-      "type": "pays",
-      "label": "paga el alquiler de su piso en Madrid",
-      "description": "Claudio Rivas, socio de Aldama, pagó el alquiler del apartamento de la novia de Ábalos. Ábalos lo admitió en juicio.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "sources": [
-        "uco-atestado-233pp",
-        "declaracion-abalos-juicio-2026"
-      ],
-      "verified": true,
-      "period": {
-        "from": "2020-01",
-        "to": "2022-01"
-      }
-    },
-    {
       "id": "rel-014",
       "from": "udef",
       "to": "zapatero",
@@ -286,26 +136,6 @@
       "verified": true,
       "period": {
         "from": "2024-01",
-        "to": "2026-05"
-      }
-    },
-    {
-      "id": "rel-015",
-      "from": "uco",
-      "to": "koldo-garcia",
-      "type": "investigates",
-      "label": "investiga — atestado 233 pp. + informe 490 pp.",
-      "description": "La UCO elabora el atestado principal del caso y el informe que amplía la investigación a Santos Cerdán.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "sources": [
-        "uco-atestado-233pp",
-        "uco-490pp-2025"
-      ],
-      "verified": true,
-      "period": {
-        "from": "2023-01",
         "to": "2026-05"
       }
     },
@@ -329,44 +159,6 @@
       }
     },
     {
-      "id": "rel-017",
-      "from": "leopoldo-puente",
-      "to": "abalos",
-      "type": "processes",
-      "label": "procesa y acuerda prisión preventiva",
-      "description": "Auto de procesamiento nov. 2025. Prisión provisional sin fianza por riesgo extremo de fuga.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "sources": [
-        "auto-procesamiento-koldo-2025"
-      ],
-      "verified": true,
-      "period": {
-        "from": "2025-11-03",
-        "to": null
-      }
-    },
-    {
-      "id": "rel-018",
-      "from": "koldo-garcia",
-      "to": "santos-cerdan",
-      "type": "coordinates",
-      "label": "coordinación documentada por la UCO",
-      "description": "El informe UCO de 490 páginas vincula a Santos Cerdán con el entramado de Koldo.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "sources": [
-        "uco-490pp-2025"
-      ],
-      "verified": true,
-      "period": {
-        "from": "2019-01",
-        "to": "2021-07"
-      }
-    },
-    {
       "id": "rel-019",
       "from": "zapatero",
       "to": "plus-ultra",
@@ -374,8 +166,7 @@
       "label": "asesora a empresario vinculado a Plus Ultra",
       "description": "El PP fuerza la comparecencia de Zapatero en la comisión Koldo del Senado por asesorar a un empresario de su entorno vinculado a Plus Ultra.",
       "cases": [
-        "dp-77-24",
-        "caso-koldo"
+        "dp-77-24"
       ],
       "sources": [
         "euronews-19-feb-2026"

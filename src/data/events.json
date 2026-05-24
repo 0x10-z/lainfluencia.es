@@ -3,39 +3,13 @@
   "$comment": "EVENTOS — Hechos concretos verificados, anclados en fechas. Cada evento referencia entidades (entities[]) y fuentes (sources[]). El campo 'relations[]' vincula el evento a relaciones específicas del modelo.",
   "events": [
     {
-      "id": "ev-001",
-      "date": "2018-06-01",
-      "date_precision": "month",
-      "title": "Pedro Sánchez nombra a Ábalos ministro de Fomento",
-      "description": "Ábalos asume la cartera que controla Puertos del Estado y Adif. Koldo García lo acompaña como asesor personal. Se crea el contexto institucional que hace posible la trama de mascarillas.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "type": "political",
-      "impact": 2,
-      "entities": [
-        "abalos",
-        "koldo-garcia",
-        "adif",
-        "puertos-estado"
-      ],
-      "relations": [
-        "rel-007"
-      ],
-      "sources": [
-        "prensa-general-jun-2018"
-      ],
-      "verified": true
-    },
-    {
       "id": "ev-002",
       "date": "2020-03-14",
       "date_precision": "day",
       "title": "Decreto de estado de alarma por COVID-19",
       "description": "El Gobierno decreta el estado de alarma. Las restricciones de urgencia en contratación pública permiten adjudicaciones sin concurso. Es el mecanismo legal que ambas tramas aprovechan.",
       "cases": [
-        "dp-77-24",
-        "caso-koldo"
+        "dp-77-24"
       ],
       "type": "context",
       "impact": 5,
@@ -45,62 +19,6 @@
       "relations": [],
       "sources": [
         "boe-14-mar-2020"
-      ],
-      "verified": true
-    },
-    {
-      "id": "ev-003",
-      "date": "2020-03-21",
-      "date_precision": "day",
-      "title": "Puertos del Estado adjudica 24,2M€ a Soluciones de Gestión — sin concurso",
-      "description": "8 millones de mascarillas adjudicadas de urgencia a una empresa que facturó 0€ en 2019. La UCO determinará después que la empresa accedió a información privilegiada gracias a Koldo.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "type": "contract",
-      "impact": 5,
-      "entities": [
-        "puertos-estado",
-        "soluciones-gestion",
-        "koldo-garcia",
-        "aldama",
-        "abalos"
-      ],
-      "relations": [
-        "rel-010",
-        "rel-008",
-        "rel-009"
-      ],
-      "sources": [
-        "newtral-guia-koldo-2024",
-        "wikipedia-koldo-case"
-      ],
-      "verified": true
-    },
-    {
-      "id": "ev-004",
-      "date": "2020-03-27",
-      "date_precision": "day",
-      "title": "Adif adjudica 12,5M€ a Soluciones de Gestión — mismo patrón",
-      "description": "5 millones de mascarillas. Mismo adjudicatario, misma ausencia de concurso, misma urgencia COVID como cobertura. La UCO calificará esto de patrón sistemático.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "type": "contract",
-      "impact": 4,
-      "entities": [
-        "adif",
-        "soluciones-gestion",
-        "koldo-garcia",
-        "aldama"
-      ],
-      "relations": [
-        "rel-011",
-        "rel-008",
-        "rel-009"
-      ],
-      "sources": [
-        "newtral-guia-koldo-2024"
       ],
       "verified": true
     },
@@ -131,83 +49,6 @@
       "verified": true
     },
     {
-      "id": "ev-006",
-      "date": "2020-09-15",
-      "date_precision": "day",
-      "title": "La noche del Parador de Teruel — viaje oficial, invitadas no oficiales",
-      "description": "Ábalos realiza visita institucional a infraestructuras ferroviarias de Teruel con representantes de Adif y del Gobierno de Aragón. Esa noche, la UCO documenta en 2025 el presunto desplazamiento de dos mujeres (22 y 21 años, desde Málaga y Córdoba) coordinado por Koldo García. Una habitación se reservó a nombre del hermano de Koldo como 'sala de espera'. Al día siguiente, Koldo contacta con un mando policial para 'solucionar un problema'.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "type": "scandal",
-      "impact": 4,
-      "entities": [
-        "abalos",
-        "koldo-garcia",
-        "adif"
-      ],
-      "relations": [
-        "rel-007"
-      ],
-      "sources": [
-        "el-espanol-parador-teruel-may-2026",
-        "telemadrid-parador-10-may-2026",
-        "el-liberal-parador-11-may-2026",
-        "uco-informe-2025"
-      ],
-      "verified": "partial",
-      "notes": "Los hechos están recogidos en informes UCO de 2025 según El Español. Ábalos no ha sido acusado específicamente por este evento en el juicio oral."
-    },
-    {
-      "id": "ev-007",
-      "date": "2020-12-01",
-      "date_precision": "month",
-      "title": "Claudio Rivas comienza a pagar el alquiler del piso de Jésica Rodríguez en Madrid",
-      "description": "El socio de Aldama asume el pago del apartamento de la pareja del ministro Ábalos. Documentado en el atestado UCO de 233 páginas. Ábalos lo admitió en juicio pero lo calificó de 'parche provisional'.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "type": "corruption",
-      "impact": 3,
-      "entities": [
-        "claudio-rivas",
-        "jessica-rodriguez",
-        "abalos",
-        "aldama"
-      ],
-      "relations": [
-        "rel-013"
-      ],
-      "sources": [
-        "uco-atestado-233pp",
-        "declaracion-abalos-juicio-2026"
-      ],
-      "verified": true
-    },
-    {
-      "id": "ev-008",
-      "date": "2021-06-01",
-      "date_precision": "month",
-      "title": "Sánchez cesa a Ábalos como ministro sin explicaciones públicas",
-      "description": "Ábalos es sustituido en Transportes. No se dan explicaciones oficiales. Koldo García pierde su posición en el ministerio. Poco después se conocerán los primeros indicios de la trama de mascarillas.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "type": "political",
-      "impact": 3,
-      "entities": [
-        "abalos",
-        "koldo-garcia"
-      ],
-      "relations": [
-        "rel-007"
-      ],
-      "sources": [
-        "prensa-general-jul-2021"
-      ],
-      "verified": true
-    },
-    {
       "id": "ev-009",
       "date": "2021-12-01",
       "date_precision": "month",
@@ -219,7 +60,6 @@
       "type": "judicial",
       "impact": 3,
       "entities": [
-        "tribunal-supremo",
         "plus-ultra",
         "fondo-solvencia"
       ],
@@ -228,31 +68,6 @@
       ],
       "sources": [
         "sentencia-ts-plus-ultra-2021"
-      ],
-      "verified": true
-    },
-    {
-      "id": "ev-010",
-      "date": "2022-04-01",
-      "date_precision": "month",
-      "title": "Fiscalía Anticorrupción abre investigación por los contratos de mascarillas",
-      "description": "Los fiscales detectan seis contratos sospechosos adjudicados sin licitación a Soluciones de Gestión. La empresa había pasado de 0€ a 54M€ en un año. Se cede la causa al juez Ismael Moreno de la Audiencia Nacional.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "type": "investigation",
-      "impact": 3,
-      "entities": [
-        "soluciones-gestion",
-        "aldama"
-      ],
-      "relations": [
-        "rel-009",
-        "rel-010",
-        "rel-011"
-      ],
-      "sources": [
-        "wikipedia-koldo-case"
       ],
       "verified": true
     },
@@ -283,139 +98,13 @@
       "verified": true
     },
     {
-      "id": "ev-012",
-      "date": "2024-02-21",
-      "date_precision": "day",
-      "title": "Operación Delorme — 20 detenidos, Koldo García arrestado",
-      "description": "La Guardia Civil ejecuta registros simultáneos. Koldo García y su esposa Patricia Úriz son detenidos. El caso explota en primera plana. Ábalos, aforado como diputado, pasa al Grupo Mixto para no perder el aforamiento ante el Supremo.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "type": "police_operation",
-      "impact": 5,
-      "entities": [
-        "uco",
-        "koldo-garcia",
-        "abalos"
-      ],
-      "relations": [
-        "rel-015"
-      ],
-      "sources": [
-        "wikipedia-caso-abalos",
-        "prensa-op-delorme-feb-2024"
-      ],
-      "verified": true
-    },
-    {
-      "id": "ev-013",
-      "date": "2025-06-01",
-      "date_precision": "month",
-      "title": "Santos Cerdán ingresa en prisión preventiva. UCO presenta 490 páginas",
-      "description": "El exnúmero 3 del PSOE entra en Soto del Real. El informe UCO de 490 páginas lo vincula directamente al entramado Koldo-Aldama. La Fiscalía abre la pieza de financiación ilegal del PSOE.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "type": "judicial",
-      "impact": 4,
-      "entities": [
-        "uco",
-        "santos-cerdan",
-        "koldo-garcia"
-      ],
-      "relations": [
-        "rel-018"
-      ],
-      "sources": [
-        "uco-490pp-2025",
-        "wikipedia-santos-cerdan"
-      ],
-      "verified": true
-    },
-    {
-      "id": "ev-014",
-      "date": "2025-11-03",
-      "date_precision": "day",
-      "title": "Juez Puente dicta auto de procesamiento contra Ábalos, Koldo y Aldama",
-      "description": "Auto por organización criminal, cohecho continuado, tráfico de influencias y malversación. Cierra la instrucción de la pieza principal. La causa pasa al tribunal de enjuiciamiento.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "type": "judicial",
-      "impact": 5,
-      "entities": [
-        "leopoldo-puente",
-        "abalos",
-        "koldo-garcia",
-        "aldama"
-      ],
-      "relations": [
-        "rel-017"
-      ],
-      "sources": [
-        "auto-procesamiento-koldo-2025",
-        "cgpj-nota-prensa-nov-2025"
-      ],
-      "verified": true
-    },
-    {
-      "id": "ev-015",
-      "date": "2025-11-27",
-      "date_precision": "day",
-      "title": "Ábalos y Koldo García ingresan en Soto del Real por riesgo 'extremo de fuga'",
-      "description": "Furgón policial. Prisión provisional sin fianza. Fianza civil de 60.000€ para cubrir responsabilidad civil. Primera vez que un exministro español entra en prisión preventiva en esta causa.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "type": "judicial",
-      "impact": 5,
-      "entities": [
-        "leopoldo-puente",
-        "abalos",
-        "koldo-garcia"
-      ],
-      "relations": [
-        "rel-017"
-      ],
-      "sources": [
-        "infobae-soto-real-2025",
-        "auto-prision-koldo-2025"
-      ],
-      "verified": true
-    },
-    {
-      "id": "ev-016",
-      "date": "2025-12-11",
-      "date_precision": "day",
-      "title": "Juez Puente abre juicio oral en el Tribunal Supremo",
-      "description": "Auto de apertura de juicio oral. La Sala Segunda del TS asume el enjuiciamiento. Fianzas de 60.000€ mantenidas. Se designan 7 magistrados.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "type": "judicial",
-      "impact": 4,
-      "entities": [
-        "tribunal-supremo",
-        "leopoldo-puente",
-        "abalos",
-        "koldo-garcia",
-        "aldama"
-      ],
-      "relations": [],
-      "sources": [
-        "cgpj-nota-juicio-oral-dic-2025"
-      ],
-      "verified": true
-    },
-    {
       "id": "ev-017",
       "date": "2026-02-19",
       "date_precision": "day",
       "title": "PP fuerza comparecencia de Zapatero en comisión Koldo del Senado",
       "description": "Euronews informa que el PP exige que Zapatero comparezca en la comisión de investigación del caso Koldo, por haber asesorado a un empresario de su entorno personal vinculado a Plus Ultra. Primer nexo documental entre ambos casos.",
       "cases": [
-        "dp-77-24",
-        "caso-koldo"
+        "dp-77-24"
       ],
       "type": "political",
       "impact": 3,
@@ -428,81 +117,6 @@
       ],
       "sources": [
         "euronews-19-feb-2026"
-      ],
-      "verified": true
-    },
-    {
-      "id": "ev-018",
-      "date": "2026-04-07",
-      "date_precision": "day",
-      "title": "Arranca el juicio oral en el Tribunal Supremo — caso Koldo",
-      "description": "Primera sesión. 7 magistrados. Fiscalía pide 24 años para Ábalos, 19,5 para Koldo, 7 para Aldama. Se prevén 14 jornadas y ~80 testigos.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "type": "judicial",
-      "impact": 5,
-      "entities": [
-        "tribunal-supremo",
-        "abalos",
-        "koldo-garcia",
-        "aldama"
-      ],
-      "relations": [],
-      "sources": [
-        "prensa-juicio-abr-2026"
-      ],
-      "verified": true
-    },
-    {
-      "id": "ev-019",
-      "date": "2026-04-29",
-      "date_precision": "day",
-      "title": "Declaran Aldama, Koldo y Ábalos — jornada clave en el Supremo",
-      "description": "Aldama se declara culpable de 3 delitos. Afirma haber entregado 4M€. Koldo niega haber cobrado y denuncia oferta de libertad a cambio de implicar al Gobierno. Ábalos niega todo y llama al proceso 'inquisitorial'. La UCO declara que Ábalos tomó 'la decisión última' de duplicar la compra de mascarillas.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "type": "trial",
-      "impact": 5,
-      "entities": [
-        "tribunal-supremo",
-        "abalos",
-        "koldo-garcia",
-        "aldama",
-        "uco"
-      ],
-      "relations": [
-        "rel-012"
-      ],
-      "sources": [
-        "vozpopuli-juicio-mascarillas-2026",
-        "estrelladigital-juicio-2026",
-        "infobae-abalos-declaracion-2026"
-      ],
-      "verified": true
-    },
-    {
-      "id": "ev-020",
-      "date": "2026-05-07",
-      "date_precision": "day",
-      "title": "El juicio Koldo queda visto para sentencia — 14 jornadas, 80 testigos",
-      "description": "Última sesión con informes finales de acusaciones y defensas. Fiscalía mantiene sus peticiones. El tribunal deberá decidir si existió organización criminal. Ábalos pide absolución. Aldama aguarda reducción de condena por colaboración.",
-      "cases": [
-        "caso-koldo"
-      ],
-      "type": "judicial",
-      "impact": 4,
-      "entities": [
-        "tribunal-supremo",
-        "abalos",
-        "koldo-garcia",
-        "aldama"
-      ],
-      "relations": [],
-      "sources": [
-        "estrelladigital-sentencia-2026",
-        "vozpopuli-juicio-mascarillas-2026"
       ],
       "verified": true
     },

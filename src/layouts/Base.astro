@@ -50,6 +50,9 @@ const sources   = sourcesData.sources   as Source[]
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 </head>
 <body>
+  <!-- Barra de progreso de lectura -->
+  <div id="read-progress" style="position:fixed;top:52px;left:0;height:2px;width:0%;background:var(--red);z-index:1000;transition:width 0.1s linear;pointer-events:none;"></div>
+
   <div class="layout">
     <Navbar />
     <div class="main-content" style="display:flex; flex-direction:column;">
@@ -73,6 +76,17 @@ const sources   = sourcesData.sources   as Source[]
     sources={sources}
     client:load
   />
+
+  <script>
+    const bar = document.getElementById('read-progress')!
+    function updateProgress() {
+      const scrolled = window.scrollY
+      const total = document.documentElement.scrollHeight - window.innerHeight
+      bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%'
+    }
+    window.addEventListener('scroll', updateProgress, { passive: true })
+    updateProgress()
+  </script>
 
   <script>
     const observer = new IntersectionObserver(
