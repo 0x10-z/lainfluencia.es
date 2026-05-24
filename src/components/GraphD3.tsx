@@ -139,7 +139,7 @@ export default function GraphD3({ entities, relations }: Props) {
       .text(d => d.name.split(' ').slice(0, 2).join(' '))
       .attr('dy', d => nodeRadius(d) + 12)
       .attr('text-anchor', 'middle')
-      .attr('font-family', "'IBM Plex Mono', monospace")
+      .attr('font-family', "'DM Mono', monospace")
       .attr('font-size', '9px')
       .attr('fill', '#9a9589')
       .attr('pointer-events', 'none')
@@ -205,7 +205,7 @@ export default function GraphD3({ entities, relations }: Props) {
           pointerEvents: 'none',
           zIndex: 200,
           maxWidth: '260px',
-          fontFamily: "'IBM Plex Sans', sans-serif",
+          fontFamily: "'DM Sans', sans-serif",
         }}
       />
     </div>

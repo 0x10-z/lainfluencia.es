@@ -1,213 +1,193 @@
 ---
 import Base from '../layouts/Base.astro'
+import type { Event, Entity, Source, Case } from '../types'
+import { formatDate, getImpactColor, getImpactLabel, getStatusColor, getStatusLabel } from '../utils'
 
-import casesData     from '../data/cases.json'
-import eventsData    from '../data/events.json'
-import entitiesData  from '../data/entities.json'
-import sourcesData   from '../data/sources.json'
-import relationsData from '../data/relations.json'
+import casesData    from '../data/cases.json'
+import eventsData   from '../data/events.json'
+import entitiesData from '../data/entities.json'
+import sourcesData  from '../data/sources.json'
 
-import type { Event, Entity, Source, Case, Relation } from '../types'
-import { formatDate, getImpactLabel, getImpactColor, getStatusColor, getStatusLabel } from '../utils'
-
-const events    = eventsData.events    as Event[]
+const caseZ     = (casesData.cases as Case[]).find(c => c.id === 'dp-77-24')!
+const allEvents = eventsData.events as Event[]
 const entities  = entitiesData.entities as Entity[]
-const sources   = sourcesData.sources  as Source[]
-const cases     = casesData.cases      as Case[]
-const relations = relationsData.relations as Relation[]
+const sources   = sourcesData.sources as Source[]
 
-const caseZ     = cases.find(c => c.id === 'dp-77-24')!
-const eventsZ   = events.filter(e => e.cases.includes('dp-77-24'))
+const eventsZ   = allEvents.filter(e => e.cases.includes('dp-77-24'))
 const entitiesZ = entities.filter(e => e.cases.includes('dp-77-24'))
 const sourcesZ  = sources.filter(s => s.cases.includes('dp-77-24'))
 
 const latest = [...eventsZ]
   .filter(e => !e.pending)
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-  .slice(0, 8)
+  .slice(0, 10)
 
-const topImpact = eventsZ
-  .filter(e => e.impact === 5 && !e.pending)
+const critical = eventsZ.filter(e => e.impact === 5 && !e.pending)
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-  .slice(0, 3)
 
 const investigated = entitiesZ
-  .filter(e => e.type === 'person' && ['investigated', 'accused', 'convicted'].includes(e.status))
+  .filter(e => e.type === 'person' && ['investigated','accused','convicted'].includes(e.status))
 
 const pending = eventsZ.find(e => e.pending)
 ---
 
-<Base
-  title="La Influencia"
-  description="Investigación sobre el Caso Zapatero y Plus Ultra. Datos verificados, fuentes documentadas."
->
-  <div style="padding: 2rem 2rem 0;">
+<Base title="La Influencia" description="Investigación sobre el Caso Zapatero. Datos verificados, fuentes documentadas.">
+<div style="padding:2rem; max-width:960px;">
 
-    <!-- Cabecera de sección -->
-    <div style="margin-bottom: 1.75rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--line);">
-      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; color:var(--red); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.4rem;">
-        D.P. 77/2024 — Juzgado Central de Instrucción Nº 2
+  <!-- ── Cabecera del expediente ───────────────────── -->
+  <div style="margin-bottom:1.75rem;">
+    <div style="display:flex; align-items:start; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
+      <div>
+        <h1 style="font-size:1.25rem; font-weight:600; letter-spacing:-0.025em; margin-bottom:0.25rem;">
+          Caso Zapatero / Plus Ultra
+        </h1>
+        <p style="font-size:0.82rem; color:var(--txt2); margin:0; max-width:560px; line-height:1.55;">
+          Investigación sobre el rescate de 53&nbsp;M€ a Plus Ultra. El juez Calama imputó
+          al expresidente Zapatero el 18&nbsp;may.&nbsp;2026 por cuatro delitos.
+        </p>
       </div>
-      <h1 style="font-size:1.5rem; font-weight:700; letter-spacing:-0.03em; margin-bottom:0.4rem;">
-        Caso Zapatero / Plus Ultra
-      </h1>
-      <p style="font-size:0.88rem; color:var(--txt2); margin:0; max-width:640px; line-height:1.6;">
-        Investigación sobre el presunto rescate irregular de 53 millones de euros
-        a la aerolínea venezolana Plus Ultra. El juez Calama imputó a Zapatero el 18 de mayo de 2026
-        por organización criminal, tráfico de influencias, blanqueo y falsedad documental.
-      </p>
       {pending && (
-        <div style="margin-top:0.85rem; display:inline-flex; align-items:center; gap:8px; background:var(--gold-bg); border:1px solid #e0d090; padding:5px 10px; border-radius:4px;">
-          <span style="width:6px;height:6px;background:var(--gold);border-radius:50%;display:inline-block;flex-shrink:0;"></span>
-          <span style="font-family:'IBM Plex Mono',monospace; font-size:0.62rem; color:var(--gold);">
-            Próximo: {pending.title} — {formatDate(pending.date, pending.date_precision)}
-          </span>
+        <div style="background:var(--gold-bg); border:1px solid #dcc870; border-radius:5px; padding:6px 10px; flex-shrink:0;">
+          <div style="font-family:'DM Mono',monospace; font-size:0.55rem; color:var(--gold); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:2px;">Próximo</div>
+          <div style="font-size:0.75rem; color:var(--txt); font-weight:500; line-height:1.3;">{pending.title}</div>
+          <div style="font-family:'DM Mono',monospace; font-size:0.6rem; color:var(--txt3); margin-top:2px;">{formatDate(pending.date, pending.date_precision)}</div>
         </div>
       )}
     </div>
+  </div>
 
-    <!-- Cifras rápidas -->
-    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-bottom:2rem;">
+  <!-- ── Ficha del expediente ──────────────────────── -->
+  <div class="ficha" style="margin-bottom:1.5rem;">
+    <div style="display:grid; grid-template-columns:repeat(4,1fr);">
       {[
-        { n: eventsZ.length,    label: 'Eventos',     href: '/cronologia' },
-        { n: entitiesZ.length,  label: 'Actores',     href: '/red' },
-        { n: sourcesZ.length,   label: 'Fuentes',     href: '/documentos' },
-        { n: caseZ.charges.length, label: 'Delitos', href: null },
-      ].map(s => (
-        <div style="background:var(--bg); padding:1rem 1.25rem;">
-          {s.href ? (
-            <a href={s.href} style="text-decoration:none; display:block;">
-              <div style="font-size:1.6rem; font-weight:700; letter-spacing:-0.03em; color:var(--txt); line-height:1;">
-                {s.n}
-              </div>
-              <div style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.06em; margin-top:3px;">
-                {s.label}
-              </div>
-            </a>
-          ) : (
-            <>
-              <div style="font-size:1.6rem; font-weight:700; letter-spacing:-0.03em; color:var(--txt); line-height:1;">
-                {s.n}
-              </div>
-              <div style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.06em; margin-top:3px;">
-                {s.label}
-              </div>
-            </>
-          )}
+        { k: 'Nº expediente',  v: 'D.P. 77/2024' },
+        { k: 'Juzgado',        v: 'JCI Nº 2 · Madrid' },
+        { k: 'Juez instructor',v: 'José Luis Calama' },
+        { k: 'Estado',         v: 'En instrucción' },
+      ].map(({ k, v }, i, arr) => (
+        <div style={`padding:10px 14px; background:var(--bg2); border-right:${i < arr.length-1 ? '1px solid var(--line2)' : 'none'};`}>
+          <div style="font-family:'DM Mono',monospace; font-size:0.55rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:3px;">{k}</div>
+          <div style="font-size:0.8rem; font-weight:500; color:var(--txt);">{v}</div>
         </div>
       ))}
     </div>
-
-    <!-- Dos columnas: eventos + personas -->
-    <div style="display:grid; grid-template-columns:1fr 260px; gap:2rem; align-items:start;">
-
-      <!-- Columna izquierda: últimos eventos -->
-      <div>
-        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;">
-          <span style="font-size:0.75rem; font-weight:600; color:var(--txt);">Últimos eventos</span>
-          <a href="/cronologia" style="font-family:'IBM Plex Mono',monospace; font-size:0.62rem; color:var(--txt3); text-decoration:none; letter-spacing:0.03em;">
-            Ver todos →
-          </a>
-        </div>
-
-        <div style="display:flex; flex-direction:column; border:1px solid var(--line);">
-          {latest.map((ev, i) => {
-            const impactColor = getImpactColor(ev.impact)
-            const borderColor = ev.cases.includes('dp-77-24') && ev.cases.includes('caso-koldo')
-              ? 'var(--gold)' : 'var(--red)'
-            return (
-              <a
-                href={`/eventos/${ev.id}`}
-                style={`
-                  display:block; padding:0.85rem 1rem;
-                  border-bottom:${i < latest.length - 1 ? '1px solid var(--line)' : 'none'};
-                  border-left:3px solid ${borderColor};
-                  text-decoration:none;
-                  transition:background 0.1s;
-                `}
-                class="card-hover"
-              >
-                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <time style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:var(--txt3); letter-spacing:0.03em; white-space:nowrap;">
-                    {formatDate(ev.date, ev.date_precision)}
-                  </time>
-                  <span style={`font-family:'IBM Plex Mono',monospace; font-size:0.58rem; color:${impactColor}; text-transform:uppercase; letter-spacing:0.06em;`}>
-                    {getImpactLabel(ev.impact)}
-                  </span>
-                </div>
-                <div style="font-size:0.85rem; font-weight:600; color:var(--txt); line-height:1.35; letter-spacing:-0.01em;">
-                  {ev.title}
-                </div>
-              </a>
-            )
-          })}
-        </div>
+    <div style="border-top:1px solid var(--line2); padding:10px 14px; background:var(--bg2);">
+      <div style="font-family:'DM Mono',monospace; font-size:0.55rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:5px;">Delitos imputados</div>
+      <div style="display:flex; flex-wrap:wrap; gap:6px;">
+        {caseZ.charges.map(charge => (
+          <span style="font-size:0.75rem; color:var(--txt2); background:var(--red-bg); border:1px solid #f0c0bc; border-radius:3px; padding:2px 8px;">
+            {charge}
+          </span>
+        ))}
       </div>
+    </div>
+  </div>
 
-      <!-- Columna derecha: personas -->
+  <!-- ── Métricas ──────────────────────────────────── -->
+  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:1.75rem;">
+    {[
+      { n: eventsZ.length,      label:'Eventos',   href:'/cronologia', color:'var(--txt)' },
+      { n: entitiesZ.length,    label:'Actores',   href:'/red',        color:'var(--txt)' },
+      { n: sourcesZ.length,     label:'Fuentes',   href:'/documentos', color:'var(--txt)' },
+      { n: critical.length,     label:'Críticos',  href:'/cronologia', color:'var(--red)'  },
+    ].map(({ n, label, href, color }) => (
+      <a href={href} style="display:block; background:var(--card); border:1px solid var(--line); border-radius:6px; padding:12px 14px; text-decoration:none;" class="card-hover">
+        <div style={`font-size:1.5rem; font-weight:700; letter-spacing:-0.03em; color:${color}; line-height:1; margin-bottom:3px;`}>{n}</div>
+        <div style="font-family:'DM Mono',monospace; font-size:0.58rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.06em;">{label}</div>
+      </a>
+    ))}
+  </div>
+
+  <!-- ── Cuerpo: dos columnas ─────────────────────── -->
+  <div style="display:grid; grid-template-columns:1fr 240px; gap:1.5rem; align-items:start;">
+
+    <!-- Eventos recientes -->
+    <div>
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.75rem;">
+        <span style="font-size:0.75rem; font-weight:600; color:var(--txt);">Eventos recientes</span>
+        <a href="/cronologia" style="font-family:'DM Mono',monospace; font-size:0.6rem; color:var(--txt3); letter-spacing:0.03em;">ver todos →</a>
+      </div>
+      <div class="ficha">
+        {latest.map((ev, i) => {
+          const ic = getImpactColor(ev.impact)
+          return (
+            <a href={`/eventos/${ev.id}`}
+              class="card-hover"
+              style={`
+                display:grid; grid-template-columns:80px 1fr;
+                border-bottom:${i < latest.length-1 ? '1px solid var(--line2)' : 'none'};
+                text-decoration:none;
+                border-left:3px solid ${ev.impact === 5 ? 'var(--red)' : ev.impact === 4 ? 'var(--gold)' : 'var(--line)'};
+              `}>
+              <!-- Fecha -->
+              <div style="padding:9px 10px; border-right:1px solid var(--line2); background:var(--bg2); display:flex; flex-direction:column; justify-content:center; gap:2px;">
+                <time style="font-family:'DM Mono',monospace; font-size:0.6rem; color:var(--txt3); letter-spacing:0.02em; line-height:1.4; display:block;">
+                  {formatDate(ev.date, ev.date_precision)}
+                </time>
+                <span style={`font-family:'DM Mono',monospace; font-size:0.55rem; color:${ic}; text-transform:uppercase; letter-spacing:0.06em;`}>
+                  {getImpactLabel(ev.impact)}
+                </span>
+              </div>
+              <!-- Título -->
+              <div style="padding:9px 12px; display:flex; align-items:center;">
+                <span style="font-size:0.8rem; font-weight:500; color:var(--txt); line-height:1.35; letter-spacing:-0.01em;">
+                  {ev.title}
+                </span>
+              </div>
+            </a>
+          )
+        })}
+      </div>
+    </div>
+
+    <!-- Lateral: personas + eventos críticos -->
+    <div style="display:flex; flex-direction:column; gap:1.25rem;">
+
+      <!-- Investigados -->
       <div>
-        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;">
-          <span style="font-size:0.75rem; font-weight:600; color:var(--txt);">Personas investigadas</span>
-          <a href="/red" style="font-family:'IBM Plex Mono',monospace; font-size:0.62rem; color:var(--txt3); text-decoration:none; letter-spacing:0.03em;">
-            Red →
-          </a>
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.75rem;">
+          <span style="font-size:0.75rem; font-weight:600; color:var(--txt);">Investigados</span>
+          <a href="/red" style="font-family:'DM Mono',monospace; font-size:0.6rem; color:var(--txt3); letter-spacing:0.03em;">red →</a>
         </div>
-
-        <div style="display:flex; flex-direction:column; border:1px solid var(--line);">
+        <div class="ficha">
           {investigated.map((ent, i) => {
             const sc = getStatusColor(ent.status)
             const sl = getStatusLabel(ent.status)
             return (
-              <a
-                href={`/personajes/${ent.id}`}
-                style={`
-                  display:flex; align-items:center; gap:10px;
-                  padding:0.7rem 1rem;
-                  border-bottom:${i < investigated.length - 1 ? '1px solid var(--line)' : 'none'};
-                  text-decoration:none;
-                  transition:background 0.1s;
-                `}
+              <a href={`/personajes/${ent.id}`}
                 class="card-hover"
-              >
-                <div style="flex:1; min-width:0;">
-                  <div style="font-size:0.82rem; font-weight:600; color:var(--txt); line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-                    {ent.name}
-                  </div>
-                  <div style="font-size:0.72rem; color:var(--txt2); line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-                    {ent.role}
-                  </div>
+                style={`display:flex; align-items:center; justify-content:space-between; gap:8px; padding:7px 10px; border-bottom:${i < investigated.length-1 ? '1px solid var(--line2)' : 'none'}; text-decoration:none;`}>
+                <div style="min-width:0;">
+                  <div style="font-size:0.78rem; font-weight:500; color:var(--txt); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{ent.name}</div>
+                  <div style="font-family:'DM Mono',monospace; font-size:0.58rem; color:var(--txt3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:1px;">{ent.role.slice(0,40)}{ent.role.length>40?'…':''}</div>
                 </div>
-                <span class="status-pill" style={`background:${sc}18; color:${sc}; border:1px solid ${sc}40; flex-shrink:0;`}>
-                  {sl}
-                </span>
+                <span class="status-pill" style={`background:${sc}15; color:${sc}; border:1px solid ${sc}35; flex-shrink:0;`}>{sl}</span>
               </a>
             )
           })}
         </div>
+      </div>
 
-        <!-- Eventos críticos -->
-        <div style="margin-top:1.5rem;">
-          <div style="font-size:0.75rem; font-weight:600; color:var(--txt); margin-bottom:1rem;">
-            Hechos críticos
-          </div>
-          <div style="display:flex; flex-direction:column; gap:8px;">
-            {topImpact.map(ev => (
-              <a
-                href={`/eventos/${ev.id}`}
-                style="display:block; padding:0.75rem; background:var(--red-bg); border:1px solid #f0c4c0; border-left:3px solid var(--red); text-decoration:none;"
-                class="card-hover"
-              >
-                <div style="font-family:'IBM Plex Mono',monospace; font-size:0.58rem; color:var(--red); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:3px;">
-                  {formatDate(ev.date, ev.date_precision)}
-                </div>
-                <div style="font-size:0.78rem; font-weight:600; color:var(--txt); line-height:1.35; letter-spacing:-0.01em;">
-                  {ev.title}
-                </div>
-              </a>
-            ))}
-          </div>
+      <!-- Hechos críticos -->
+      <div>
+        <div style="font-size:0.75rem; font-weight:600; color:var(--txt); margin-bottom:0.75rem;">Hechos críticos</div>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          {critical.slice(0,4).map(ev => (
+            <a href={`/eventos/${ev.id}`}
+              class="card-hover"
+              style="display:block; background:var(--card); border:1px solid var(--line); border-left:3px solid var(--red); border-radius:5px; padding:8px 10px; text-decoration:none;">
+              <div style="font-family:'DM Mono',monospace; font-size:0.55rem; color:var(--red); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:3px;">
+                {formatDate(ev.date, ev.date_precision)}
+              </div>
+              <div style="font-size:0.75rem; font-weight:500; color:var(--txt); line-height:1.35; letter-spacing:-0.01em;">
+                {ev.title}
+              </div>
+            </a>
+          ))}
         </div>
       </div>
+
     </div>
   </div>
+</div>
 </Base>

@@ -1,134 +1,103 @@
 ---
-import casesData    from '../data/cases.json'
-import eventsData   from '../data/events.json'
-import entitiesData from '../data/entities.json'
-import type { Case, Event, Entity } from '../types'
+import casesData  from '../data/cases.json'
+import eventsData from '../data/events.json'
+import type { Case, Event } from '../types'
 
-const cases    = casesData.cases     as Case[]
-const events   = eventsData.events   as Event[]
-const entities = entitiesData.entities as Entity[]
+const cases  = casesData.cases   as Case[]
+const events = eventsData.events as Event[]
 
-const caseZ = cases.find(c => c.id === 'dp-77-24')!
+const caseZ   = cases.find(c => c.id === 'dp-77-24')!
 const eventsZ = events.filter(e => e.cases.includes('dp-77-24'))
-
-// Último evento no pendiente
-const lastEvent = [...eventsZ]
-  .filter(e => !e.pending)
+const lastEv  = [...eventsZ].filter(e => !e.pending)
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0]
 
 const pathname = Astro.url.pathname
 
-const navItems = [
-  { href: '/',            label: 'Inicio',      icon: '⌂' },
-  { href: '/cronologia',  label: 'Cronología',  icon: '◷' },
-  { href: '/red',         label: 'Red',         icon: '◎' },
-  { href: '/documentos',  label: 'Documentos',  icon: '▤' },
-  { href: '/buscar',      label: 'Buscar',      icon: '⌕' },
+const nav = [
+  { href: '/',           label: 'Inicio',     icon: '◈' },
+  { href: '/cronologia', label: 'Cronología', icon: '◷' },
+  { href: '/red',        label: 'Red',        icon: '◎' },
+  { href: '/documentos', label: 'Documentos', icon: '▤'  },
+  { href: '/buscar',     label: 'Buscar',     icon: '⌕'  },
 ]
 
-function isActive(href: string) {
-  if (href === '/') return pathname === '/'
-  return pathname.startsWith(href)
-}
+const isActive = (href: string) =>
+  href === '/' ? pathname === '/' : pathname.startsWith(href)
 ---
 
 <aside class="sidebar">
-  <!-- Logo -->
-  <div style="padding: 1.25rem 1rem 1rem; border-bottom: 1px solid var(--line);">
-    <a href="/" style="text-decoration:none; display:block;">
-      <div style="font-size: 0.95rem; font-weight: 700; color: var(--txt); letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 2px;">
+  <!-- Marca -->
+  <div style="padding:1.1rem 1rem 0.9rem; border-bottom:1px solid var(--line);">
+    <a href="/" style="text-decoration:none;">
+      <div style="font-size:0.9rem; font-weight:600; color:var(--txt); letter-spacing:-0.02em; line-height:1.2;">
         La Influencia
       </div>
-      <div style="font-family:'IBM Plex Mono',monospace; font-size: 0.58rem; color: var(--txt3); letter-spacing: 0.04em; text-transform: uppercase;">
+      <div style="font-family:'DM Mono',monospace; font-size:0.55rem; color:var(--txt3); letter-spacing:0.05em; text-transform:uppercase; margin-top:2px;">
         Investigación · Datos
       </div>
     </a>
   </div>
 
-  <!-- Navegación -->
-  <nav style="padding: 0.5rem 0; border-bottom: 1px solid var(--line);">
-    {navItems.map(({ href, label, icon }) => (
-      <a
-        href={href}
-        style={`
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          padding: 6px 1rem;
-          font-size: 0.82rem;
-          font-weight: ${isActive(href) ? '600' : '400'};
-          color: ${isActive(href) ? 'var(--txt)' : 'var(--txt2)'};
-          background: ${isActive(href) ? 'var(--bg3)' : 'transparent'};
-          text-decoration: none;
-          border-left: 2px solid ${isActive(href) ? 'var(--red)' : 'transparent'};
-          transition: background 0.1s;
-        `}
-      >
-        <span style={`font-size:0.75rem; opacity:${isActive(href) ? '1' : '0.5'};`}>{icon}</span>
+  <!-- Nav -->
+  <nav style="padding:0.4rem 0; border-bottom:1px solid var(--line);">
+    {nav.map(({ href, label, icon }) => (
+      <a href={href} style={`
+        display:flex; align-items:center; gap:7px;
+        padding:5px 12px;
+        font-size:0.78rem;
+        font-weight:${isActive(href) ? '600' : '400'};
+        color:${isActive(href) ? 'var(--txt)' : 'var(--txt2)'};
+        background:${isActive(href) ? 'var(--card)' : 'transparent'};
+        border-left:2px solid ${isActive(href) ? 'var(--red)' : 'transparent'};
+        text-decoration:none;
+        transition:background 0.1s;
+      `}>
+        <span style="font-size:0.65rem; opacity:0.6;">{icon}</span>
         {label}
       </a>
     ))}
   </nav>
 
-  <!-- Estado del caso -->
-  <div style="padding: 1rem; border-bottom: 1px solid var(--line);">
-    <div style="font-family:'IBM Plex Mono',monospace; font-size:0.58rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.6rem;">
-      Caso activo
+  <!-- Expediente -->
+  <div style="padding:0.9rem 1rem; border-bottom:1px solid var(--line);">
+    <div style="font-family:'DM Mono',monospace; font-size:0.55rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.5rem;">
+      Expediente
     </div>
-
-    <div style="font-size:0.78rem; font-weight:600; color:var(--txt); margin-bottom:4px; line-height:1.3;">
-      D.P. 77/2024
-    </div>
-    <div style="font-family:'IBM Plex Mono',monospace; font-size:0.62rem; color:var(--txt2); line-height:1.5;">
-      Zapatero / Plus Ultra
-    </div>
-
-    <div style="margin-top:0.75rem; display:flex; flex-direction:column; gap:4px;">
+    <div class="ficha" style="border-radius:4px;">
       {[
-        { label: 'Estado',    val: 'Instrucción' },
-        { label: 'Juez',      val: 'Calama' },
-        { label: 'Organismo', val: 'JCI Nº 2 · Madrid' },
-      ].map(({ label, val }) => (
-        <div style="display:flex; gap:6px; align-items:baseline;">
-          <span style="font-family:'IBM Plex Mono',monospace; font-size:0.58rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.05em; flex-shrink:0; width:58px;">
-            {label}
-          </span>
-          <span style="font-size:0.75rem; color:var(--txt2);">{val}</span>
+        { k: 'N.º',      v: 'D.P. 77/2024' },
+        { k: 'Juzgado',  v: 'JCI Nº 2 · Madrid' },
+        { k: 'Juez',     v: 'Calama' },
+        { k: 'Estado',   v: 'Instrucción' },
+        { k: 'Abierto',  v: 'Ene. 2024' },
+      ].map(({ k, v }) => (
+        <div class="ficha-row">
+          <div class="ficha-label">{k}</div>
+          <div class="ficha-value" style="font-size:0.72rem;">{v}</div>
         </div>
       ))}
     </div>
-
-    {lastEvent && (
-      <div style="margin-top:0.75rem; padding-top:0.75rem; border-top:1px solid var(--line2);">
-        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.58rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:4px;">
-          Último hecho
-        </div>
-        <a href={`/eventos/${lastEvent.id}`} style="font-size:0.75rem; color:var(--txt2); line-height:1.4; display:block; text-decoration:none;">
-          {lastEvent.title.length > 60 ? lastEvent.title.slice(0, 60) + '…' : lastEvent.title}
-        </a>
-      </div>
-    )}
   </div>
 
   <!-- Cargos -->
-  <div style="padding: 1rem; border-bottom: 1px solid var(--line); flex:1;">
-    <div style="font-family:'IBM Plex Mono',monospace; font-size:0.58rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.6rem;">
-      Cargos imputados
+  <div style="padding:0.9rem 1rem; flex:1; overflow-y:auto;">
+    <div style="font-family:'DM Mono',monospace; font-size:0.55rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.5rem;">
+      Cargos
     </div>
-    <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:3px;">
+    <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:2px;">
       {caseZ.charges.map(charge => (
-        <li style="font-size:0.73rem; color:var(--txt2); line-height:1.4; display:flex; gap:5px; align-items:start;">
-          <span style="color:var(--red); flex-shrink:0; font-size:0.6rem; margin-top:3px;">▸</span>
+        <li style="font-size:0.72rem; color:var(--txt2); padding:3px 0; border-bottom:1px solid var(--line2); display:flex; gap:5px; align-items:start; line-height:1.4;">
+          <span style="color:var(--red); flex-shrink:0; font-size:0.55rem; margin-top:3px; font-family:'DM Mono',monospace;">▸</span>
           {charge}
         </li>
       ))}
     </ul>
   </div>
 
-  <!-- Footer del sidebar -->
-  <div style="padding:0.75rem 1rem; margin-top:auto;">
-    <p style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; color:var(--txt3); margin:0; line-height:1.6;">
-      La imputación no implica condena. Todos los investigados son inocentes hasta sentencia firme.
+  <!-- Disclaimer -->
+  <div style="padding:0.75rem 1rem; border-top:1px solid var(--line);">
+    <p style="font-family:'DM Mono',monospace; font-size:0.52rem; color:var(--txt3); margin:0; line-height:1.6;">
+      La imputación no implica condena. Inocentes hasta sentencia firme.
     </p>
   </div>
 </aside>

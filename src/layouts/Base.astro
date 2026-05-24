@@ -41,9 +41,9 @@ const fullTitle = title === 'La Influencia' ? title : `${title} — La Influenci
     <Sidebar />
     <div class="main-content">
       <slot />
-      <footer style="border-top:1px solid var(--line); padding:1.5rem 2rem; margin-top:3rem;">
-        <p style="font-family:'IBM Plex Mono',monospace; font-size:0.62rem; color:var(--txt3); margin:0; line-height:1.7;">
-          La imputación o procesamiento no implica condena. Todos los investigados son inocentes hasta sentencia firme.<br />
+      <footer style="border-top:1px solid var(--line); padding:1.25rem 2rem; margin-top:4rem; background:var(--bg2);">
+        <p style="font-family:'DM Mono',monospace; font-size:0.58rem; color:var(--txt3); margin:0; line-height:1.7;">
+          La imputación o procesamiento no implica condena. Todos los investigados son inocentes hasta sentencia firme.
           Fuentes documentadas en cada hecho. Datos auditables y públicos.
         </p>
       </footer>
@@ -55,7 +55,7 @@ const fullTitle = title === 'La Influencia' ? title : `${title} — La Influenci
       entries => entries.forEach(e => {
         if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target) }
       }),
-      { threshold: 0.08, rootMargin: '0px 0px -24px 0px' }
+      { threshold: 0.06, rootMargin: '0px 0px -20px 0px' }
     )
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el))
   </script>

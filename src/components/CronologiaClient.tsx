@@ -48,7 +48,7 @@ export default function CronologiaClient({ events, entities, sources, tipos }: P
   })
 
   const sel = {
-    fontFamily: "'IBM Plex Mono', monospace",
+    fontFamily: "'DM Mono', monospace",
     fontSize: '0.75rem',
     padding: '6px 10px',
     background: 'var(--bg2)',
@@ -60,7 +60,7 @@ export default function CronologiaClient({ events, entities, sources, tipos }: P
   } as React.CSSProperties
 
   const lbl = {
-    fontFamily: "'IBM Plex Mono', monospace",
+    fontFamily: "'DM Mono', monospace",
     fontSize: '0.65rem',
     color: 'var(--txt3)',
     textTransform: 'uppercase' as const,
@@ -99,12 +99,12 @@ export default function CronologiaClient({ events, entities, sources, tipos }: P
         {(caso !== 'todos' || tipo !== 'todos' || impactoMin > 1) && (
           <button
             onClick={() => { setCaso('todos'); setTipo('todos'); setImpactoMin(1) }}
-            style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.72rem', color: 'var(--txt2)', background: 'var(--bg3)', border: '1px solid var(--line)', padding: '6px 12px', cursor: 'pointer' }}
+            style={{ fontFamily: "'DM Mono',monospace", fontSize: '0.72rem', color: 'var(--txt2)', background: 'var(--bg3)', border: '1px solid var(--line)', padding: '6px 12px', cursor: 'pointer' }}
           >
             Limpiar ✕
           </button>
         )}
-        <span style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.72rem', color: 'var(--txt3)', marginLeft: 'auto', alignSelf: 'flex-end', paddingBottom: '6px' }}>
+        <span style={{ fontFamily: "'DM Mono',monospace", fontSize: '0.72rem', color: 'var(--txt3)', marginLeft: 'auto', alignSelf: 'flex-end', paddingBottom: '6px' }}>
           {filtered.length} evento{filtered.length !== 1 ? 's' : ''}
         </span>
       </div>
@@ -140,26 +140,26 @@ export default function CronologiaClient({ events, entities, sources, tipos }: P
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
                     <time
                       dateTime={ev.date}
-                      style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.78rem', color: 'var(--txt3)', whiteSpace: 'nowrap' }}
+                      style={{ fontFamily: "'DM Mono',monospace", fontSize: '0.78rem', color: 'var(--txt3)', whiteSpace: 'nowrap' }}
                     >
                       {formatDate(ev.date, ev.date_precision)}
                       {ev.pending && <span style={{ color: 'var(--gold)', marginLeft: '6px', fontSize: '0.65rem' }}>PENDIENTE</span>}
                     </time>
-                    <span style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.65rem', color: 'var(--txt3)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    <span style={{ fontFamily: "'DM Mono',monospace", fontSize: '0.65rem', color: 'var(--txt3)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                       {EVENT_TYPE_LABELS[ev.type] ?? ev.type}
                     </span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
-                    <span style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.7rem', color: verifiedColor }} title={ev.verified === true ? 'Verificado' : ev.verified === 'partial' ? 'Parcial' : 'Pendiente'}>
+                    <span style={{ fontFamily: "'DM Mono',monospace", fontSize: '0.7rem', color: verifiedColor }} title={ev.verified === true ? 'Verificado' : ev.verified === 'partial' ? 'Parcial' : 'Pendiente'}>
                       {verifiedIcon}
                     </span>
-                    <span style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.65rem', color: 'var(--txt3)' }}>
+                    <span style={{ fontFamily: "'DM Mono',monospace", fontSize: '0.65rem', color: 'var(--txt3)' }}>
                       {isOpen ? '▴' : '▾'}
                     </span>
                   </div>
                 </div>
 
-                <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: '1.15rem', fontWeight: 700, color: 'var(--txt)', margin: '0 0 0.6rem', lineHeight: 1.2, letterSpacing: '-0.01em' }}>
+                <h3 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '1.15rem', fontWeight: 700, color: 'var(--txt)', margin: '0 0 0.6rem', lineHeight: 1.2, letterSpacing: '-0.01em' }}>
                   {ev.title}
                 </h3>
 
@@ -169,14 +169,14 @@ export default function CronologiaClient({ events, entities, sources, tipos }: P
                     {[1,2,3,4,5].map(i => (
                       <span key={i} style={{ width: '7px', height: '7px', background: i <= ev.impact ? impactColor : 'var(--line2)', display: 'block' }} />
                     ))}
-                    <span style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.68rem', color: impactColor, marginLeft: '4px' }}>
+                    <span style={{ fontFamily: "'DM Mono',monospace", fontSize: '0.68rem', color: impactColor, marginLeft: '4px' }}>
                       {getImpactLabel(ev.impact)}
                     </span>
                   </div>
                   <span style={{ color: 'var(--line2)' }}>|</span>
                   {ev.cases.map(c => (
                     <span key={c} style={{
-                      fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.62rem', fontWeight: 500,
+                      fontFamily: "'DM Mono',monospace", fontSize: '0.62rem', fontWeight: 500,
                       letterSpacing: '0.06em', textTransform: 'uppercase', padding: '2px 8px',
                       borderRadius: '999px', border: `1px solid ${CASE_COLORS[c] ?? 'var(--line2)'}`,
                       color: CASE_COLORS[c] ?? 'var(--txt3)',
@@ -202,7 +202,7 @@ export default function CronologiaClient({ events, entities, sources, tipos }: P
 
                   {evEntities.length > 0 && (
                     <div style={{ marginBottom: '1rem' }}>
-                      <p style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.68rem', color: 'var(--txt3)', textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 0.5rem' }}>
+                      <p style={{ fontFamily: "'DM Mono',monospace", fontSize: '0.68rem', color: 'var(--txt3)', textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 0.5rem' }}>
                         Actores
                       </p>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
@@ -217,7 +217,7 @@ export default function CronologiaClient({ events, entities, sources, tipos }: P
 
                   {evSources.length > 0 && (
                     <div style={{ marginBottom: '1rem' }}>
-                      <p style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.68rem', color: 'var(--txt3)', textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 0.5rem' }}>
+                      <p style={{ fontFamily: "'DM Mono',monospace", fontSize: '0.68rem', color: 'var(--txt3)', textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 0.5rem' }}>
                         Fuentes
                       </p>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -239,7 +239,7 @@ export default function CronologiaClient({ events, entities, sources, tipos }: P
                           const label = src.subtype ?? (src.type === 'judicial_order' ? 'Auto' : src.type === 'police_report' ? 'Informe' : src.type === 'press' ? 'Prensa' : src.type)
                           return (
                             <span key={src.id} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                              <span style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.62rem', padding: '2px 6px', background: bg, color: fg, border: `1px solid ${fg}40`, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                              <span style={{ fontFamily: "'DM Mono',monospace", fontSize: '0.62rem', padding: '2px 6px', background: bg, color: fg, border: `1px solid ${fg}40`, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                                 {label}
                               </span>
                               {src.url
@@ -255,7 +255,7 @@ export default function CronologiaClient({ events, entities, sources, tipos }: P
                     </div>
                   )}
 
-                  <a href={`/eventos/${ev.id}`} style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.72rem', color: 'var(--blue2)', textDecoration: 'none', letterSpacing: '0.03em' }}>
+                  <a href={`/eventos/${ev.id}`} style={{ fontFamily: "'DM Mono',monospace", fontSize: '0.72rem', color: 'var(--blue2)', textDecoration: 'none', letterSpacing: '0.03em' }}>
                     Ver página completa →
                   </a>
                 </div>
@@ -266,7 +266,7 @@ export default function CronologiaClient({ events, entities, sources, tipos }: P
       </div>
 
       {filtered.length === 0 && (
-        <div style={{ padding: '3rem', textAlign: 'center', color: 'var(--txt3)', fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.85rem' }}>
+        <div style={{ padding: '3rem', textAlign: 'center', color: 'var(--txt3)', fontFamily: "'DM Mono',monospace", fontSize: '0.85rem' }}>
           No hay eventos con los filtros seleccionados.
         </div>
       )}
