@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css'
-import Sidebar from '../components/Sidebar.astro'
+import Navbar from '../components/Navbar.astro'
 
 interface Props {
   title: string
@@ -38,7 +38,7 @@ const fullTitle = title === 'La Influencia' ? title : `${title} — La Influenci
 </head>
 <body>
   <div class="layout">
-    <Sidebar />
+    <Navbar />
     <div class="main-content">
       <slot />
       <footer style="border-top:1px solid var(--line); padding:1.25rem 2rem; margin-top:4rem; background:var(--bg2);">

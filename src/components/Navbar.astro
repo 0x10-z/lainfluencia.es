@@ -1,0 +1,67 @@
+---
+import eventsData from '../data/events.json'
+import entitiesData from '../data/entities.json'
+import type { Event, Entity } from '../types'
+import NavSearch from './NavSearch.tsx'
+
+const events = eventsData.events as Event[]
+const entities = entitiesData.entities as Entity[]
+
+const pathname = Astro.url.pathname
+
+const nav = [
+  { href: '/',            label: 'Inicio' },
+  { href: '/cronologia',  label: 'Cronología' },
+  { href: '/personajes',  label: 'Personajes' },
+  { href: '/red',         label: 'Red' },
+  { href: '/documentos',  label: 'Documentos' },
+]
+
+const isActive = (href: string) =>
+  href === '/' ? pathname === '/' : pathname.startsWith(href)
+---
+
+<nav class="topnav">
+  <!-- Logo -->
+  <a href="/" style="
+    display: flex; align-items: center; gap: 0;
+    padding: 0 1.25rem;
+    height: 100%;
+    border-right: 1px solid var(--line);
+    text-decoration: none;
+    flex-shrink: 0;
+  ">
+    <div>
+      <div style="font-size: 0.95rem; font-weight: 700; color: var(--txt); letter-spacing: -0.03em; line-height: 1;">
+        La Influencia
+      </div>
+      <div style="font-family: 'DM Mono', monospace; font-size: 0.5rem; color: var(--red); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 1px;">
+        Investigación
+      </div>
+    </div>
+  </a>
+
+  <!-- Links de nav -->
+  <div style="display: flex; align-items: stretch; height: 100%; flex: 1;">
+    {nav.map(({ href, label }) => (
+      <a href={href} style={`
+        display: flex; align-items: center;
+        padding: 0 1rem;
+        font-size: 0.8rem;
+        font-weight: ${isActive(href) ? '600' : '400'};
+        color: ${isActive(href) ? 'var(--txt)' : 'var(--txt2)'};
+        border-bottom: 2px solid ${isActive(href) ? 'var(--red)' : 'transparent'};
+        text-decoration: none;
+        white-space: nowrap;
+        transition: color 0.1s;
+      `}>
+        {label}
+      </a>
+    ))}
+  </div>
+
+  <!-- Búsqueda integrada -->
+  <div style="display: flex; align-items: center; padding: 0 1rem; border-left: 1px solid var(--line);">
+    <NavSearch events={events} entities={entities} client:load />
+  </div>
+</nav>

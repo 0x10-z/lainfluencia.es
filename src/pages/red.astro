@@ -7,13 +7,18 @@ import relationsData from '../data/relations.json'
 
 import type { Entity, Relation } from '../types'
 
-const entities = entitiesData.entities as Entity[]
-const relations = relationsData.relations as Relation[]
+const allEntities = entitiesData.entities as Entity[]
+const allRelations = relationsData.relations as Relation[]
+// Solo relaciones del Caso Zapatero (excluir las exclusivas del Caso Koldo)
+const relations = allRelations.filter(r => r.cases.includes('dp-77-24'))
+// Solo entidades presentes en esas relaciones o en el Caso Zapatero
+const relatedIds = new Set(relations.flatMap(r => [r.from, r.to]))
+const entities = allEntities.filter(e => e.cases.includes('dp-77-24') || relatedIds.has(e.id))
 ---
 
 <Base
   title="Red de relaciones"
-  description="Mapa visual de las relaciones entre actores del Caso Zapatero y el Caso Koldo."
+  description="Mapa visual de las relaciones entre actores del Caso Zapatero."
 >
   <!-- Cabecera -->
   <div class="container" style="padding: 2rem 0 1rem;">
@@ -33,8 +38,6 @@ const relations = relationsData.relations as Relation[]
     <div style="display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center;">
       {[
         { color: 'var(--red)', label: 'Caso Zapatero' },
-        { color: 'var(--blue)', label: 'Caso Koldo' },
-        { color: 'var(--gold)', label: 'Ambos casos' },
         { color: 'var(--txt3)', label: 'Sin caso directo' },
       ].map(({ color, label }) => (
         <span style="display:flex;align-items:center;gap:6px;">
