@@ -300,6 +300,116 @@
       "url": null
     },
     {
+      "id": "estrelladigital-zapatero-senado-2026",
+      "type": "press",
+      "title": "Zapatero comparecerá en la comisión del caso Koldo por el rescate de Plus Ultra",
+      "publisher": "Estrella Digital",
+      "date": "2026-02-19",
+      "cases": ["dp-77-24"],
+      "availability": "public",
+      "url": "https://www.estrelladigital.es/articulo/espana/zapatero-declarara-senado-2-marzo-rescate-plus-ultra/20260219194655441726.html"
+    },
+    {
+      "id": "articulo14-ferraz-2026",
+      "type": "press",
+      "title": "La base de la trama a 60 metros de la sede del PSOE",
+      "publisher": "Artículo 14",
+      "date": "2026-05-20",
+      "cases": ["dp-77-24"],
+      "availability": "public",
+      "url": "https://www.articulo14.es/politica/la-oficina-de-zapatero-en-ferraz-20260520.html"
+    },
+    {
+      "id": "eldiario-origen-caso-zapatero-2026",
+      "type": "press",
+      "title": "El origen del caso que implica a Zapatero: una denuncia de Anticorrupción tras alertas de Francia y Suiza",
+      "publisher": "elDiario.es",
+      "date": "2026-05-21",
+      "cases": ["dp-77-24"],
+      "availability": "public",
+      "url": "https://www.eldiario.es/politica/origen-caso-implica-zapatero-denuncia-anticorrupcion-alertas-francia-suiza_1_13234413.html"
+    },
+    {
+      "id": "infobae-magistrada-enlace-2024",
+      "type": "press",
+      "title": "El CGPJ nombra a la jueza Silvia Martínez Cantón como magistrada de enlace en Francia",
+      "publisher": "Infobae España",
+      "date": "2024-07-11",
+      "cases": ["dp-77-24"],
+      "availability": "public",
+      "url": "https://www.infobae.com/espana/agencias/2024/07/11/el-cgpj-nombra-a-la-jueza-silvia-martinez-canton-como-magistrada-de-enlace-en-francia/"
+    },
+    {
+      "id": "boe-magistrada-enlace-2024",
+      "type": "official",
+      "title": "Orden PJC/772/2024 — Nombramiento magistrada de enlace Silvia Martínez Cantón ante Francia y Suiza",
+      "issuer": "Boletín Oficial del Estado",
+      "date": "2024-07-22",
+      "cases": ["dp-77-24"],
+      "availability": "public",
+      "url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-15434"
+    },
+    {
+      "id": "infobae-detenciones-plus-ultra-2025",
+      "type": "press",
+      "title": "La Policía detiene al presidente y al CEO de Plus Ultra tras registrar la sede de la aerolínea por presunto blanqueo",
+      "publisher": "Infobae España",
+      "date": "2025-12-11",
+      "cases": ["dp-77-24"],
+      "availability": "public",
+      "url": "https://www.infobae.com/espana/agencias/2025/12/11/la-policia-detiene-al-presidente-y-al-ceo-de-plus-ultra-tras-registrar-la-sede-de-la-aerolinea-por-presunto-blanqueo/"
+    },
+    {
+      "id": "burgosconecta-cese-enlace-2026",
+      "type": "press",
+      "title": "El Gobierno ciega la vía suiza que ha ayudado a destapar el caso Zapatero",
+      "publisher": "Burgos Conecta",
+      "date": "2026-05-22",
+      "cases": ["dp-77-24"],
+      "availability": "public",
+      "url": "https://www.burgosconecta.es/nacional/gobierno-ciega-via-suiza-ayudado-destapar-zapatero-20260522092626-ntrc.html"
+    },
+    {
+      "id": "libertad-digital-morodo-2024",
+      "type": "press",
+      "title": "La Audiencia Nacional condena al embajador de Zapatero en Venezuela, Raúl Morodo, a 10 meses de prisión",
+      "publisher": "Libertad Digital",
+      "date": "2024-12-03",
+      "cases": ["dp-77-24"],
+      "availability": "public",
+      "url": "https://www.libertaddigital.com/espana/2024-12-03/audiencia-nacional-condena-embajador-zapatero-venezuela-raul-morodo-10-meses-prision-7193755/"
+    },
+    {
+      "id": "eldiario-empresas-zapatero-2026",
+      "type": "press",
+      "title": "El juez Calama señala a dos venezolanos como vehículo de pago a Zapatero por negocios entre Pekín y Caracas",
+      "publisher": "elDiario.es",
+      "date": "2026-05-21",
+      "cases": ["dp-77-24"],
+      "availability": "public",
+      "url": "https://www.eldiario.es/politica/juez-calama-senala-venezolanos-vehiculo-pago-zapatero-negocios-pekin-caracas_1_13234374.html"
+    },
+    {
+      "id": "elindependiente-udef-marlaska-2022",
+      "type": "press",
+      "title": "Grande-Marlaska coloca al frente de la UDEF a un experto en inmigración ilegal",
+      "publisher": "El Independiente",
+      "date": "2022-06-23",
+      "cases": ["dp-77-24"],
+      "availability": "public",
+      "url": "https://www.elindependiente.com/espana/2022/06/23/grande-marlaska-coloca-al-frente-de-la-udef-a-un-experto-en-inmigracion-ilegal/"
+    },
+    {
+      "id": "elindependiente-pascual-grasa-2024",
+      "type": "press",
+      "title": "Marlaska nombra comisario general de Policía Judicial al jefe superior de Cataluña",
+      "publisher": "El Independiente",
+      "date": "2024-01-08",
+      "cases": ["dp-77-24"],
+      "availability": "public",
+      "url": "https://www.elindependiente.com/espana/2024/01/08/marlaska-nombra-comisario-general-de-policia-judicial-al-jefe-superior-de-cataluna/"
+    },
+    {
       "id": "eldiario-zapatero-imputado-2026",
       "type": "press",
       "title": "Zapatero, imputado por organización criminal, falsedad y tráfico de influencias en el caso Plus Ultra",
