@@ -124,7 +124,11 @@ function badgeLabel(src: Source): string {
               return (
                 <div style="border-right:1px solid var(--line); border-bottom:1px solid var(--line); display:flex; flex-direction:column;">
                   {src.url && !isHomepage ? (
-                    <a href={src.url} target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;text-decoration:none;color:inherit;flex:1;transition:background 0.15s;"
+                    <div
+                      class="press-card"
+                      data-url={src.url}
+                      data-title={ogData?.title ?? src.title}
+                      style="display:flex;flex-direction:column;text-decoration:none;color:inherit;flex:1;transition:background 0.15s;cursor:pointer;"
                       onmouseover="this.style.background='var(--bg2)'"
                       onmouseout="this.style.background=''">
                       {/* Imagen OG */}
@@ -156,10 +160,10 @@ function badgeLabel(src: Source): string {
                           </p>
                         )}
                         <span style="font-family:var(--fm);font-size:0.46rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--txt3);margin-top:auto;padding-top:0.3rem;">
-                          Abrir fuente ↗
+                          Ver artículo ↗
                         </span>
                       </div>
-                    </a>
+                    </div>
                   ) : (
                     /* Homepage genérica — sin enlace útil, solo info */
                     <div style="display:flex;flex-direction:column;flex:1;">
@@ -244,3 +248,171 @@ function badgeLabel(src: Source): string {
     ))}
   </div>
 </Base>
+
+<!-- Modal lector de artículos -->
+<div id="article-modal" style="
+  display:none; position:fixed; inset:0; z-index:1000;
+  background:rgba(0,0,0,0.75); backdrop-filter:blur(3px);
+  align-items:center; justify-content:center;
+">
+  <div style="
+    position:relative; width:min(960px,95vw); height:88vh;
+    background:var(--bg); border:1px solid var(--line);
+    display:flex; flex-direction:column; border-radius:6px; overflow:hidden;
+  ">
+    <!-- Barra superior -->
+    <div style="
+      display:flex; align-items:center; gap:0.75rem;
+      padding:0.6rem 1rem; border-bottom:1px solid var(--line);
+      background:var(--bg2); flex-shrink:0;
+    ">
+      <span id="modal-title" style="
+        font-family:var(--fm); font-size:0.6rem; color:var(--txt2);
+        letter-spacing:0.05em; flex:1; overflow:hidden;
+        text-overflow:ellipsis; white-space:nowrap;
+      "></span>
+      <a id="modal-link" href="#" target="_blank" rel="noopener noreferrer" style="
+        font-family:var(--fm); font-size:0.5rem; letter-spacing:0.1em;
+        text-transform:uppercase; color:var(--txt3); text-decoration:none;
+        padding:0.3rem 0.7rem; border:1px solid var(--line); border-radius:4px;
+        white-space:nowrap; transition:color 0.15s, border-color 0.15s; flex-shrink:0;
+      "
+        onmouseover="this.style.color='var(--txt)';this.style.borderColor='var(--txt3)'"
+        onmouseout="this.style.color='var(--txt3)';this.style.borderColor='var(--line)'"
+      >Abrir en nueva pestaña ↗</a>
+      <button id="modal-close" style="
+        background:none; border:none; cursor:pointer;
+        font-size:1.1rem; color:var(--txt3); padding:0.2rem 0.4rem;
+        line-height:1; transition:color 0.15s; flex-shrink:0;
+      "
+        onmouseover="this.style.color='var(--txt)'"
+        onmouseout="this.style.color='var(--txt3)'"
+      >✕</button>
+    </div>
+
+    <!-- Loading -->
+    <div id="modal-loading" style="
+      display:none; position:absolute; inset:45px 0 0 0;
+      align-items:center; justify-content:center; flex-direction:column;
+      gap:0.75rem; background:var(--bg); pointer-events:none;
+    ">
+      <div style="
+        width:28px; height:28px; border-radius:50%;
+        border:2px solid var(--line); border-top-color:var(--txt3);
+        animation:spin 0.7s linear infinite;
+      "></div>
+      <span style="font-family:var(--fm);font-size:0.48rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--txt3);">Cargando…</span>
+    </div>
+    <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+
+    <!-- iframe -->
+    <iframe id="modal-iframe" src="about:blank" style="
+      flex:1; border:none; width:100%; background:var(--bg);
+    " sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+
+    <!-- Fallback cuando el iframe es bloqueado -->
+    <div id="modal-fallback" style="
+      display:none; position:absolute; inset:45px 0 0 0;
+      align-items:center; justify-content:center; flex-direction:column;
+      gap:1rem; background:var(--bg); text-align:center; padding:2rem;
+    ">
+      <span style="font-size:2rem; opacity:0.3;">⊘</span>
+      <p style="font-family:var(--fb); font-size:0.85rem; color:var(--txt3); margin:0; max-width:340px; line-height:1.6;">
+        Este medio no permite la vista previa integrada.
+      </p>
+      <a id="modal-fallback-link" href="#" target="_blank" rel="noopener noreferrer" style="
+        font-family:var(--fm); font-size:0.55rem; letter-spacing:0.1em;
+        text-transform:uppercase; color:var(--txt2); text-decoration:none;
+        padding:0.5rem 1.2rem; border:1px solid var(--line); border-radius:4px;
+        transition:color 0.15s, border-color 0.15s;
+      "
+        onmouseover="this.style.color='var(--txt)';this.style.borderColor='var(--txt3)'"
+        onmouseout="this.style.color='var(--txt2)';this.style.borderColor='var(--line)'"
+      >Abrir artículo ↗</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const modal    = document.getElementById('article-modal')!
+  const modalBox = modal.querySelector('div')! as HTMLElement
+  const iframe   = document.getElementById('modal-iframe') as HTMLIFrameElement
+  const titleEl  = document.getElementById('modal-title')!
+  const linkEl   = document.getElementById('modal-link') as HTMLAnchorElement
+  const closeBtn = document.getElementById('modal-close')!
+  const fallback = document.getElementById('modal-fallback')!
+  const fbLink   = document.getElementById('modal-fallback-link') as HTMLAnchorElement
+  const loading  = document.getElementById('modal-loading')!
+
+  let blockTimer: ReturnType<typeof setTimeout> | null = null
+
+  function openModal(url: string, title: string) {
+    titleEl.textContent = title
+    linkEl.href = url
+    fbLink.href = url
+    fallback.style.display = 'none'
+    loading.style.display = 'flex'
+    iframe.style.opacity = '0'
+    iframe.src = url
+
+    // Animación entrada
+    modal.style.display = 'flex'
+    modal.style.opacity = '0'
+    modalBox.style.transform = 'translateY(18px) scale(0.97)'
+    modalBox.style.transition = 'transform 0.22s cubic-bezier(.22,1,.36,1), opacity 0.22s'
+    modal.style.transition = 'opacity 0.22s'
+    requestAnimationFrame(() => {
+      modal.style.opacity = '1'
+      modalBox.style.transform = 'translateY(0) scale(1)'
+    })
+
+    document.body.style.overflow = 'hidden'
+
+    if (blockTimer) clearTimeout(blockTimer)
+
+    iframe.onload = () => {
+      if (blockTimer) clearTimeout(blockTimer)
+      loading.style.display = 'none'
+      iframe.style.opacity = '1'
+      iframe.style.transition = 'opacity 0.2s'
+    }
+    iframe.onerror = () => showFallback()
+
+    // Si sigue en about:blank tras 5s, el navegador bloqueó la carga
+    blockTimer = setTimeout(() => {
+      try {
+        if (iframe.contentWindow?.location.href === 'about:blank') showFallback()
+      } catch { /* cross-origin = cargó bien */ }
+    }, 5000)
+  }
+
+  function showFallback() {
+    loading.style.display = 'none'
+    fallback.style.display = 'flex'
+  }
+
+  function closeModal() {
+    modal.style.opacity = '0'
+    modalBox.style.transform = 'translateY(12px) scale(0.97)'
+    setTimeout(() => {
+      modal.style.display = 'none'
+      document.body.style.overflow = ''
+      iframe.src = 'about:blank'
+      iframe.style.opacity = '0'
+      fallback.style.display = 'none'
+      loading.style.display = 'none'
+    }, 180)
+  }
+
+  closeBtn.addEventListener('click', closeModal)
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal() })
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal() })
+
+  document.querySelectorAll<HTMLElement>('.press-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const url   = card.dataset.url   ?? ''
+      const title = card.dataset.title ?? ''
+      if (url) openModal(url, title)
+    })
+  })
+</script>
