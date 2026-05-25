@@ -112,8 +112,18 @@ export default function GraphD3({ entities, relations }: Props) {
 
     const zoom = d3.zoom<SVGSVGElement, unknown>()
       .scaleExtent([0.2, 5])
+      .filter(event => {
+        // Rueda: solo con Ctrl. Pan con ratón: siempre.
+        if (event.type === 'wheel') return event.ctrlKey || event.metaKey
+        return true
+      })
       .on('zoom', e => g.attr('transform', e.transform.toString()))
     svg.call(zoom)
+
+    // Evitar que el navegador haga zoom de página con Ctrl+rueda sobre el SVG
+    svgRef.current!.addEventListener('wheel', e => {
+      if (e.ctrlKey || e.metaKey) e.preventDefault()
+    }, { passive: false })
 
     const g = svg.append('g')
 
@@ -260,7 +270,7 @@ export default function GraphD3({ entities, relations }: Props) {
   }
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
       {/* Filtros de tipo de relación */}
       <div style={{
         display: 'flex', flexWrap: 'wrap', gap: '0.35rem',
@@ -293,10 +303,21 @@ export default function GraphD3({ entities, relations }: Props) {
       </div>
 
       {/* SVG */}
-      <svg
-        ref={svgRef}
-        style={{ flex: 1, width: '100%', background: 'var(--bg)', display: 'block' }}
-      />
+      <div style={{ position: 'relative', flex: 1, overflow: 'hidden' }}>
+        <svg
+          ref={svgRef}
+          style={{ width: '100%', height: '100%', background: 'var(--bg)', display: 'block' }}
+        />
+        <div style={{
+          position: 'absolute', bottom: '0.75rem', right: '0.75rem',
+          fontFamily: 'var(--fm)', fontSize: '0.46rem', color: 'var(--txt3)',
+          background: 'var(--bg2)', border: '1px solid var(--line)',
+          padding: '0.3rem 0.6rem', borderRadius: '4px', pointerEvents: 'none',
+          letterSpacing: '0.06em', textTransform: 'uppercase',
+        }}>
+          Ctrl + rueda para zoom
+        </div>
+      </div>
 
       {/* Tooltip */}
       <div ref={tooltipRef} style={{
