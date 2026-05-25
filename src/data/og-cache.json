@@ -48,7 +48,13 @@
     "siteName": "The Objective",
     "localThumb": "/og-thumbs/the-objective-plus-ultra-koldo-2026.jpg"
   },
-  "el-independiente-conexion-venezolana-2026": null,
+  "el-independiente-conexion-venezolana-2026": {
+    "image": "https://www.elindependiente.com/wp-content/uploads/2026/05/delcy-zapatero-plus-ultra.jpg",
+    "localThumb": null,
+    "title": "La conexión venezolana de Zapatero",
+    "description": "Uno de los nombres que aparece de fondo en esa trama es el de Alex Saab, empresario de origen colombiano afín a Maduro",
+    "siteName": "El Independiente"
+  },
   "infobae-guia-plus-ultra-2026": {
     "image": "https://www.infobae.com/resizer/v2/PVPWHC5QJJBUPMXHCAXZZFYGMM.png?auth=7512ce283f4d4bbaca2b03a9c39429d30d8cdafdac729eb9b6c28ed8ba7960fb&amp;smart=true&amp;width=1200&amp;height=630&amp;quality=85",
     "title": "Guía para entender el ‘caso Plus Ultra’ y la imputación de Zapatero: un rescate aprobado por el Gobierno, conexiones con Venezuela y acercamientos a figuras del PSOE",
