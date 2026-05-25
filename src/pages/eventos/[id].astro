@@ -9,7 +9,7 @@ import entitiesData from '../../data/entities.json'
 import relationsData from '../../data/relations.json'
 import sourcesData from '../../data/sources.json'
 
-import type { Event, Entity, Relation, Source } from '../../types'
+import type { Event, Entity, Relation, Source, EventExcerpt } from '../../types'
 import { formatDate, getEventTypeLabel, getSourceById, getEntityById } from '../../utils'
 
 export async function getStaticPaths() {
@@ -81,6 +81,36 @@ const ogDesc = event.description.slice(0, 160)
         </p>
       )}
     </div>
+
+    <!-- Extractos documentales -->
+    {event.excerpts && event.excerpts.length > 0 && (
+      <section style="margin-top:2.5rem;">
+        <h2 style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--txt3);text-transform:uppercase;letter-spacing:0.08em;margin:0 0 1rem;font-weight:400;padding-bottom:0.5rem;border-bottom:1px solid var(--line);">
+          Extractos documentales — {event.excerpts.length}
+        </h2>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          {event.excerpts.map((ex: EventExcerpt) => {
+            const src = evSources.find(s => s.id === ex.source)
+            return (
+              <figure style="margin:0;padding:1rem 1.25rem;background:var(--bg2);border-left:3px solid var(--gold);">
+                <blockquote style="margin:0 0 0.75rem;font-size:0.9rem;color:var(--txt);line-height:1.7;font-style:italic;">
+                  "{ex.text}"
+                </blockquote>
+                <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--txt3);display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;">
+                  <span>{src?.title ?? ex.source}</span>
+                  {ex.page != null && (
+                    <span style="color:var(--txt3);">· p. {ex.page}</span>
+                  )}
+                  {src?.date && (
+                    <span style="color:var(--txt3);">· {src.date}</span>
+                  )}
+                </figcaption>
+              </figure>
+            )
+          })}
+        </div>
+      </section>
+    )}
 
     <!-- Actores -->
     {evEntities.length > 0 && (

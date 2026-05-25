@@ -13,7 +13,19 @@
       "impact": 4,
       "entities": ["fondo-solvencia", "zapatero", "julio-martinez-sola", "rodolfo-reyes-rojas"],
       "relations": [],
-      "sources": ["auto-imputacion-zapatero-2026"],
+      "sources": ["auto-imputacion-zapatero-2026", "udef-1908-26"],
+      "excerpts": [
+        {
+          "source": "udef-1908-26",
+          "page": 59,
+          "text": "Lo tiene Grupo Zapatero desde esta mañana. Ya estaban en ello (dicen). El martes, comemos roberto y yo con Julio Martínez."
+        },
+        {
+          "source": "udef-1908-26",
+          "page": 59,
+          "text": "Yo estoy seguro que algo nos tocará. La cuestión es cuánto y cuando."
+        }
+      ],
       "verified": true
     },
     {
@@ -27,7 +39,19 @@
       "impact": 4,
       "entities": ["zapatero", "julio-martinez", "plus-ultra", "rodolfo-reyes-rojas"],
       "relations": ["rel-002"],
-      "sources": ["auto-imputacion-zapatero-2026"],
+      "sources": ["auto-imputacion-zapatero-2026", "udef-1908-26"],
+      "excerpts": [
+        {
+          "source": "udef-1908-26",
+          "page": 70,
+          "text": "Acabamos de terminar la reunión con Pedro Saura y su jefe de gabinete, Francisco Ferrer. Reunión agradable, distendida. Lógicamente, se notaba que nos han recibido por 'altas' recomendaciones. [...] El papel del ministerio, será únicamente, 'hablar' bien de la compañía, que en nuestro caso lo tenemos asegurado."
+        },
+        {
+          "source": "udef-1908-26",
+          "page": 70,
+          "text": "Si bro. Nuestro pana zapatero detrás."
+        }
+      ],
       "verified": true
     },
     {
@@ -226,6 +250,18 @@
       "sources": [
         "auto-imputacion-zapatero-2026",
         "el-mundo-zapatero-may-2026"
+      ],
+      "excerpts": [
+        {
+          "source": "auto-imputacion-zapatero-2026",
+          "page": 3,
+          "text": "Los hechos investigados son constitutivos de un delito de organización criminal, un delito de tráfico de influencias, un delito de blanqueo de capitales y un delito de falsedad documental, en los que aparece como investigado don José Luis Rodríguez Zapatero."
+        },
+        {
+          "source": "auto-imputacion-zapatero-2026",
+          "page": 7,
+          "text": "La red criminal habría operado con una estructura definida y jerarquizada, con un reparto de funciones entre sus integrantes, situándose en la cúspide José Luis Rodríguez Zapatero, quien ejercería un liderazgo no visible en la estructura formal."
+        }
       ],
       "verified": true
     },
@@ -481,6 +517,133 @@
       ],
       "verified": true,
       "notes": "La jubilación es un hecho verificado. La calificación política del nombramiento futuro es una valoración editorial de Vozpópuli."
+    },
+    {
+      "id": "ev-032",
+      "date": "2020-07-07",
+      "date_precision": "day",
+      "title": "Rodolfo Reyes activa a Miguel Palomero para acceder al ministro Ábalos",
+      "description": "Rodolfo Reyes presenta a Roberto Roselli al abogado Miguel Palomero De Juan, descrito como 'amigo del asistente de Ábalos' (Koldo García Izaguirre). Reyes le pide a Palomero que los ayude a 'llegar a Ábalos, a su mano derecha'. Palomero acepta y ese mismo día confirma a Reyes que al día siguiente se verá con 'el amigo' (Koldo) para explicarle la situación. Es la activación formal de la vía Ábalos.",
+      "cases": ["dp-77-24"],
+      "type": "corruption",
+      "impact": 4,
+      "entities": ["rodolfo-reyes-rojas", "miguel-palomero", "koldo-garcia", "abalos", "roberto-roselli", "plus-ultra"],
+      "relations": [],
+      "sources": ["udef-1908-26"],
+      "verified": true
+    },
+    {
+      "id": "ev-033",
+      "date": "2020-07-22",
+      "date_precision": "day",
+      "title": "Plus Ultra se reúne con Pedro Saura en el Ministerio de Transportes — 'altas recomendaciones'",
+      "description": "Julio Martínez Solá y Roberto Roselli se reúnen con Pedro Saura García (Secretario de Estado de Transportes) y Francisco Ferrer Moreno (su jefe de gabinete) en el Ministerio. La reunión, acelerada por la intervención de Palomero→Koldo→Ábalos, se produce un día antes de la aprobación del FASEE. Roselli y Solá informan a Reyes: 'Lógicamente, se notaba que nos han recibido por altas recomendaciones'. Reyes responde: 'Nuestro pana Zapatero detrás'. El Ministerio se compromete a hablar bien de Plus Ultra ante la SEPI.",
+      "cases": ["dp-77-24"],
+      "type": "corruption",
+      "impact": 4,
+      "entities": ["pedro-saura", "francisco-ferrer-moreno", "julio-martinez-sola", "roberto-roselli", "zapatero", "miguel-palomero", "koldo-garcia", "plus-ultra"],
+      "relations": [],
+      "sources": ["udef-1908-26"],
+      "verified": true
+    },
+    {
+      "id": "ev-034",
+      "date": "2020-09-01",
+      "date_precision": "day",
+      "title": "Plus Ultra presenta solicitud formal de ayuda ante la SEPI — 53 millones",
+      "description": "La aerolínea presenta ante la SEPI la documentación para acceder al FASEE. Inmediatamente, Roselli informa a Reyes que 'el tocayo y cía ya está en marcha' y que van a presionar a Zapatero para que agilice el expediente. El mismo día, la DGAC llama a Julio Martínez Solá, lo que los investigados interpretan como efecto de la red de influencia.",
+      "cases": ["dp-77-24"],
+      "type": "corruption",
+      "impact": 3,
+      "entities": ["plus-ultra", "fondo-solvencia", "julio-martinez", "julio-martinez-sola", "roberto-roselli", "rodolfo-reyes-rojas"],
+      "relations": [],
+      "sources": ["udef-1908-26"],
+      "verified": true
+    },
+    {
+      "id": "ev-035",
+      "date": "2020-11-04",
+      "date_precision": "day",
+      "title": "Llamada clandestina SEPI con Julio Martínez Martínez en conferencia secreta",
+      "description": "Roberto Roselli relata a Rodolfo Reyes que acaban de hablar con 'el tipo de la SEPI' y que en la llamada 'estábamos Julio, yo y, de la otra línea, estaba también el contacto, clandestinamente'. El contacto es Julio Martínez Martínez, cabeza visible de la red de Zapatero. El técnico de la SEPI les promete acelerar el expediente y llevar el caso al Comité, indicando que 'una vez que el caso es prácticamente aprobado'. La UDEF interpreta esta llamada como una muestra de acceso irregular al procedimiento.",
+      "cases": ["dp-77-24"],
+      "type": "corruption",
+      "impact": 4,
+      "entities": ["julio-martinez", "julio-martinez-sola", "roberto-roselli", "jose-angel-partearroyo", "plus-ultra", "fondo-solvencia"],
+      "relations": [],
+      "sources": ["udef-1908-26"],
+      "verified": true
+    },
+    {
+      "id": "ev-036",
+      "date": "2020-12-31",
+      "date_precision": "day",
+      "title": "Felipe Baca ordena pagos en efectivo a Palomero: 20.000€ a Reyes y 5.000€ a mujeres vinculadas a Ábalos",
+      "description": "Felipe Baca instruye a Miguel Palomero para que entregue: 20.000€ en efectivo a Rodolfo Reyes (para un tercero no identificado), 3.000€ a 'Alejandra' (teléfono venezolano) y 2.000€ a 'Jésica' (Jésica Rodríguez García, teléfono español vinculada al exministro Ábalos). La tormenta Filomena retrasó las entregas a los días 18-20 de enero de 2021. Palomero comentó sobre el paquete: 'Hay que cuidar a los jueces, policías y funcionarios, jeje'. Los 20.000€ destinados a Reyes eran en realidad para un tercero, según el propio Reyes.",
+      "cases": ["dp-77-24"],
+      "type": "money_transfer",
+      "impact": 4,
+      "entities": ["felipe-baca", "miguel-palomero", "rodolfo-reyes-rojas", "koldo-garcia", "abalos"],
+      "relations": [],
+      "sources": ["udef-1908-26"],
+      "verified": "partial",
+      "notes": "La identidad del destinatario final de los 20.000€ no consta en las diligencias. La vinculación de Jésica Rodríguez García con Ábalos consta en informe 5183 UDEF-BBCA de 14/11/2025."
+    },
+    {
+      "id": "ev-037",
+      "date": "2021-02-26",
+      "date_precision": "day",
+      "title": "Julio Martínez Martínez comunica a Reyes e Ibrahim la aprobación del rescate — antes del Consejo Gestor",
+      "description": "Con cinco días de antelación a la reunión del Consejo Gestor del FASEE (02/03/2021), Julio Martínez Martínez remite mensajes a Rodolfo Reyes y Camilo Ibrahim Issa comunicándoles 'la próxima obtención del préstamo de la SEPI, muy previsiblemente el consejo de ministros del día 9 de Marzo'. Añade: 'De esta excelente labor he sido informado y felicitado por la propia SEPI'. La UDEF concluye que esto acredita un 'conocimiento previo y extra procedimental del sentido de la resolución'.",
+      "cases": ["dp-77-24"],
+      "type": "corruption",
+      "impact": 5,
+      "entities": ["julio-martinez", "rodolfo-reyes-rojas", "camilo-ibrahim-issa", "jose-angel-partearroyo", "fondo-solvencia"],
+      "relations": [],
+      "sources": ["udef-1908-26"],
+      "verified": true
+    },
+    {
+      "id": "ev-038",
+      "date": "2021-03-02",
+      "date_precision": "day",
+      "title": "Consejo Gestor FASEE aprueba el rescate — Partearroyo confirma antes a Julio Martínez Solá",
+      "description": "El Consejo Gestor del FASEE eleva la propuesta de apoyo financiero a Plus Ultra (53M€). Ese mismo día, a las 9:33h, José Ángel Partearroyo (Director de Participadas de la SEPI) confirmó a Julio Martínez Solá: 'Todo ok ya aprobado condicionado a vuestro ok a los contratos y al consejo de ministros'. Solá reenvió la noticia a Rodolfo Reyes indicando que solo lo sabían unas pocas personas, incluido 'el Tocayo' (Julio Martínez Martínez).",
+      "cases": ["dp-77-24"],
+      "type": "corruption",
+      "impact": 5,
+      "entities": ["jose-angel-partearroyo", "julio-martinez-sola", "julio-martinez", "rodolfo-reyes-rojas", "plus-ultra", "fondo-solvencia"],
+      "relations": [],
+      "sources": ["udef-1908-26"],
+      "verified": true
+    },
+    {
+      "id": "ev-039",
+      "date": "2021-04-01",
+      "date_precision": "day",
+      "title": "Plus Ultra → Corpoestructura: contrato de asesoría de 484.000€ en 40 meses",
+      "description": "Análisis Relevante (Julio Martínez) suscribe contrato con Corpoestructura S.L. (Rodolfo Reyes y Roberto Roselli) por 10.000€/mes durante 40 meses (484.000€ en total). El contrato fue enviado por Reyes a Santiago Fernández Lena el 19/04/2021 tras presiones urgentes de Julio Martínez, que alegaba tener 'una reunión' al día siguiente donde necesitaba presentarlo. La UDEF lo califica como otro contrato ficticio para documentar pagos derivados de las influencias ejercidas.",
+      "cases": ["dp-77-24"],
+      "type": "money_transfer",
+      "impact": 3,
+      "entities": ["analisis-relevante", "corpoestructura-sl", "julio-martinez", "rodolfo-reyes-rojas", "roberto-roselli"],
+      "relations": ["rel-045"],
+      "sources": ["udef-1908-26"],
+      "verified": true
+    },
+    {
+      "id": "ev-040",
+      "date": "2021-08-10",
+      "date_precision": "day",
+      "title": "SEPI desembolsa el segundo tramo del rescate — 34 millones de euros",
+      "description": "La SEPI completó el desembolso total de la ayuda pública a Plus Ultra mediante la entrega de 34 millones de euros correspondientes al préstamo participativo. El primer tramo (19M€) ya había sido entregado el 18/03/2021. Ese mismo mes, Julio Martínez Martínez reenvió a Rodolfo Reyes una noticia sobre el nombramiento del nuevo director del FASEE en SEPI, a lo que Reyes respondió '10k done', confirmando un pago de 10.000€ a Julio Martínez.",
+      "cases": ["dp-77-24"],
+      "type": "corruption",
+      "impact": 5,
+      "entities": ["plus-ultra", "fondo-solvencia", "julio-martinez", "rodolfo-reyes-rojas"],
+      "relations": [],
+      "sources": ["udef-1908-26", "infobae-guia-plus-ultra-2026"],
+      "verified": true
     }
   ]
 }

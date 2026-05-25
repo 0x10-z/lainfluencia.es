@@ -56,7 +56,7 @@
         "dp-77-24"
       ],
       "availability": "public",
-      "url": "https://www.poderjudicial.es"
+      "url": "https://www.poderjudicial.es/search/indexAN.jsp"
     },
     {
       "id": "euronews-19-feb-2026",
@@ -68,7 +68,7 @@
         "dp-77-24"
       ],
       "availability": "public",
-      "url": "https://es.euronews.com"
+      "url": "https://es.euronews.com/2026/02/19/el-senado-fuerza-la-comparecencia-de-zapatero-por-sus-vinculos-con-plus-ultra"
     },
     {
       "id": "boe-14-mar-2020",
@@ -85,14 +85,14 @@
     {
       "id": "el-confidencial-plus-ultra-2020",
       "type": "press",
-      "title": "El Gobierno rescata a Plus Ultra con 53 millones pese a los reparos técnicos",
+      "title": "Plus Ultra: 53 millones de rescate a una aerolínea de un solo avión con implicación de Zapatero",
       "publisher": "El Confidencial",
-      "date": "2020-06",
+      "date": "2025-12-11",
       "cases": [
         "dp-77-24"
       ],
       "availability": "public",
-      "url": "https://www.elconfidencial.com"
+      "url": "https://www.elconfidencial.com/espana/2025-12-11/plus-ultra-rescate-aerolinea-implicacion-zapatero_4264219/"
     },
     {
       "id": "el-mundo-zapatero-may-2026",
@@ -104,7 +104,7 @@
         "dp-77-24"
       ],
       "availability": "public",
-      "url": "https://www.elmundo.es"
+      "url": "https://www.elmundo.es/espana/2026/05/23/6a10a8fae85ece06238b45cd.html"
     },
     {
       "id": "el-espanol-registro-ferraz-2026",
@@ -116,20 +116,19 @@
         "dp-77-24"
       ],
       "availability": "public",
-      "url": "https://www.elespanol.com"
+      "url": "https://www.elespanol.com/espana/politica/20260519/registro-oficina-zapatero-frente-sede-central-psoe-dia-gertrudis-tomo-libre/1003744251420_0.html"
     },
     {
       "id": "consejo-ministros-jun-2020",
       "type": "official",
-      "title": "Acuerdo Consejo de Ministros — Rescate Plus Ultra a través del FASEE/SEPI",
-      "publisher": "Gobierno de España — SEPI",
-      "date": "2020-06",
+      "title": "Aprobadas dos operaciones con cargo al Fondo de Apoyo a la Solvencia Empresarial (Plus Ultra + Duro Felguera)",
+      "publisher": "La Moncloa — Consejo de Ministros",
+      "date": "2021-03-09",
       "cases": [
         "dp-77-24"
       ],
-      "availability": "partial",
-      "availability_note": "Comunicado oficial. Acuerdo publicado en prensa.",
-      "url": "https://www.sepi.es"
+      "availability": "public",
+      "url": "https://www.lamoncloa.gob.es/consejodeministros/paginas/enlaces/090321-enlace-solvencia.aspx"
     },
     {
       "id": "the-objective-red-opaca-2026",
@@ -275,6 +274,42 @@
       "availability": "restricted",
       "availability_note": "Citado en el auto de imputación de 18/05/2026. No disponible públicamente.",
       "url": null
+    },
+    {
+      "id": "udef-5183-25",
+      "type": "police_report",
+      "subtype": "UDEF",
+      "title": "Informe UDEF N.º 5183/25 — UDEF-BBCA (vía Ábalos / Palomero)",
+      "issuer": "Unidad de Delincuencia Económica y Fiscal — Policía Nacional",
+      "date": "2025-11-14",
+      "cases": ["dp-77-24"],
+      "availability": "restricted",
+      "availability_note": "Citado en el Informe 1908/26. No disponible públicamente.",
+      "url": null
+    },
+    {
+      "id": "udef-0791-26",
+      "type": "police_report",
+      "subtype": "UDEF",
+      "title": "Informe UDEF N.º 791/26 — UDEF-BBCA (relación previa Palomero–Julio Martínez)",
+      "issuer": "Unidad de Delincuencia Económica y Fiscal — Policía Nacional",
+      "date": "2026-02-16",
+      "cases": ["dp-77-24"],
+      "availability": "restricted",
+      "availability_note": "Presentado en el marco de las Diligencias de Investigación Preprocesales 23/25 de la Fiscalía Especial contra la Corrupción. Citado en el Informe 1908/26.",
+      "url": null
+    },
+    {
+      "id": "eldiario-zapatero-imputado-2026",
+      "type": "press",
+      "title": "Zapatero, imputado por organización criminal, falsedad y tráfico de influencias en el caso Plus Ultra",
+      "publisher": "elDiario.es",
+      "date": "2026-05-19",
+      "cases": [
+        "dp-77-24"
+      ],
+      "availability": "public",
+      "url": "https://www.eldiario.es/politica/zapatero-imputado-blanqueo-capitales-caso-plus-ultra_1_13231540.html"
     },
     {
       "id": "vozpopuli-marlaska-udef-2026",

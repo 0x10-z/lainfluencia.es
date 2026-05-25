@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import type { Event, Entity, Relation, Source } from '../types'
 import { formatDate, getImpactColor, getImpactLabel, getEventTypeLabel, getStatusColor, getStatusLabel, getSourceById, getEntityById } from '../utils'
 
@@ -30,23 +30,30 @@ declare global {
 }
 
 export default function DetailSidebar({ events, entities, relations, sources }: Props) {
-  const [panel, setPanel] = useState<PanelData>(null)
+  const [history, setHistory] = useState<PanelData[]>([])
   const [visible, setVisible] = useState(false)
   const [animating, setAnimating] = useState(false)
+
+  const panel = history[history.length - 1] ?? null
+  const scrollRef = useRef<HTMLDivElement>(null)
 
   const open = useCallback((kind: 'event' | 'entity', id: string) => {
     const item = kind === 'event'
       ? events.find(e => e.id === id)
       : entities.find(e => e.id === id)
     if (!item) return
-    setPanel({ kind, item: item as any })
+    setHistory(prev => [...prev, { kind, item: item as any }])
     setAnimating(true)
     requestAnimationFrame(() => setVisible(true))
   }, [events, entities])
 
+  const goBack = useCallback(() => {
+    setHistory(prev => prev.slice(0, -1))
+  }, [])
+
   const close = useCallback(() => {
     setVisible(false)
-    setTimeout(() => { setPanel(null); setAnimating(false) }, 320)
+    setTimeout(() => { setHistory([]); setAnimating(false) }, 320)
   }, [])
 
   useEffect(() => {
@@ -60,6 +67,10 @@ export default function DetailSidebar({ events, entities, relations, sources }: 
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
   }, [close])
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: 0 })
+  }, [panel])
 
   if (!animating) return null
 
@@ -109,17 +120,35 @@ export default function DetailSidebar({ events, entities, relations, sources }: 
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           flexShrink: 0,
           background: 'var(--bg2)',
+          gap: '0.75rem',
         }}>
-          <span style={{ ...mono, fontSize: '0.48rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--txt3)' }}>
-            {panel?.kind === 'event' ? 'Evento' : 'Actor'} · Ficha
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', minWidth: 0 }}>
+            {history.length > 1 && (
+              <button
+                onClick={goBack}
+                style={{
+                  background: 'none', border: '1px solid var(--line2)', cursor: 'pointer',
+                  color: 'var(--txt3)', fontFamily: 'var(--fm)', fontSize: '0.6rem',
+                  padding: '0.25rem 0.6rem', borderRadius: '999px',
+                  transition: 'color 0.15s, border-color 0.15s', flexShrink: 0,
+                }}
+                onMouseEnter={e => { e.currentTarget.style.color = 'var(--txt)'; e.currentTarget.style.borderColor = 'var(--txt3)' }}
+                onMouseLeave={e => { e.currentTarget.style.color = 'var(--txt3)'; e.currentTarget.style.borderColor = 'var(--line2)' }}
+              >
+                ← volver
+              </button>
+            )}
+            <span style={{ ...mono, fontSize: '0.48rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--txt3)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {panel?.kind === 'event' ? 'Evento' : 'Actor'} · Ficha
+            </span>
+          </div>
           <button
             onClick={close}
             style={{
               background: 'none', border: '1px solid var(--line2)', cursor: 'pointer',
               color: 'var(--txt3)', fontFamily: 'var(--fm)', fontSize: '0.6rem',
               padding: '0.25rem 0.6rem', borderRadius: '999px',
-              transition: 'color 0.15s, border-color 0.15s',
+              transition: 'color 0.15s, border-color 0.15s', flexShrink: 0,
             }}
             onMouseEnter={e => { (e.currentTarget).style.color = 'var(--txt)'; (e.currentTarget).style.borderColor = 'var(--line2)' }}
             onMouseLeave={e => { (e.currentTarget).style.color = 'var(--txt3)'; (e.currentTarget).style.borderColor = 'var(--line2)' }}
@@ -129,7 +158,7 @@ export default function DetailSidebar({ events, entities, relations, sources }: 
         </div>
 
         {/* Contenido scrollable */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: '1.5rem' }}>
+        <div ref={scrollRef} style={{ flex: 1, overflowY: 'auto', padding: '1.5rem' }}>
           {panel?.kind === 'event' && <EventPanel event={panel.item} entities={entities} relations={relations} sources={sources} pill={pill} openPanel={open} />}
           {panel?.kind === 'entity' && <EntityPanel entity={panel.item} events={events} entities={entities} relations={relations} sources={sources} pill={pill} openPanel={open} />}
         </div>

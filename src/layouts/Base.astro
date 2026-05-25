@@ -51,7 +51,7 @@ const sources   = sourcesData.sources   as Source[]
 </head>
 <body>
   <!-- Barra de progreso de lectura -->
-  <div id="read-progress" style="position:fixed;top:52px;left:0;height:2px;width:0%;background:var(--red);z-index:1000;transition:width 0.1s linear;pointer-events:none;"></div>
+  <div id="read-progress" style="position:fixed;top:52px;left:0;height:2px;width:0%;background:var(--red);z-index:850;transition:width 0.1s linear;pointer-events:none;"></div>
 
   <div class="layout">
     <Navbar />
@@ -86,6 +86,28 @@ const sources   = sourcesData.sources   as Source[]
     }
     window.addEventListener('scroll', updateProgress, { passive: true })
     updateProgress()
+
+    // Ocultar la barra cuando el sidebar está abierto
+    const _origOpen = window.openDetailSidebar
+    const _origClose = window.closeDetailSidebar
+    Object.defineProperty(window, 'openDetailSidebar', {
+      get() { return this._openDetailSidebar },
+      set(fn) {
+        this._openDetailSidebar = fn
+          ? (...args: Parameters<typeof fn>) => { bar.style.opacity = '0'; fn(...args) }
+          : fn
+      },
+      configurable: true,
+    })
+    Object.defineProperty(window, 'closeDetailSidebar', {
+      get() { return this._closeDetailSidebar },
+      set(fn) {
+        this._closeDetailSidebar = fn
+          ? (...args: Parameters<typeof fn>) => { bar.style.opacity = '1'; fn(...args) }
+          : fn
+      },
+      configurable: true,
+    })
   </script>
 
   <script>

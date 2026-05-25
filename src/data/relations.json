@@ -591,6 +591,75 @@
       "period": {"from": "2021-03", "to": "2021-07"}
     },
     {
+      "id": "rel-045",
+      "from": "analisis-relevante",
+      "to": "corpoestructura-sl",
+      "type": "transfers",
+      "label": "contrato de asesoría ficticio 484.000€",
+      "description": "Análisis Relevante (Julio Martínez) suscribió contrato con Corpoestructura S.L. (Rodolfo Reyes y Roberto Roselli) el 01/04/2021 por 10.000€/mes durante 40 meses (484.000€). La UDEF lo califica como un contrato ficticio para documentar pagos derivados de las influencias ejercidas en el rescate de Plus Ultra.",
+      "cases": ["dp-77-24"],
+      "sources": ["udef-1908-26"],
+      "verified": true,
+      "amount": {
+        "value": 484000,
+        "currency": "EUR",
+        "approximate": false
+      },
+      "period": {"from": "2021-04", "to": "2024-08"}
+    },
+    {
+      "id": "rel-046",
+      "from": "miguel-palomero",
+      "to": "koldo-garcia",
+      "type": "coordinates",
+      "label": "amigo personal — intermedió ante Ábalos por Plus Ultra",
+      "description": "Miguel Palomero De Juan era amigo personal de Koldo García Izaguirre, asistente del ministro Ábalos. En julio de 2020, Rodolfo Reyes le presentó a los directivos de Plus Ultra para que los ayudara a 'llegar a Ábalos, a su mano derecha'. Palomero lo describió a Rodolfo Reyes como 'el amigo', reuniéndose con él el 08/07/2020 para explicarle la situación de Plus Ultra antes de la reunión con Pedro Saura.",
+      "cases": ["dp-77-24"],
+      "sources": ["udef-1908-26"],
+      "verified": true,
+      "period": {"from": "2020-07", "to": "2021-06"}
+    },
+    {
+      "id": "rel-047",
+      "from": "felipe-baca",
+      "to": "miguel-palomero",
+      "type": "pays",
+      "label": "ordena pagos en efectivo — 25.000€ en efectivo",
+      "description": "Luis Felipe Baca ordenó a Miguel Palomero la entrega de 20.000€ en efectivo a Rodolfo Reyes, 3.000€ a 'Alejandra' y 2.000€ a Jésica Rodríguez García (vinculada al exministro Ábalos) en diciembre 2020 – enero 2021. Palomero comentó sobre el paquete: 'Hay que cuidar a los jueces, policías y funcionarios, jeje'.",
+      "cases": ["dp-77-24"],
+      "sources": ["udef-1908-26"],
+      "verified": "partial",
+      "amount": {
+        "value": 25000,
+        "currency": "EUR",
+        "approximate": false
+      },
+      "period": {"from": "2020-12", "to": "2021-01"}
+    },
+    {
+      "id": "rel-048",
+      "from": "jose-angel-partearroyo",
+      "to": "plus-ultra",
+      "type": "coordinates",
+      "label": "filtró información privilegiada del proceso SEPI/FASEE",
+      "description": "José Ángel Partearroyo Martín (Director de Participadas IV de la SEPI) mantuvo contacto directo con Roberto Roselli durante el expediente FASEE, acelerando plazos y trasladando información confidencial. El 02/12/2020 confirmó que la SEPI estaba 'contratando asesores'. El 09/12/2020 prometió envío inmediato de requerimientos. El 02/03/2021 confirmó a Julio Martínez Solá la aprobación antes de que el Consejo Gestor formalizara la decisión: 'Todo ok ya aprobado condicionado a vuestro ok a los contratos y al consejo de ministros'.",
+      "cases": ["dp-77-24"],
+      "sources": ["udef-1908-26"],
+      "verified": true,
+      "period": {"from": "2020-12", "to": "2021-11"}
+    },
+    {
+      "id": "rel-049",
+      "from": "ruben-lopez-martinez",
+      "to": "koldo-garcia",
+      "type": "coordinates",
+      "label": "informó de la presencia de Zapatero en el Ministerio de Trabajo",
+      "description": "El 07/09/2020, Rubén Eladio López Martínez (director de la Unidad de Emergencias del Ministerio de Transportes) remitió a Koldo García Izaguirre el mensaje: 'Está Zapatero reunido ahora mismo con el ministro de Inclusión y Seguridad Social en Ministerio de Trabajo', que Koldo reenvió al ministro Ábalos. La agenda de Koldo acreditaba también una comida programada entre Ábalos y Zapatero.",
+      "cases": ["dp-77-24"],
+      "sources": ["udef-1908-26"],
+      "verified": true
+    },
+    {
       "id": "rel-032",
       "from": "marlaska",
       "to": "fernando-pascual-grasa",

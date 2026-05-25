@@ -200,7 +200,7 @@ Los PDFs fuente están en `data/pdf/`. El flujo para extraer datos de un documen
 #### Estado de lectura
 
 - [x] `auto-zapatero.pdf` — Auto de imputación del JCI Nº 2 (38 pp.) — leído completo 25/05/2026
-- [ ] `Informe UDEF Caso Zapatero - Caso Plus Ultra.pdf` — Informe policial UDEF
+- [x] `Informe UDEF Caso Zapatero - Caso Plus Ultra.pdf` — Informe UDEF 1908/26 UDEF-BBCA (22/04/2026, 157 pp.) — leído completo 25/05/2026
 
 #### Flujo con Claude
 

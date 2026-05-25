@@ -43,6 +43,12 @@ export type SourceType =
   | 'reference'
   | 'official'
 
+export interface EventExcerpt {
+  source: string
+  page?: number
+  text: string
+}
+
 export interface Event {
   id: string
   date: string
@@ -55,6 +61,7 @@ export interface Event {
   entities: string[]
   relations: string[]
   sources: string[]
+  excerpts?: EventExcerpt[]
   verified: boolean | 'partial'
   pending?: boolean
   notes?: string

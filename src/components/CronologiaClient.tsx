@@ -188,6 +188,16 @@ export default function CronologiaClient({ events, tipos }: Props) {
                           }}>
                             {TYPE_LABELS[ev.type] ?? ev.type}
                           </span>
+                          {ev.excerpts && ev.excerpts.length > 0 && (
+                            <span style={{
+                              fontFamily: 'var(--fm)', fontSize: '0.46rem', letterSpacing: '0.08em',
+                              textTransform: 'uppercase', padding: '0.15rem 0.55rem',
+                              borderRadius: '999px', border: '1px solid var(--gold)',
+                              color: 'var(--gold)',
+                            }}>
+                              ❝ extracto
+                            </span>
+                          )}
                         </div>
 
                         {/* Título */}
