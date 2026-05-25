@@ -45,6 +45,7 @@ export default function SearchBox({ events, entities }: Props) {
     keys: ['title', 'subtitle'],
     threshold: 0.35,
     includeMatches: true,
+    ignoreDiacritics: true,
   }), [items])
 
   const results = query.trim().length >= 2 ? fuse.search(query).slice(0, 12) : []

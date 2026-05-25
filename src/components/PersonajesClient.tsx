@@ -59,12 +59,13 @@ export default function PersonajesClient({ entities }: Props) {
     if (tipo !== 'todos' && e.type !== tipo) return false
     if (estado !== 'todos' && e.status !== estado) return false
     if (query) {
-      const q = query.toLowerCase()
+      const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '')
+      const q = norm(query)
       return (
-        e.name.toLowerCase().includes(q) ||
-        e.role.toLowerCase().includes(q) ||
-        e.aliases.some(a => a.toLowerCase().includes(q)) ||
-        e.tags.some(t => t.toLowerCase().includes(q))
+        norm(e.name).includes(q) ||
+        norm(e.role).includes(q) ||
+        e.aliases.some(a => norm(a).includes(q)) ||
+        e.tags.some(t => norm(t).includes(q))
       )
     }
     return true
