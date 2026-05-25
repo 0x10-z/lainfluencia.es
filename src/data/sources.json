@@ -265,6 +265,18 @@
       "url": "https://theobjective.com/espana/2025-11-14/marlaska-grupo-antinarcos-udef/"
     },
     {
+      "id": "onif-informe-25-02-2026",
+      "type": "police_report",
+      "subtype": "UDEF",
+      "title": "Informe ONIF — Análisis de flujos financieros red Zapatero",
+      "issuer": "Oficina Nacional de Investigación del Fraude (ONIF) — Agencia Tributaria",
+      "date": "2026-02-25",
+      "cases": ["dp-77-24"],
+      "availability": "restricted",
+      "availability_note": "Citado en el auto de imputación de 18/05/2026. No disponible públicamente.",
+      "url": null
+    },
+    {
       "id": "vozpopuli-marlaska-udef-2026",
       "type": "press",
       "title": "Marlaska impondrá un nuevo mando de la UDEF en plena investigación a Zapatero",

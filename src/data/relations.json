@@ -404,6 +404,193 @@
       "verified": "partial"
     },
     {
+      "id": "rel-033",
+      "from": "plus-ultra",
+      "to": "analisis-relevante",
+      "type": "transfers",
+      "label": "paga 598.910€ en contratos de asesoría",
+      "description": "Plus Ultra pagó 598.910,07€ a sociedades de Julio Martínez (Análisis Relevante 301.290€, Voli Analítica 141.772€, Lot Domotic 155.847€) mediante contratos de asesoría ficticios. Todos los contratos replican el mismo texto estándar y las sociedades receptoras carecen de empleados.",
+      "cases": ["dp-77-24"],
+      "sources": ["auto-imputacion-zapatero-2026"],
+      "verified": true,
+      "amount": {
+        "value": 598910,
+        "currency": "EUR",
+        "approximate": false
+      },
+      "period": {"from": "2020-07", "to": "2025-12"}
+    },
+    {
+      "id": "rel-034",
+      "from": "analisis-relevante",
+      "to": "zapatero",
+      "type": "transfers",
+      "label": "transfiere 490.780€ a Zapatero",
+      "description": "Análisis Relevante pagó 490.780€ a la cuenta personal de José Luis Rodríguez Zapatero y María Sonsoles Espinosa Díaz entre 2020 y 2025. El auto señala 445.200€ de origen directo en el período 2021-2025 y 29.680€ adicionales en 2020.",
+      "cases": ["dp-77-24"],
+      "sources": ["auto-imputacion-zapatero-2026"],
+      "verified": true,
+      "amount": {
+        "value": 490780,
+        "currency": "EUR",
+        "approximate": false
+      },
+      "period": {"from": "2020-01", "to": "2025-06"}
+    },
+    {
+      "id": "rel-035",
+      "from": "analisis-relevante",
+      "to": "whathefav",
+      "type": "transfers",
+      "label": "paga 239.755€ a Whathefav",
+      "description": "Análisis Relevante pagó 239.755,01€ a Whathefav entre 2020 y 2025, bajo el concepto de 'servicios agencia'. El contrato de prestación de servicios entre ambas (01/06/2020) establecía que Whathefav maquetaba y distribuía los informes de AR a sus clientes.",
+      "cases": ["dp-77-24"],
+      "sources": ["auto-imputacion-zapatero-2026"],
+      "verified": true,
+      "amount": {
+        "value": 239755,
+        "currency": "EUR",
+        "approximate": false
+      },
+      "period": {"from": "2020-06", "to": "2025-12"}
+    },
+    {
+      "id": "rel-036",
+      "from": "gate-center",
+      "to": "zapatero",
+      "type": "transfers",
+      "label": "transfiere 352.980€ a Zapatero",
+      "description": "Gate Center pagó 352.980€ a José Luis Rodríguez Zapatero. Zapatero era presidente de Gate Center. Daniel Romero-Abreu Kaup es el fundador y administrador de Gate Center y también de Thinking Heads, otra entidad que pagó a Zapatero.",
+      "cases": ["dp-77-24"],
+      "sources": ["auto-imputacion-zapatero-2026"],
+      "verified": true,
+      "amount": {
+        "value": 352980,
+        "currency": "EUR",
+        "approximate": false
+      },
+      "period": {"from": "2020-01", "to": "2025-12"}
+    },
+    {
+      "id": "rel-037",
+      "from": "gate-center",
+      "to": "whathefav",
+      "type": "transfers",
+      "label": "transfiere 171.727€ a Whathefav",
+      "description": "Gate Center pagó 171.727€ a Whathefav, la empresa de las hijas de Zapatero.",
+      "cases": ["dp-77-24"],
+      "sources": ["auto-imputacion-zapatero-2026"],
+      "verified": true,
+      "amount": {
+        "value": 171727,
+        "currency": "EUR",
+        "approximate": false
+      }
+    },
+    {
+      "id": "rel-038",
+      "from": "thinking-heads",
+      "to": "zapatero",
+      "type": "transfers",
+      "label": "paga 681.318€ a Zapatero por conferencias",
+      "description": "Thinking Heads Group y Thinking Heads Americas pagaron 681.318,04€ y 12.297€ adicionales a Zapatero. El auto señala que estos pagos, junto con los de Gate Center, conforman la mayor parte de los ingresos declarados de Zapatero como conferenciante y asesor geoestratégico.",
+      "cases": ["dp-77-24"],
+      "sources": ["auto-imputacion-zapatero-2026"],
+      "verified": true,
+      "amount": {
+        "value": 693615,
+        "currency": "EUR",
+        "approximate": false
+      },
+      "period": {"from": "2020-01", "to": "2025-12"}
+    },
+    {
+      "id": "rel-039",
+      "from": "plus-ultra",
+      "to": "caleton-consultores",
+      "type": "transfers",
+      "label": "paga 1.159.558€ a través de Caletón",
+      "description": "Plus Ultra pagó 1.159.558,55€ a Caletón Consultores entre 2020 y 2025. Las facturas consignaban 'comisiones por operaciones chárter intermediadas por Caletón'. Caletón redistribuyó parte a Lot Domotic y Voli Analítica (sociedades de Julio Martínez).",
+      "cases": ["dp-77-24"],
+      "sources": ["auto-imputacion-zapatero-2026"],
+      "verified": true,
+      "amount": {
+        "value": 1159558,
+        "currency": "EUR",
+        "approximate": false
+      },
+      "period": {"from": "2020-01", "to": "2025-12"}
+    },
+    {
+      "id": "rel-040",
+      "from": "plus-ultra",
+      "to": "summer-wind",
+      "type": "transfers",
+      "label": "paga 3.979.182€ a Summer Wind (2023)",
+      "description": "En 2023, Plus Ultra pagó 3.979.182€ a Summer Wind S.L., que redistribuyó 213.202€ a Afitta (sociedad de Julio Martínez). El auto señala a Summer Wind como capa de interposición.",
+      "cases": ["dp-77-24"],
+      "sources": ["auto-imputacion-zapatero-2026"],
+      "verified": true,
+      "amount": {
+        "value": 3979182,
+        "currency": "EUR",
+        "approximate": false
+      },
+      "period": {"from": "2023-01", "to": "2023-12"}
+    },
+    {
+      "id": "rel-041",
+      "from": "softgestor",
+      "to": "analisis-relevante",
+      "type": "transfers",
+      "label": "paga 145.200€ a Análisis Relevante",
+      "description": "Softgestor pagó 145.200€ a Análisis Relevante en dos tramos (72.600€ el 30/10/2020 y 72.600€ el 16/09/2021). Los contratos fueron negociados por Francisco Flores Suárez al margen del administrador formal de Softgestor.",
+      "cases": ["dp-77-24"],
+      "sources": ["auto-imputacion-zapatero-2026"],
+      "verified": true,
+      "amount": {
+        "value": 145200,
+        "currency": "EUR",
+        "approximate": false
+      },
+      "period": {"from": "2020-10", "to": "2021-09"}
+    },
+    {
+      "id": "rel-042",
+      "from": "julio-martinez",
+      "to": "idella-consulenza",
+      "type": "controls",
+      "label": "administra Idella — firmó el contrato con Plus Ultra",
+      "description": "Julio Martínez Martínez representó a Idella en el contrato de asesoría con Plus Ultra firmado el 19/01/2021. También firmó como representante de Plus Ultra, siendo Julio Martínez Solá quien representó formalmente a la aerolínea.",
+      "cases": ["dp-77-24"],
+      "sources": ["auto-imputacion-zapatero-2026"],
+      "verified": true
+    },
+    {
+      "id": "rel-043",
+      "from": "zapatero",
+      "to": "analisis-relevante",
+      "type": "coordinates",
+      "label": "participa como consultor y aprueba el listado de clientes",
+      "description": "El auto documenta que Zapatero participaba activamente en el chat grupal 'AR' de Análisis Relevante y el 06/07/2021 remitió a Julio Martínez dos archivos Excel ('LISTA AR OK.xlsx' y 'direcciones email JM.xlsx') con el listado de clientes a los que enviar los informes. El auto concluye que estos listados son herramientas de planificación logística, no simples contactos.",
+      "cases": ["dp-77-24"],
+      "sources": ["auto-imputacion-zapatero-2026"],
+      "verified": true,
+      "period": {"from": "2020-06", "to": "2025-12"}
+    },
+    {
+      "id": "rel-044",
+      "from": "julio-martinez",
+      "to": "juan-manuel-teixeira",
+      "type": "influences",
+      "label": "ejerce tráfico de influencias ante el INAC de Venezuela",
+      "description": "Julio Martínez Martínez intermedió ante Juan Manuel Teixeira Díaz (presidente del INAC venezolano) para que Plus Ultra obtuviera autorizaciones de vuelo. El 30/07/2021 Plus Ultra le pidió que intercediera 'en la autorización del INAC por el vuelo CCS-Mad del sábado'. Al día siguiente, una persona identificada como '7' en la agenda de Julio celebró la 'exitosa gestión'.",
+      "cases": ["dp-77-24"],
+      "sources": ["auto-imputacion-zapatero-2026"],
+      "verified": true,
+      "period": {"from": "2021-03", "to": "2021-07"}
+    },
+    {
       "id": "rel-032",
       "from": "marlaska",
       "to": "fernando-pascual-grasa",

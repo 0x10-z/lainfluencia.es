@@ -3,6 +3,48 @@
   "$comment": "EVENTOS — Hechos concretos verificados, anclados en fechas. Cada evento referencia entidades (entities[]) y fuentes (sources[]). El campo 'relations[]' vincula el evento a relaciones específicas del modelo.",
   "events": [
     {
+      "id": "ev-001",
+      "date": "2020-07-03",
+      "date_precision": "day",
+      "title": "Consejo de Ministros aprueba el FASEE — creación del fondo de rescate COVID",
+      "description": "El Real Decreto-ley 25/2020 crea el Fondo de Apoyo a la Solvencia de Empresas Estratégicas (FASEE), gestionado por la SEPI. Al día siguiente, Julio Martínez Solá comunicó a Rodolfo Reyes que 'lo tiene Grupo Zapatero desde esta mañana' y que 'ya estaban en ello'. La creación del fondo es el detonante del plan de Plus Ultra para usar la red de influencia de Zapatero.",
+      "cases": ["dp-77-24"],
+      "type": "political",
+      "impact": 4,
+      "entities": ["fondo-solvencia", "zapatero", "julio-martinez-sola", "rodolfo-reyes-rojas"],
+      "relations": [],
+      "sources": ["auto-imputacion-zapatero-2026"],
+      "verified": true
+    },
+    {
+      "id": "ev-003",
+      "date": "2020-07-22",
+      "date_precision": "day",
+      "title": "Plus Ultra se reúne en el Ministerio de Transportes gracias a la red Zapatero",
+      "description": "La red de Zapatero concierta una reunión en el Ministerio de Transportes a la que asisten altos cargos y directivos de Plus Ultra. Tras la reunión, los investigados refieren haber sido recibidos por 'altas recomendaciones'. Rodolfo Reyes declaró: 'Nuestro pana Zapatero detrás'. Al día siguiente el Consejo de Ministros aprobó el FASEE.",
+      "cases": ["dp-77-24"],
+      "type": "corruption",
+      "impact": 4,
+      "entities": ["zapatero", "julio-martinez", "plus-ultra", "rodolfo-reyes-rojas"],
+      "relations": ["rel-002"],
+      "sources": ["auto-imputacion-zapatero-2026"],
+      "verified": true
+    },
+    {
+      "id": "ev-004",
+      "date": "2020-07-30",
+      "date_precision": "day",
+      "title": "Se firma el primer contrato Análisis Relevante – Plus Ultra (6.050€/mes)",
+      "description": "Al día siguiente de la reunión entre Julio Martínez Martínez y Julio Martínez Solá, se firma el contrato de asesoría entre Análisis Relevante y Plus Ultra: 5.000€/mes + IVA durante 12 meses (72.600€ totales). El auto señala la sincronía temporal entre las gestiones de influencia y la firma del contrato como indicio de su naturaleza instrumental.",
+      "cases": ["dp-77-24"],
+      "type": "contract",
+      "impact": 3,
+      "entities": ["analisis-relevante", "plus-ultra", "julio-martinez", "julio-martinez-sola"],
+      "relations": ["rel-002"],
+      "sources": ["auto-imputacion-zapatero-2026"],
+      "verified": true
+    },
+    {
       "id": "ev-002",
       "date": "2020-03-14",
       "date_precision": "day",
@@ -24,28 +66,69 @@
     },
     {
       "id": "ev-005",
-      "date": "2020-06-01",
-      "date_precision": "month",
-      "title": "El Gobierno aprueba rescate de 53M€ a Plus Ultra",
-      "description": "Consejo de Ministros aprueba la ayuda a través del Fondo de Apoyo a la Solvencia. La aerolínea venezolana con <1% de cuota de mercado cumple los requisitos 'de forma ajustada' según técnicos. La UDEF vinculará el proceso a presiones coordinadas por Zapatero.",
+      "date": "2020-07-24",
+      "date_precision": "day",
+      "title": "BOE publica criterios de elegibilidad del FASEE — Plus Ultra empieza a actuar",
+      "description": "La Orden PCM/679/2020 publica en el BOE los criterios de elegibilidad del FASEE. El mismo día 24/07/2020 se produce la reunión entre Julio Martínez Martínez y Julio Martínez Solá, y el 30/07 se firma el primer contrato Análisis Relevante–Plus Ultra. El auto señala esta sincronía como indicio de que la contratación de la red de influencia fue inmediatamente posterior al conocimiento de los criterios del fondo.",
       "cases": [
         "dp-77-24"
       ],
-      "type": "contract",
-      "impact": 5,
+      "type": "political",
+      "impact": 3,
       "entities": [
         "fondo-solvencia",
         "plus-ultra",
-        "zapatero"
+        "zapatero",
+        "julio-martinez"
       ],
       "relations": [
-        "rel-002",
-        "rel-006"
+        "rel-002"
       ],
       "sources": [
-        "el-confidencial-plus-ultra-2020",
-        "udef-1907-26"
+        "auto-imputacion-zapatero-2026"
       ],
+      "verified": true
+    },
+    {
+      "id": "ev-006",
+      "date": "2021-01-19",
+      "date_precision": "day",
+      "title": "Idella firma contrato con Plus Ultra: 1% del rescate si lo consiguen (530.000€)",
+      "description": "Idella Consulenza Strategica (Julio Martínez Martínez) y Plus Ultra (Julio Martínez Solá) firman contrato de asesoría. La duración depende de la resolución del FASEE y la comisión pactada es el 1%+IVA del importe aprobado —equivalente a 530.000€ si se conceden los 53M€—. Cinco días después, Julio empieza los trámites para constituir Landside Dubai FZCO, participada al 100% por Idella, aparentemente para recibir ese cobro fuera de España.",
+      "cases": ["dp-77-24"],
+      "type": "contract",
+      "impact": 4,
+      "entities": ["idella-consulenza", "plus-ultra", "julio-martinez", "julio-martinez-sola", "landside-dubai"],
+      "relations": [],
+      "sources": ["auto-imputacion-zapatero-2026"],
+      "verified": true
+    },
+    {
+      "id": "ev-007",
+      "date": "2021-02-26",
+      "date_precision": "day",
+      "title": "Julio Martínez felicita a Plus Ultra por la ayuda ANTES del Consejo Gestor",
+      "description": "El 26/02/2021, Julio Martínez Martínez comunicó a Camilo Ibrahim Issa la 'obtención de la resolución' y que había sido 'informado y felicitado por la propia SEPI'. El Consejo Gestor del FASEE no se reuniría hasta el 02/03/2021 para adoptar la decisión que fue elevada al Consejo de Ministros para su aprobación definitiva el 09/03/2021. El conocimiento anticipado del sentido de la resolución es el indicio más directo de que la red de influencia actuó sobre el proceso.",
+      "cases": ["dp-77-24"],
+      "type": "corruption",
+      "impact": 5,
+      "entities": ["zapatero", "julio-martinez", "camilo-ibrahim-issa", "snip-aviation", "plus-ultra", "fondo-solvencia"],
+      "relations": ["rel-002"],
+      "sources": ["auto-imputacion-zapatero-2026"],
+      "verified": true
+    },
+    {
+      "id": "ev-008",
+      "date": "2021-03-09",
+      "date_precision": "day",
+      "title": "Consejo de Ministros aprueba 53M€ para Plus Ultra — primer tramo desembolsado el 18/03",
+      "description": "El Consejo de Ministros aprueba formalmente el rescate de 53M€ a Plus Ultra a través del FASEE/SEPI. El primer tramo de la ayuda se desembolsó el 18/03/2021, y el segundo el 10/08/2021, tras levantarse el bloqueo judicial. El primer pago de Plus Ultra a Análisis Relevante se produjo el 05/11/2020, antes del desembolso pero coincidiendo con una reunión 'clandestina' con un contacto de la SEPI.",
+      "cases": ["dp-77-24"],
+      "type": "contract",
+      "impact": 5,
+      "entities": ["fondo-solvencia", "plus-ultra", "zapatero", "julio-martinez"],
+      "relations": ["rel-002", "rel-006"],
+      "sources": ["auto-imputacion-zapatero-2026", "consejo-ministros-jun-2020"],
       "verified": true
     },
     {
