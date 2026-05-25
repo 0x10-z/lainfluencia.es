@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro'
 import GraphD3 from '../components/GraphD3.tsx'
-import DetailSidebar from '../components/DetailSidebar.tsx'
 
 import entitiesData from '../data/entities.json'
 import relationsData from '../data/relations.json'
@@ -12,13 +11,44 @@ import type { Entity, Relation, Event, Source } from '../types'
 
 const allEntities = entitiesData.entities as Entity[]
 const allRelations = relationsData.relations as Relation[]
-const events = eventsData.events as Event[]
-const sources = sourcesData.sources as Source[]
-// Solo relaciones del Caso Zapatero (excluir las exclusivas del Caso Koldo)
+const events   = eventsData.events as Event[]
+const sources  = sourcesData.sources as Source[]
+
 const relations = allRelations.filter(r => r.cases.includes('dp-77-24'))
-// Solo entidades presentes en esas relaciones o en el Caso Zapatero
 const relatedIds = new Set(relations.flatMap(r => [r.from, r.to]))
 const entities = allEntities.filter(e => e.cases.includes('dp-77-24') || relatedIds.has(e.id))
+
+const withAmount = relations.filter(r => r.amount?.value != null)
+const totalEur = withAmount.reduce((s, r) => s + (r.amount?.value ?? 0), 0)
+
+const LINK_COLOR: Record<string, string> = {
+  pays:              '#6b5006',
+  transfers:         '#6b5006',
+  controls:          '#9c1f10',
+  coordinates:       '#9c1f10',
+  influences:        '#c0392b',
+  employs:           '#1e5490',
+  advises:           '#1e5490',
+  investigates:      '#134a28',
+  imputes:           '#134a28',
+  produces_documents:'#7a7264',
+  awards_contract:   '#6b5006',
+}
+const TYPE_LABEL: Record<string, string> = {
+  pays: 'Pagos', transfers: 'Transferencias', controls: 'Control',
+  coordinates: 'Coordinación', influences: 'Influencia', employs: 'Empleo',
+  advises: 'Asesoría', investigates: 'Investigación', imputes: 'Imputación',
+  produces_documents: 'Documentos', awards_contract: 'Contrato',
+}
+const NODE_COLOR: Record<string, string> = {
+  person: '#9c1f10', company: '#143460', institution: '#134a28', account: '#6b5006',
+}
+const NODE_LABEL: Record<string, string> = {
+  person: 'Persona', company: 'Empresa', institution: 'Institución', account: 'Cuenta',
+}
+
+const relTypes = [...new Set(relations.map(r => r.type))]
+const entTypes = [...new Set(entities.map(e => e.type))]
 ---
 
 <Base
@@ -26,56 +56,141 @@ const entities = allEntities.filter(e => e.cases.includes('dp-77-24') || related
   description="Mapa visual de las relaciones entre actores del Caso Zapatero."
 >
   <!-- Cabecera -->
-  <div class="container" style="padding: 2rem 0 1rem;">
-    <p style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--txt3);text-transform:uppercase;letter-spacing:0.08em;margin:0 0 0.5rem;">
-      Red de relaciones
-    </p>
-    <h1 style="font-size:clamp(1.6rem,3.5vw,2.4rem);margin:0 0 0.5rem;">
+  <div style="padding:2rem 3vw 1.5rem; border-bottom:1px solid var(--line);">
+    <div style="font-family:var(--fm); font-size:0.5rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.18em; margin-bottom:0.5rem;">
+      Red de relaciones · Caso Zapatero
+    </div>
+    <h1 style="font-family:var(--ft); font-size:clamp(1.8rem,4vw,2.8rem); font-weight:900; letter-spacing:-0.025em; margin-bottom:0.75rem; line-height:1.05;">
       {entities.length} actores · {relations.length} vínculos documentados
     </h1>
-    <p style="font-size:0.85rem;color:var(--txt2);margin:0;">
-      Arrastra para mover nodos. Rueda para hacer zoom. Pulsa un nodo para abrir su ficha.
-    </p>
-  </div>
 
-  <!-- Leyenda -->
-  <div class="container" style="padding: 0.75rem 0; border-bottom: 1px solid var(--line);">
-    <span style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--txt3);">
-      Líneas continuas = verificado · Líneas discontinuas = parcial
-    </span>
+    <!-- Stats rápidos -->
+    <div style="display:flex; flex-wrap:wrap; gap:1.5rem; margin-bottom:1.25rem;">
+      <div>
+        <div style="font-family:var(--ft); font-size:1.5rem; font-weight:900; color:var(--gold); line-height:1;">
+          {totalEur.toLocaleString('es-ES')} €
+        </div>
+        <div style="font-family:var(--fm); font-size:0.44rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.1em; margin-top:2px;">
+          flujos dinerarios documentados
+        </div>
+      </div>
+      <div>
+        <div style="font-family:var(--ft); font-size:1.5rem; font-weight:900; color:var(--red); line-height:1;">
+          {withAmount.length}
+        </div>
+        <div style="font-family:var(--fm); font-size:0.44rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.1em; margin-top:2px;">
+          vínculos con importe conocido
+        </div>
+      </div>
+      <div>
+        <div style="font-family:var(--ft); font-size:1.5rem; font-weight:900; color:var(--txt2); line-height:1;">
+          {relations.filter(r => r.verified === true).length}
+        </div>
+        <div style="font-family:var(--fm); font-size:0.44rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.1em; margin-top:2px;">
+          relaciones verificadas
+        </div>
+      </div>
+    </div>
+
+    <!-- Leyenda tipos de entidad -->
+    <div style="display:flex; flex-wrap:wrap; gap:1.25rem; margin-bottom:0.75rem;">
+      {entTypes.map(t => (
+        <div style="display:flex; align-items:center; gap:0.4rem;">
+          <span style={`width:10px; height:10px; border-radius:50%; border:2px solid ${NODE_COLOR[t]}; background:${NODE_COLOR[t]}22; display:inline-block; flex-shrink:0;`} />
+          <span style="font-family:var(--fm); font-size:0.48rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.08em;">
+            {NODE_LABEL[t] ?? t}
+          </span>
+        </div>
+      ))}
+      <div style="width:1px; background:var(--line2); margin:0 0.25rem;" />
+      {relTypes.map(t => (
+        <div style="display:flex; align-items:center; gap:0.4rem;">
+          <span style={`width:18px; height:2px; background:${LINK_COLOR[t] ?? '#4a4740'}; display:inline-block; flex-shrink:0;`} />
+          <span style="font-family:var(--fm); font-size:0.48rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.08em;">
+            {TYPE_LABEL[t] ?? t}
+          </span>
+        </div>
+      ))}
+    </div>
+
+    <p style="font-family:var(--fm); font-size:0.52rem; color:var(--txt3); margin:0; letter-spacing:0.04em;">
+      Arrastra nodos · Rueda para zoom · Pulsa un nodo para abrir ficha · Filtra por tipo de vínculo en el grafo
+    </p>
   </div>
 
   <!-- Grafo -->
-  <div style="height: calc(100vh - 200px); min-height: 500px; border-bottom: 1px solid var(--line);">
+  <div style="height:calc(100vh - 52px); min-height:520px; border-bottom:1px solid var(--line);">
     <GraphD3 entities={entities} relations={relations} client:load />
   </div>
 
-  <DetailSidebar events={events} entities={allEntities} relations={allRelations} sources={sources} client:load />
-
   <!-- Lista de relaciones -->
-  <div class="container" style="padding: 3rem 0;">
-    <h2 style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--txt3);text-transform:uppercase;letter-spacing:0.08em;margin:0 0 1.5rem;font-weight:400;">
-      Todas las relaciones documentadas
-    </h2>
-    <div style="display:flex;flex-direction:column;gap:1px;background:var(--line);">
+  <div style="padding:3rem 3vw 5rem;">
+    <div style="display:flex; align-items:baseline; gap:1rem; margin-bottom:1.5rem; padding-bottom:0.75rem; border-bottom:1px solid var(--line);">
+      <h2 style="font-family:var(--fm); font-size:0.55rem; color:var(--txt3); text-transform:uppercase; letter-spacing:0.15em; font-weight:400; margin:0;">
+        Todas las relaciones documentadas
+      </h2>
+      <span style="font-family:var(--fm); font-size:0.5rem; color:var(--txt3);">{relations.length}</span>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:1px; background:var(--line);">
       {relations.map(r => {
         const from = entities.find(e => e.id === r.from)
-        const to = entities.find(e => e.id === r.to)
+        const to   = entities.find(e => e.id === r.to)
+        const bc   = LINK_COLOR[r.type] ?? 'var(--line2)'
+        const verColor = r.verified === true ? 'var(--green)' : r.verified === 'partial' ? 'var(--gold)' : 'var(--txt3)'
+        const verLabel = r.verified === true ? '✓' : r.verified === 'partial' ? '~' : '?'
         return (
-          <div style={`background:var(--bg2);border-left:3px solid var(--red);padding:0.85rem 1.25rem;display:flex;flex-wrap:wrap;gap:1rem;align-items:center;`}>
-            <a href={from ? `/personajes/${from.id}` : '#'} style="font-size:0.88rem;color:var(--txt);text-decoration:none;font-weight:600;">
-              {from?.name ?? r.from}
-            </a>
-            <span style="font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--txt3);padding:2px 8px;border:1px solid var(--line2);">
-              {r.label}
-            </span>
-            <a href={to ? `/personajes/${to.id}` : '#'} style="font-size:0.88rem;color:var(--txt);text-decoration:none;font-weight:600;">
-              {to?.name ?? r.to}
-            </a>
-            {r.amount?.value != null && (
-              <span style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--gold);margin-left:auto;">
-                {r.amount.approximate ? '~' : ''}{r.amount.value.toLocaleString('es-ES')} {r.amount.currency}
+          <div
+            style={`background:var(--bg2); border-left:3px solid ${bc}; padding:0.9rem 1.25rem; display:grid; grid-template-columns:1fr auto; gap:0.75rem 1.5rem; cursor:pointer; transition:background 0.15s;`}
+            onclick={`window.openDetailSidebar?.('entity','${r.from}')`}
+            onmouseover="this.style.background='var(--bg3)'"
+            onmouseout="this.style.background='var(--bg2)'"
+          >
+            <!-- Fila principal -->
+            <div style="display:flex; flex-wrap:wrap; align-items:center; gap:0.5rem;">
+              <a
+                href={from ? `/personajes/${from.id}` : '#'}
+                onclick="event.stopPropagation()"
+                style="font-family:var(--ft); font-size:0.9rem; font-weight:700; color:var(--txt); text-decoration:none; border-bottom:1px solid var(--line2);"
+              >
+                {from?.name ?? r.from}
+              </a>
+              <span style={`font-family:var(--fm); font-size:0.46rem; color:${bc}; padding:0.12rem 0.55rem; border:1px solid ${bc}22; border-radius:999px; background:${bc}11; text-transform:uppercase; letter-spacing:0.06em; white-space:nowrap;`}>
+                {r.label}
               </span>
+              <a
+                href={to ? `/personajes/${to.id}` : '#'}
+                onclick="event.stopPropagation()"
+                style="font-family:var(--ft); font-size:0.9rem; font-weight:700; color:var(--txt); text-decoration:none; border-bottom:1px solid var(--line2);"
+              >
+                {to?.name ?? r.to}
+              </a>
+            </div>
+
+            <!-- Meta derecha -->
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:0.25rem; flex-shrink:0;">
+              {r.amount?.value != null && (
+                <span style="font-family:var(--fm); font-size:0.72rem; font-weight:600; color:var(--gold); white-space:nowrap;">
+                  {r.amount.approximate ? '~' : ''}{r.amount.value.toLocaleString('es-ES')} {r.amount.currency}
+                </span>
+              )}
+              <span style={`font-family:var(--fm); font-size:0.46rem; color:${verColor};`}>
+                {verLabel} {r.verified === true ? 'verificado' : r.verified === 'partial' ? 'parcial' : 'sin verificar'}
+              </span>
+            </div>
+
+            <!-- Descripción (fila 2) -->
+            {r.description && (
+              <div style="grid-column:1/-1; font-family:var(--fb); font-size:0.76rem; color:var(--txt3); line-height:1.5; margin-top:-0.1rem;">
+                {r.description}
+              </div>
+            )}
+
+            <!-- Período -->
+            {r.period?.from && (
+              <div style="grid-column:1/-1; font-family:var(--fm); font-size:0.46rem; color:var(--txt3); letter-spacing:0.06em; text-transform:uppercase;">
+                Período: {r.period.from}{r.period.to ? ` — ${r.period.to}` : ' → actualidad'}
+              </div>
             )}
           </div>
         )
