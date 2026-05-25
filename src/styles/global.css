@@ -328,6 +328,58 @@ body::before {
 
 
 /* ─────────────────────────────────────────────
+   TOOLTIP — data-tooltip="texto"
+   Usar con position:relative en el contenedor
+───────────────────────────────────────────── */
+[data-tooltip] {
+  position: relative;
+  cursor: default;
+}
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: pre-line;
+  width: max-content;
+  max-width: min(320px, 90vw);
+  background: var(--txt);
+  color: var(--bg);
+  font-family: var(--fm);
+  font-size: 0.6rem;
+  line-height: 1.65;
+  letter-spacing: 0.02em;
+  padding: 0.6rem 0.85rem;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.22);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  transform: translateX(-50%) translateY(4px);
+  z-index: 9000;
+}
+[data-tooltip]:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+/* flecha */
+[data-tooltip]::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 2px);
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--txt);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  z-index: 9000;
+}
+[data-tooltip]:hover::before { opacity: 1; }
+
+/* ─────────────────────────────────────────────
    RESPONSIVE
 ───────────────────────────────────────────── */
 @media (max-width: 768px) {

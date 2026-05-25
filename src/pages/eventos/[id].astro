@@ -180,13 +180,28 @@ const ogDesc = event.description.slice(0, 160)
 
     <!-- Metadatos -->
     <div style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;">
-      <span style="font-family:'IBM Plex Mono',monospace;font-size:0.58rem;color:var(--txt3);padding:0.2rem 0.6rem;border:1px solid var(--line2);border-radius:4px;">
+      <span
+        style="font-family:'IBM Plex Mono',monospace;font-size:0.58rem;color:var(--txt3);padding:0.2rem 0.6rem;border:1px solid var(--line2);border-radius:4px;"
+        data-tooltip="Identificador interno del hecho en la base de datos"
+      >
         #{event.id}
       </span>
-      <span style={`font-family:'IBM Plex Mono',monospace;font-size:0.58rem;padding:0.2rem 0.6rem;border-radius:4px;border:1px solid ${getImpactColor(event.impact)};color:${getImpactColor(event.impact)};`}>
+      <span
+        style={`font-family:'IBM Plex Mono',monospace;font-size:0.58rem;padding:0.2rem 0.6rem;border-radius:4px;border:1px solid ${getImpactColor(event.impact)};color:${getImpactColor(event.impact)};`}
+        data-tooltip={`Escala de impacto 1–5 (alcance judicial, económico y mediático):\n1 · Residual — hecho menor o contextual\n2 · Bajo — relevancia limitada al caso\n3 · Medio — relevante para la instrucción\n4 · Alto — hito significativo del caso\n5 · Crítico — punto de inflexión judicial o político`}
+      >
         Impacto {event.impact}/5 — {getImpactLabel(event.impact)}
       </span>
-      <span style={`font-family:'IBM Plex Mono',monospace;font-size:0.58rem;padding:0.2rem 0.6rem;border-radius:4px;border:1px solid ${verifiedColor};color:${verifiedColor};`}>
+      <span
+        style={`font-family:'IBM Plex Mono',monospace;font-size:0.58rem;padding:0.2rem 0.6rem;border-radius:4px;border:1px solid ${verifiedColor};color:${verifiedColor};`}
+        data-tooltip={
+          event.verified === true
+            ? '✓ Verificado\nRespaldado por al menos dos fuentes primarias independientes (auto judicial, informe UDEF/UCO u oficial). No contradicho por fuente de igual rango.'
+            : event.verified === 'partial'
+            ? '~ Verificación parcial\nCuenta con una fuente primaria (auto, informe UDEF/UCO) pero no cruzada con segunda fuente independiente, o parte del relato procede solo de prensa.'
+            : '? Sin verificar\nProcede únicamente de fuentes de prensa o declaraciones no contrastadas con documento primario.'
+        }
+      >
         {verifiedLabel}
       </span>
     </div>

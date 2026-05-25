@@ -232,10 +232,22 @@ function EventPanel({ event, entities, relations, sources, pill, openPanel }: {
         {[1,2,3,4,5].map(n => (
           <span key={n} style={{ width: '20px', height: '3px', borderRadius: '2px', background: n <= event.impact ? impColor : 'var(--line2)', display: 'block' }} />
         ))}
-        <span style={{ fontFamily: 'var(--fm)', fontSize: '0.52rem', color: impColor, marginLeft: '6px', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+        <span
+          data-tooltip={`Escala de impacto 1–5:\n1 · Residual\n2 · Bajo\n3 · Medio\n4 · Alto\n5 · Crítico`}
+          style={{ fontFamily: 'var(--fm)', fontSize: '0.52rem', color: impColor, marginLeft: '6px', letterSpacing: '0.08em', textTransform: 'uppercase' }}
+        >
           {getImpactLabel(event.impact)}
         </span>
-        <span style={{ fontFamily: 'var(--fm)', fontSize: '0.52rem', color: verColor, marginLeft: 'auto', letterSpacing: '0.06em' }}>
+        <span
+          data-tooltip={
+            event.verified === true
+              ? '✓ Verificado\nRespaldado por ≥2 fuentes primarias independientes (auto judicial, informe UDEF/UCO u oficial).'
+              : event.verified === 'partial'
+              ? '~ Verificación parcial\nUna fuente primaria confirmada, pendiente de cruzar con segunda fuente independiente.'
+              : '? Sin verificar\nSolo fuentes de prensa, sin documento primario contrastado.'
+          }
+          style={{ fontFamily: 'var(--fm)', fontSize: '0.52rem', color: verColor, marginLeft: 'auto', letterSpacing: '0.06em' }}
+        >
           {verLabel}
         </span>
       </div>
