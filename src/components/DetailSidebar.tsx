@@ -233,7 +233,7 @@ function EventPanel({ event, entities, relations, sources, pill, openPanel }: {
           <span key={n} style={{ width: '20px', height: '3px', borderRadius: '2px', background: n <= event.impact ? impColor : 'var(--line2)', display: 'block' }} />
         ))}
         <span
-          data-tooltip={`Escala de impacto 1–5:\n1 · Residual\n2 · Bajo\n3 · Medio\n4 · Alto\n5 · Crítico`}
+          data-tooltip={`Escala de impacto 1–5:\n1 · Residual — contexto sin consecuencias directas\n2 · Bajo — relevante pero sin mover la instrucción\n3 · Medio — avanza la investigación o genera consecuencias documentadas\n4 · Alto — hito: detención, imputación, contrato clave o registro\n5 · Crítico — punto de inflexión judicial o político del caso`}
           style={{ fontFamily: 'var(--fm)', fontSize: '0.52rem', color: impColor, marginLeft: '6px', letterSpacing: '0.08em', textTransform: 'uppercase' }}
         >
           {getImpactLabel(event.impact)}

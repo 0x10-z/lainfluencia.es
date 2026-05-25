@@ -188,7 +188,7 @@ const ogDesc = event.description.slice(0, 160)
       </span>
       <span
         style={`font-family:'IBM Plex Mono',monospace;font-size:0.58rem;padding:0.2rem 0.6rem;border-radius:4px;border:1px solid ${getImpactColor(event.impact)};color:${getImpactColor(event.impact)};`}
-        data-tooltip={`Escala de impacto 1–5 (alcance judicial, económico y mediático):\n1 · Residual — hecho menor o contextual\n2 · Bajo — relevancia limitada al caso\n3 · Medio — relevante para la instrucción\n4 · Alto — hito significativo del caso\n5 · Crítico — punto de inflexión judicial o político`}
+        data-tooltip={`Escala de impacto 1–5:\n1 · Residual — contexto o antecedente sin consecuencias directas\n2 · Bajo — relevante para el caso pero sin mover la instrucción\n3 · Medio — avanza la investigación o genera consecuencias documentadas\n4 · Alto — hito significativo: detención, imputación, contrato clave o registro\n5 · Crítico — punto de inflexión que cambia el curso judicial o político del caso`}
       >
         Impacto {event.impact}/5 — {getImpactLabel(event.impact)}
       </span>
