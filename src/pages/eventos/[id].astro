@@ -10,7 +10,7 @@ import relationsData from '../../data/relations.json'
 import sourcesData from '../../data/sources.json'
 
 import type { Event, Entity, Relation, Source, EventExcerpt } from '../../types'
-import { formatDate, getEventTypeLabel, getSourceById, getEntityById } from '../../utils'
+import { formatDate, getEventTypeLabel, getSourceById, getEntityById, getImpactColor, getImpactLabel } from '../../utils'
 
 export async function getStaticPaths() {
   const events = eventsData.events as Event[]
@@ -178,15 +178,17 @@ const ogDesc = event.description.slice(0, 160)
       </section>
     )}
 
-    <!-- ID técnico -->
-    <div style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--line);">
-      <p style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--txt3);margin:0;">
-        ID: <code style="color:var(--txt2);">{event.id}</code>
-        {' · '}
-        Impacto: {event.impact}/5
-        {' · '}
-        Verificación: {String(event.verified)}
-      </p>
+    <!-- Metadatos -->
+    <div style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:0.58rem;color:var(--txt3);padding:0.2rem 0.6rem;border:1px solid var(--line2);border-radius:4px;">
+        #{event.id}
+      </span>
+      <span style={`font-family:'IBM Plex Mono',monospace;font-size:0.58rem;padding:0.2rem 0.6rem;border-radius:4px;border:1px solid ${getImpactColor(event.impact)};color:${getImpactColor(event.impact)};`}>
+        Impacto {event.impact}/5 — {getImpactLabel(event.impact)}
+      </span>
+      <span style={`font-family:'IBM Plex Mono',monospace;font-size:0.58rem;padding:0.2rem 0.6rem;border-radius:4px;border:1px solid ${verifiedColor};color:${verifiedColor};`}>
+        {verifiedLabel}
+      </span>
     </div>
   </div>
 </Base>
