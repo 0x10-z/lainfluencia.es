@@ -7,7 +7,7 @@ import type { Source, SourceType } from '../types'
 import { getSourceTypeLabel } from '../utils'
 
 const sources = sourcesData.sources as Source[]
-const og = ogCache as Record<string, { image: string | null; title: string | null; description: string | null; siteName: string | null } | null>
+const og = ogCache as Record<string, { image: string | null; localThumb: string | null; title: string | null; description: string | null; siteName: string | null } | null>
 
 const ORDER: SourceType[] = ['judicial_order', 'police_report', 'official', 'press', 'fact_check', 'reference']
 
@@ -114,7 +114,8 @@ function badgeLabel(src: Source): string {
           <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:0; border-left:1px solid var(--line);">
             {grouped[t].map(src => {
               const ogData = og[src.id]
-              const hasOG  = ogData && (ogData.image || ogData.title)
+              const hasOG  = ogData && (ogData.localThumb || ogData.image || ogData.title)
+              const thumbSrc = ogData?.localThumb ?? ogData?.image ?? null
               const isHomepage = src.url && HOMEPAGE_RE.test(src.url)
               const availColor = AVAILABILITY_COLOR[src.availability] ?? 'var(--txt3)'
               const availLabel = AVAILABILITY_LABEL[src.availability] ?? src.availability
@@ -127,9 +128,9 @@ function badgeLabel(src: Source): string {
                       onmouseover="this.style.background='var(--bg2)'"
                       onmouseout="this.style.background=''">
                       {/* Imagen OG */}
-                      {hasOG && ogData?.image && (
+                      {hasOG && thumbSrc && (
                         <div style="aspect-ratio:16/9;overflow:hidden;background:var(--bg3);flex-shrink:0;">
-                          <img src={ogData.image} alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
+                          <img src={thumbSrc} alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
                         </div>
                       )}
                       {/* Sin imagen — franja de color */}
