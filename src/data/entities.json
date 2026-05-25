@@ -1000,7 +1000,7 @@
       "cases": ["dp-77-24"],
       "status": "investigated",
       "tags": ["zapatero", "cuentas-bancarias"],
-      "notes": "Cotitular junto a Zapatero de la cuenta 00492036312794051807 (Santander) y otras en CaixaBank. El 16/01/2025 realizó una transferencia de 498.000€ desde cuenta CaixaBank para cancelar anticipadamente la hipoteca del inmueble adquirido en calle Ramón Crespo, Madrid (580.000€, comprado el 26/02/2024)."
+      "notes": "Cotitular junto a Zapatero de la cuenta 00492036312794051807 (Santander) y otras en CaixaBank. El 16/01/2025 realizó una transferencia de 498.000€ desde cuenta CaixaBank para cancelar anticipadamente la hipoteca del inmueble adquirido en calle Ramón Crespo, Madrid (580.000€, comprado el 26/02/2024). El Español (24/05/2026) apunta que los fondos procedían de la venta de una vivienda familiar en Valdemarín de su propiedad, no de los ingresos profesionales de Zapatero. Esta versión no ha sido contrastada judicialmente; la UDEF traza el dinero desde una cuenta alimentada por el circuito de la red."
     },
     {
       "id": "pilar-rodriguez-fernandez",
@@ -1034,6 +1034,152 @@
       "status": "unknown",
       "tags": ["fiscalia", "fiscal-general"],
       "notes": "Mencionado en el artículo de The Objective (25/05/2026) en el contexto de la estrategia de la Fiscalía respecto al caso Plus Ultra. Investigado por filtración de datos fiscales de Alberto González Amador (pareja de la presidenta de Madrid Isabel Díaz Ayuso) en causa separada."
+    },
+    {
+      "id": "javier-de-paz",
+      "type": "person",
+      "name": "Javier de Paz Mancho",
+      "aliases": [],
+      "role": "Presidente de Movistar+. Consejero de Telefónica. Vinculado al PSOE",
+      "cases": ["dp-77-24"],
+      "status": "unknown",
+      "tags": ["telefonica", "movistar", "ibex35", "psoe"],
+      "notes": "Aparece como participante del chat de WhatsApp 'AR' junto a Zapatero, Julio Martínez Martínez, Sergio Sánchez Benítez y su hija Silvia de Paz — el grupo operativo interno de Análisis Relevante, calificado por la UDEF como núcleo de organización criminal. Ha admitido que llegó a hacer un pago para asociarse a Análisis Relevante, que canceló en el último momento. El Independiente (27/02/2025) lo describe como consejero de Telefónica 'vinculado al PSOE'. La SEPI controla el 10% de Telefónica desde diciembre 2023, coincidiendo con el período de instrucción del caso."
+    },
+    {
+      "id": "silvia-de-paz",
+      "type": "person",
+      "name": "Silvia de Paz Mancho",
+      "aliases": [],
+      "role": "Socia del bufete Pérez-Llorca. Hija de Javier de Paz",
+      "cases": ["dp-77-24"],
+      "status": "unknown",
+      "tags": ["abogada", "perez-llorca", "analisis-relevante"],
+      "notes": "Aparece como participante del chat de WhatsApp 'AR', grupo operativo interno de Análisis Relevante. La UDEF describe su participación junto a su padre Javier de Paz, Zapatero, Julio Martínez Martínez y Sergio Sánchez Benítez como evidencia de 'participación activa y directa de José Luis Rodríguez Zapatero en los canales de organización y comunicación interna de Análisis Relevante S.L.'."
+    },
+    {
+      "id": "danilo-diazgranados",
+      "type": "person",
+      "name": "Danilo Díazgranados Manglano",
+      "aliases": [],
+      "role": "Cliente venezolano de la red. Describe a JMM como 'el banco del jefe'",
+      "cases": ["dp-77-24"],
+      "status": "investigated",
+      "tags": ["venezuela", "intermediario", "analisis-relevante"],
+      "notes": "En conversación interceptada con el abogado Palomero define a Julio Martínez Martínez como 'el banco del jefe', con lo que Palomero dice entender perfectamente. El 27/04/2020 realizó una transferencia de 20.000€ a Whathefav que la UDEF señala como pago del entorno JMM para opacar su origen real."
+    },
+    {
+      "id": "naguib-sawiris",
+      "type": "person",
+      "name": "Naguib Sawiris",
+      "aliases": [],
+      "role": "Magnate egipcio. Objetivo de lobby venezolano de la red",
+      "cases": ["dp-77-24"],
+      "status": "unknown",
+      "tags": ["venezuela", "lobby", "inversiones"],
+      "notes": "Mencionado en el reporte de marzo de 2023 que Domingo Amaro Chacón envía desde Caracas a 'Presidente' (Zapatero). La red llevaba 'años apoyando para que se interesen los grandes capitales a invertir' en empresas del Estado venezolano, con Sawiris como objetivo concreto. Fundador del grupo Orascom, uno de los mayores inversores de telecomunicaciones del mundo."
+    },
+    {
+      "id": "marc-murtra",
+      "type": "person",
+      "name": "Marc Murtra Millar",
+      "aliases": [],
+      "role": "Presidente de Telefónica desde febrero 2025. Vinculado al entorno del Gobierno",
+      "cases": ["dp-77-24"],
+      "status": "unknown",
+      "tags": ["telefonica", "ibex35", "gobierno"],
+      "notes": "Nombrado presidente de Telefónica en febrero 2025 tras ceder Álvarez-Pallete. Su llegada consolida el control del Gobierno sobre la compañía: la SEPI tiene el 10% desde diciembre 2023, Carlos Ocaña (hombre de confianza del Ejecutivo) asciende a vicepresidente, y Javier de Paz —vinculado al PSOE y presente en el chat 'AR' de Análisis Relevante— permanece en el consejo."
+    },
+    {
+      "id": "telefonica",
+      "type": "company",
+      "name": "Telefónica S.A.",
+      "aliases": ["Movistar"],
+      "role": "Cotizada del Ibex 35. La SEPI adquiere el 10% en diciembre 2023",
+      "cases": ["dp-77-24"],
+      "status": "unknown",
+      "tags": ["ibex35", "sepi", "gobierno", "telecomunicaciones"],
+      "registration": "España",
+      "notes": "En diciembre 2023 la SEPI adquiere el 10% de Telefónica, convirtiéndose en el mayor accionista y rompiendo el equilibrio de poder entre CriteriaCaixa (9,9%) y Saudi Telecom Company (9,97%). Javier de Paz, presidente de Movistar+ y participante del chat 'AR' de Análisis Relevante (calificado por la UDEF como núcleo de organización criminal), es consejero de la compañía. La coincidencia entre la toma de control estatal (dic. 2023) y el período de instrucción del caso aún no tiene respuesta institucional."
+    },
+    {
+      "id": "china-intl-cultural-tech",
+      "type": "company",
+      "name": "China International Cultural Technology Resources Group Co. Ltd.",
+      "aliases": ["CICTG"],
+      "role": "Empresa vinculada al Partido Comunista Chino. Remitió carta de intenciones a la 'Oficina del Presidente Zapatero'",
+      "cases": ["dp-77-24"],
+      "status": "investigated",
+      "tags": ["china", "pcc", "petroleo", "lobby"],
+      "registration": "Hong Kong",
+      "notes": "Registrada en Hong Kong en octubre de 2022. El 30/10/2023 remitió una carta de intenciones directamente a la 'Oficina del Presidente Zapatero'. Las comunicaciones internas de la red la describen como 'una empresa que depende del Partido Comunista Chino'. Su interés era acceder a cupos de petróleo venezolano (PDVSA) a través de la intermediación de Zapatero y Delcy Rodríguez."
+    },
+    {
+      "id": "fangyong-du",
+      "type": "person",
+      "name": "Fangyong Du",
+      "aliases": ["Miguelito Duch", "Miguel Duch"],
+      "role": "Empresario chino. Hombre clave en la red de contactos asiáticos de Zapatero",
+      "cases": ["dp-77-24"],
+      "status": "investigated",
+      "tags": ["china", "intermediario", "huawei"],
+      "notes": "Señalado por El Independiente como 'uno de los hombres clave en la red de contactos asiáticos del expresidente'. Actuó como intermediario vinculado a Huawei. Liquidó varias de sus empresas apenas horas antes de la operación policial."
+    },
+    {
+      "id": "liu-jianchao",
+      "type": "person",
+      "name": "Liu Jianchao",
+      "aliases": [],
+      "role": "Máximo responsable de Relaciones Internacionales del Partido Comunista Chino",
+      "cases": ["dp-77-24"],
+      "status": "unknown",
+      "tags": ["china", "pcc", "lobby"],
+      "notes": "Zapatero almorzó con él durante su segundo viaje a Pekín en noviembre 2023, un mes después de asistir al III Foro de las Nuevas Rutas de la Seda (oct. 2023). El auto del juez Calama documenta los contactos de alto nivel de Zapatero con la cúpula del PCCh como parte de la operativa de intermediación entre capitales chinos y el régimen venezolano."
+    },
+    {
+      "id": "victor-aldama",
+      "type": "person",
+      "name": "Víctor de Aldama",
+      "aliases": ["el conseguidor"],
+      "role": "Empresario intermediario. Confesó en el caso Koldo. Conecta la trama Zapatero con los casos Koldo, Mascarillas e Hidrocarburos",
+      "cases": ["dp-77-24"],
+      "status": "investigated",
+      "tags": ["caso-koldo", "intermediario", "venezuela", "hidrocarburos"],
+      "notes": "Protagonista del caso Koldo (contratos de mascarillas) y del caso Hidrocarburos (fraude de IVA de 182-231M€ con Villafuel de Claudio Rivas). Declaró ante la Audiencia Nacional que Zapatero usaba teléfonos desechables similares a los de la trama Koldo. Documentada al menos una reunión en el hotel Santo Mauro con Zapatero como 'facilitador del régimen de Maduro'. Alertado en Caracas de que estaba 'pisando' territorio de Zapatero. Actuó como intermediario para desatascar 200M$ de Air Europa en Venezuela. Negoció compra de 104 lingotes de oro venezolano (68M$) con Zapatero 'al tanto de la gestión'. Afirmó que el PSOE puso cupos de petróleo venezolano sobre la mesa para financiar el partido y la Internacional Socialista."
+    },
+    {
+      "id": "claudio-rivas",
+      "type": "person",
+      "name": "Claudio Rivas",
+      "aliases": [],
+      "role": "Dueño de Villafuel. Principal imputado en el caso Hidrocarburos",
+      "cases": ["dp-77-24"],
+      "status": "investigated",
+      "tags": ["hidrocarburos", "fraude-fiscal", "villafuel"],
+      "notes": "Dueño de Villafuel, empresa de distribución de combustible que evadió 182,5M€ de IVA entre 2022-2024 (231M€ si se incluye 2021). Usaba firmas pantalla para ocultar al vendedor real del combustible. Los investigadores rastrearon 73,9M€ en el extranjero (Portugal, China, Colombia). El caso está instruido por el juez Santiago Pedraz en la Audiencia Nacional."
+    },
+    {
+      "id": "villafuel",
+      "type": "company",
+      "name": "Villafuel",
+      "aliases": [],
+      "role": "Empresa de distribución de combustible. Vehículo del fraude de IVA del caso Hidrocarburos",
+      "cases": ["dp-77-24"],
+      "status": "investigated",
+      "tags": ["hidrocarburos", "fraude-fiscal"],
+      "registration": "España",
+      "notes": "Propiedad de Claudio Rivas. Compraba combustible y lo vendía reteniendo ilícitamente el IVA que debía ingresar en Hacienda. Usaba firmas pantalla disueltas sistemáticamente. El fraude asciende a 182,5-231M€ (2021-2024), con hasta 1.000M€ de daño potencial en el sector. El caso conecta con Koldo García (10.000€/mes), Ábalos (chalé en La Alcaidesa) y Aldama como intermediario con Moncloa. Instruido por el juez Pedraz en la Audiencia Nacional."
+    },
+    {
+      "id": "angel-victor-torres",
+      "type": "person",
+      "name": "Ángel Víctor Torres",
+      "aliases": [],
+      "role": "Ministro de Política Territorial. Señalado por Aldama como receptor de dinero de la trama mascarillas",
+      "cases": ["dp-77-24"],
+      "status": "unknown",
+      "tags": ["caso-koldo", "mascarillas", "psoe"],
+      "notes": "Aldama lo señaló en su declaración ante la Audiencia Nacional (21/05/2026, caso Koldo) como uno de los que habría recibido dinero relacionado con la trama de contratos de mascarillas. Aldama insistió en que operaciones clave no podían realizarse sin conocimiento de altos niveles políticos."
     }
   ]
 }

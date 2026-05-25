@@ -235,5 +235,50 @@
   },
   "alvaro-garcia-ortiz": {
     "source": "placeholder"
+  },
+  "javier-de-paz": {
+    "source": "placeholder"
+  },
+  "silvia-de-paz": {
+    "source": "placeholder"
+  },
+  "danilo-diazgranados": {
+    "source": "placeholder"
+  },
+  "naguib-sawiris": {
+    "source": "wikidata",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/2/2e/Sawiris.jpg",
+    "pageUrl": null
+  },
+  "marc-murtra": {
+    "source": "placeholder"
+  },
+  "telefonica": {
+    "source": "wikidata",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Distrito_Telef%C3%B3nica_%28Madrid%29_09.jpg/500px-Distrito_Telef%C3%B3nica_%28Madrid%29_09.jpg",
+    "pageUrl": null
+  },
+  "china-intl-cultural-tech": {
+    "source": "placeholder"
+  },
+  "fangyong-du": {
+    "source": "placeholder"
+  },
+  "liu-jianchao": {
+    "source": "placeholder"
+  },
+  "victor-aldama": {
+    "source": "placeholder"
+  },
+  "claudio-rivas": {
+    "source": "placeholder"
+  },
+  "villafuel": {
+    "source": "placeholder"
+  },
+  "angel-victor-torres": {
+    "source": "wikidata",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/%28%C3%81ngel_V%C3%ADctor_Torres%29_Torres_sobre_los_convenios_de_Vivienda_y_Carreteras_para_Canarias._AcfiPress_Noticias_Canarias.jpg/500px-%28%C3%81ngel_V%C3%ADctor_Torres%29_Torres_sobre_los_convenios_de_Vivienda_y_Carreteras_para_Canarias._AcfiPress_Noticias_Canarias.jpg",
+    "pageUrl": null
   }
 }

@@ -768,6 +768,136 @@
       "verified": true
     },
     {
+      "id": "rel-068",
+      "from": "victor-aldama",
+      "to": "zapatero",
+      "type": "coordinates",
+      "label": "confluyen en Venezuela — Zapatero 'pisando' el mismo territorio",
+      "description": "Aldama fue alertado en Caracas de que estaba 'pisando' territorio de Zapatero al operar en Venezuela. Documentada al menos una reunión en el hotel Santo Mauro donde Zapatero actuó como 'facilitador del régimen de Maduro'. Aldama declaró ante la Audiencia Nacional que Zapatero usaba teléfonos desechables similares a los de la trama Koldo.",
+      "cases": ["dp-77-24"],
+      "sources": ["eldebate-caso-hidrocarburos-2026", "esdiario-aldama-declaracion-2026"],
+      "verified": "partial"
+    },
+    {
+      "id": "rel-069",
+      "from": "villafuel",
+      "to": "koldo-garcia",
+      "type": "transfers",
+      "label": "paga 10.000€/mes a Koldo García — caso Hidrocarburos",
+      "description": "El caso Hidrocarburos acredita que Koldo García recibía 10.000€ mensuales de la trama de fraude de IVA de Villafuel (182-231M€). Aldama era el intermediario con Moncloa. El dinero del fraude también habría sufragado un chalé de Ábalos en La Alcaidesa (Cádiz).",
+      "cases": ["dp-77-24"],
+      "sources": ["eldebate-caso-hidrocarburos-2026"],
+      "verified": "partial"
+    },
+    {
+      "id": "rel-070",
+      "from": "victor-aldama",
+      "to": "koldo-garcia",
+      "type": "transfers",
+      "label": "intermediario con Moncloa — 1,8M€ al PSOE en 2019-2020",
+      "description": "Aldama canalizó 1,8M€ al PSOE entre 2019 y 2020. Koldo García le pedía hablar con empresarios para hacer 'donaciones al partido' a cambio de obras adjudicadas. El dinero circulaba en efectivo: Aldama llevaba sobres de 50-60.000€ al Ministerio sin control.",
+      "cases": ["dp-77-24"],
+      "sources": ["the-objective-bombas-aldama-2026"],
+      "verified": "partial",
+      "amount": {
+        "value": 1800000,
+        "currency": "EUR",
+        "approximate": false
+      },
+      "period": {"from": "2019-01", "to": "2020-12"}
+    },
+    {
+      "id": "rel-065",
+      "from": "zapatero",
+      "to": "china-intl-cultural-tech",
+      "type": "influences",
+      "label": "intermediario obligatorio para acceder al petróleo venezolano — carta de intenciones al 'Presidente'",
+      "description": "El juez Calama documenta que cualquier comprador internacional de crudo venezolano debía presentar una carta de intenciones (LOI) a la 'Oficina del Presidente Zapatero' como requisito de acceso. China International Cultural Technology Resources Group (vinculada al PCCh) remitió su LOI el 30/10/2023, dos semanas después de que Zapatero asistiera al III Foro de las Nuevas Rutas de la Seda en Pekín.",
+      "cases": ["dp-77-24"],
+      "sources": ["udef-1907-26", "infobae-zapatero-china-pcc-2026"],
+      "verified": true,
+      "period": {"from": "2023-10-16", "to": "2023-10-30"}
+    },
+    {
+      "id": "rel-066",
+      "from": "zapatero",
+      "to": "liu-jianchao",
+      "type": "coordinates",
+      "label": "almuerza con el jefe de Relaciones Internacionales del PCCh — nov. 2023",
+      "description": "Durante su segundo viaje a Pekín en noviembre de 2023 (un mes después del III Foro de las Nuevas Rutas de la Seda), Zapatero almuerza con Liu Jianchao, máximo responsable de Relaciones Internacionales del Partido Comunista Chino, con rango ministerial. El auto del juez Calama lo documenta como parte de la red de contactos de alto nivel entre la oficina de Zapatero y la cúpula china.",
+      "cases": ["dp-77-24"],
+      "sources": ["infobae-zapatero-china-pcc-2026"],
+      "verified": true,
+      "period": {"from": "2023-11-01", "to": "2023-11-30"}
+    },
+    {
+      "id": "rel-067",
+      "from": "fangyong-du",
+      "to": "zapatero",
+      "type": "coordinates",
+      "label": "intermediario clave en la red de contactos asiáticos — liquida empresas antes de la operación policial",
+      "description": "Fangyong Du ('Miguelito Duch'), empresario chino vinculado a Huawei, es señalado como uno de los hombres clave en la red de contactos asiáticos de Zapatero. Liquidó varias de sus empresas apenas horas antes de la operación policial.",
+      "cases": ["dp-77-24"],
+      "sources": ["elindependiente-zapatero-china-2026"],
+      "verified": "partial"
+    },
+    {
+      "id": "rel-060",
+      "from": "javier-de-paz",
+      "to": "analisis-relevante",
+      "type": "coordinates",
+      "label": "participa en el chat operativo 'AR' de Análisis Relevante",
+      "description": "Javier de Paz Mancho (presidente de Movistar+, consejero de Telefónica) aparece como participante del chat de WhatsApp 'AR', grupo operativo interno de Análisis Relevante calificado por la UDEF como prueba de la dirección personal de Zapatero sobre la red. Ha admitido haber realizado un pago para asociarse a la sociedad, que canceló en el último momento.",
+      "cases": ["dp-77-24"],
+      "sources": ["udef-1907-26"],
+      "verified": "partial"
+    },
+    {
+      "id": "rel-061",
+      "from": "silvia-de-paz",
+      "to": "analisis-relevante",
+      "type": "coordinates",
+      "label": "participa en el chat operativo 'AR' de Análisis Relevante",
+      "description": "Silvia de Paz Mancho (socia de Pérez-Llorca, hija de Javier de Paz) aparece como participante del chat 'AR', junto a Zapatero, Julio Martínez Martínez, Sergio Sánchez Benítez y su padre.",
+      "cases": ["dp-77-24"],
+      "sources": ["udef-1907-26"],
+      "verified": "partial"
+    },
+    {
+      "id": "rel-062",
+      "from": "danilo-diazgranados",
+      "to": "julio-martinez",
+      "type": "coordinates",
+      "label": "'es el banco del jefe' — describe a JMM como tesorero de Zapatero",
+      "description": "Danilo Díazgranados, en conversación interceptada con el abogado Palomero, define a Julio Martínez Martínez como 'el banco del jefe'. Palomero responde que entiende perfectamente. La frase sintetiza la naturaleza de JMM: no socio ni asesor, sino el vehículo financiero del expresidente.",
+      "cases": ["dp-77-24"],
+      "sources": ["udef-1908-26"],
+      "verified": true
+    },
+    {
+      "id": "rel-063",
+      "from": "fondo-solvencia",
+      "to": "telefonica",
+      "type": "controls",
+      "label": "SEPI adquiere el 10% de Telefónica — dic. 2023",
+      "description": "En diciembre de 2023 la SEPI (que gestiona simultáneamente el FASEE que rescató a Plus Ultra) adquiere el 10% de Telefónica, convirtiéndose en su mayor accionista. El Gobierno consolida el control en febrero 2025 con el nombramiento de Marc Murtra como presidente y el ascenso de Carlos Ocaña. Javier de Paz, participante del chat 'AR' de Análisis Relevante, permanece como consejero.",
+      "cases": ["dp-77-24"],
+      "sources": ["elindependiente-telefonica-murtra-2025"],
+      "verified": true,
+      "period": {"from": "2023-12-20", "to": null}
+    },
+    {
+      "id": "rel-064",
+      "from": "zapatero",
+      "to": "naguib-sawiris",
+      "type": "influences",
+      "label": "lobby para atraer inversión de Sawiris al régimen venezolano",
+      "description": "El reporte de marzo de 2023 desde Caracas de Domingo Amaro Chacón a 'Presidente' (Zapatero) menciona que llevan 'años apoyando para que se interesen los grandes capitales a invertir' en empresas del Estado venezolano, con Naguib Sawiris como objetivo concreto. La oficina de Zapatero actúa como intermediario estable entre el régimen chavista y capitales internacionales.",
+      "cases": ["dp-77-24"],
+      "sources": ["udef-1907-26"],
+      "verified": "partial"
+    },
+    {
       "id": "rel-058",
       "from": "pilar-rodriguez-fernandez",
       "to": "plus-ultra",
