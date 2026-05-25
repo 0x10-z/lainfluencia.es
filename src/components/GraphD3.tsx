@@ -78,7 +78,6 @@ export default function GraphD3({ entities, relations }: Props) {
 
     const links: Link[] = relations
       .filter(r => nodeMap.has(r.from) && nodeMap.has(r.to))
-      .filter(r => !activeType || r.type === activeType)
       .map(r => ({
         source: r.from, target: r.to,
         id: r.id, label: r.label, type: r.type,
@@ -164,16 +163,15 @@ export default function GraphD3({ entities, relations }: Props) {
           : ''
         t.innerHTML = `<span style="font-weight:600">${d.label}</span>${amt ? `<br><span style="color:var(--gold);font-size:0.75rem;">${amt}</span>` : ''}`
         t.style.display = 'block'
-        t.style.left = (event.pageX + 14) + 'px'
-        t.style.top  = (event.pageY - 10) + 'px'
-        // Resaltar la línea visible del mismo datum
+        t.style.left = (event.clientX + 14) + 'px'
+        t.style.top  = (event.clientY - 10) + 'px'
         linkG.filter(ld => ld === d).select('line')
           .attr('stroke-opacity', 1).attr('stroke-width', 3)
       })
       .on('mousemove', event => {
         const t = tooltipRef.current; if (!t) return
-        t.style.left = (event.pageX + 14) + 'px'
-        t.style.top  = (event.pageY - 10) + 'px'
+        t.style.left = (event.clientX + 14) + 'px'
+        t.style.top  = (event.clientY - 10) + 'px'
       })
       .on('mouseleave', (event, d) => {
         const t = tooltipRef.current; if (t) t.style.display = 'none'
@@ -240,15 +238,15 @@ export default function GraphD3({ entities, relations }: Props) {
           <div style="font-size:0.75rem;color:var(--txt2);line-height:1.4;">${d.role}</div>
         `
         t.style.display = 'block'
-        t.style.left = (event.pageX + 14) + 'px'
-        t.style.top  = (event.pageY - 10) + 'px'
+        t.style.left = (event.clientX + 14) + 'px'
+        t.style.top  = (event.clientY - 10) + 'px'
         d3.select(event.currentTarget as SVGGElement).select('circle')
           .attr('stroke-width', 3).attr('fill', (d: any) => NODE_COLOR[d.type] + '35')
       })
       .on('mousemove', event => {
         const t = tooltipRef.current; if (!t) return
-        t.style.left = (event.pageX + 14) + 'px'
-        t.style.top  = (event.pageY - 10) + 'px'
+        t.style.left = (event.clientX + 14) + 'px'
+        t.style.top  = (event.clientY - 10) + 'px'
       })
       .on('mouseleave', (event, d) => {
         const t = tooltipRef.current; if (t) t.style.display = 'none'
