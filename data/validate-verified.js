@@ -64,11 +64,18 @@ for (const ev of events) {
     }
   } else if (ev.verified === 'partial') {
     if (primary === 0 && onlyPress) {
-      console.log(`⚠️  WARNING ${label}`)
-      console.log(`   verified:partial pero todas las fuentes son prensa (ninguna primaria)`)
-      console.log(`   Fuentes: ${ev.sources.join(', ')}`)
+      const pressCount = ev.sources.length
+      if (pressCount >= 2) {
+        console.log(`ℹ️  INFO    ${label}`)
+        console.log(`   verified:partial con ${pressCount} fuentes de prensa — sin documento primario`)
+        console.log(`   Fuentes: ${ev.sources.join(', ')}`)
+      } else {
+        console.log(`⚠️  WARNING ${label}`)
+        console.log(`   verified:partial con solo 1 fuente de prensa — buscar segunda fuente o documento primario`)
+        console.log(`   Fuentes: ${ev.sources.join(', ')}`)
+        warnings++
+      }
       console.log()
-      warnings++
     }
   } else if (ev.verified === false) {
     if (primary >= 1) {
