@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import * as d3 from 'd3'
 import type { Entity, Relation } from '../types'
 
@@ -61,7 +61,6 @@ function nodeRadius(node: Node): number {
 export default function GraphD3({ entities, relations }: Props) {
   const svgRef    = useRef<SVGSVGElement>(null)
   const tooltipRef = useRef<HTMLDivElement>(null)
-  const [activeType, setActiveType] = useState<string | null>(null)
 
   useEffect(() => {
     const svg = d3.select(svgRef.current!)
@@ -136,9 +135,12 @@ export default function GraphD3({ entities, relations }: Props) {
       .force('x',       d3.forceX<Node>(W / 2).strength(0.05))
       .force('y',       d3.forceY<Node>(H / 2).strength(0.04))
 
-    // Links
-    const link = g.append('g').selectAll('line')
-      .data(links).join('line')
+    // Links — grupo por cada relación: línea visible + línea hit invisible
+    const linkG = g.append('g').selectAll<SVGGElement, Link>('g')
+      .data(links).join('g')
+
+    // Línea visible
+    const link = linkG.append('line')
       .attr('stroke', d => LINK_COLOR[d.type] ?? '#4a4740')
       .attr('stroke-opacity', 0.65)
       .attr('stroke-width', d => d.amount?.value ? 2.5 : 1.5)
@@ -147,19 +149,26 @@ export default function GraphD3({ entities, relations }: Props) {
         const color = LINK_COLOR[d.type] ?? '#4a4740'
         return `url(#${color.replace('#', 'arrow-')})`
       })
+      .attr('pointer-events', 'none')
 
-    // Link hover — label flotante
-    link
+    // Línea hit invisible (12px de grosor para capturar hover fácilmente)
+    linkG.append('line')
+      .attr('stroke', 'transparent')
+      .attr('stroke-width', 12)
+      .attr('fill', 'none')
+      .style('cursor', 'pointer')
       .on('mouseenter', (event, d) => {
         const t = tooltipRef.current; if (!t) return
         const amt = d.amount?.value
-          ? `\n${d.amount.approximate ? '~' : ''}${d.amount.value.toLocaleString('es-ES')} ${d.amount.currency}`
+          ? `${d.amount.approximate ? '~' : ''}${d.amount.value.toLocaleString('es-ES')} ${d.amount.currency}`
           : ''
-        t.innerHTML = `<span style="font-weight:600">${d.label}</span>${amt ? `<br><span style="color:var(--gold)">${amt.trim()}</span>` : ''}`
+        t.innerHTML = `<span style="font-weight:600">${d.label}</span>${amt ? `<br><span style="color:var(--gold);font-size:0.75rem;">${amt}</span>` : ''}`
         t.style.display = 'block'
         t.style.left = (event.pageX + 14) + 'px'
         t.style.top  = (event.pageY - 10) + 'px'
-        d3.select(event.currentTarget as SVGLineElement).attr('stroke-opacity', 1).attr('stroke-width', 3)
+        // Resaltar la línea visible del mismo datum
+        linkG.filter(ld => ld === d).select('line')
+          .attr('stroke-opacity', 1).attr('stroke-width', 3)
       })
       .on('mousemove', event => {
         const t = tooltipRef.current; if (!t) return
@@ -168,7 +177,7 @@ export default function GraphD3({ entities, relations }: Props) {
       })
       .on('mouseleave', (event, d) => {
         const t = tooltipRef.current; if (t) t.style.display = 'none'
-        d3.select(event.currentTarget as SVGLineElement)
+        linkG.filter(ld => ld === d).select('line')
           .attr('stroke-opacity', 0.65)
           .attr('stroke-width', d.amount?.value ? 2.5 : 1.5)
       })
@@ -250,7 +259,7 @@ export default function GraphD3({ entities, relations }: Props) {
       .on('click', (_, d) => window.openDetailSidebar?.('entity', d.id))
 
     sim.on('tick', () => {
-      link
+      linkG.selectAll<SVGLineElement, Link>('line')
         .attr('x1', d => (d.source as Node).x!)
         .attr('y1', d => (d.source as Node).y!)
         .attr('x2', d => (d.target as Node).x!)
@@ -259,48 +268,10 @@ export default function GraphD3({ entities, relations }: Props) {
     })
 
     return () => { sim.stop() }
-  }, [entities, relations, activeType])
-
-  const linkTypes = [...new Set(relations.map(r => r.type))]
-  const TYPE_LABEL: Record<string, string> = {
-    pays: 'Pagos', transfers: 'Transferencias', controls: 'Control',
-    coordinates: 'Coordinación', influences: 'Influencia', employs: 'Empleo',
-    advises: 'Asesoría', investigates: 'Investigación', imputes: 'Imputación',
-    produces_documents: 'Documentos', awards_contract: 'Contrato',
-  }
+  }, [entities, relations])
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-      {/* Filtros de tipo de relación */}
-      <div style={{
-        display: 'flex', flexWrap: 'wrap', gap: '0.35rem',
-        padding: '0.65rem 1rem', borderBottom: '1px solid var(--line)',
-        background: 'var(--bg2)', flexShrink: 0,
-      }}>
-        <button
-          onClick={() => setActiveType(null)}
-          style={{
-            fontFamily: 'var(--fm)', fontSize: '0.48rem', letterSpacing: '0.08em',
-            textTransform: 'uppercase', padding: '0.2rem 0.65rem',
-            borderRadius: '999px', cursor: 'pointer',
-            border: activeType === null ? '1px solid var(--txt2)' : '1px solid var(--line2)',
-            background: activeType === null ? 'var(--txt)' : 'transparent',
-            color: activeType === null ? 'var(--bg)' : 'var(--txt3)',
-          }}
-        >Todos</button>
-        {linkTypes.map(t => (
-          <button key={t} onClick={() => setActiveType(activeType === t ? null : t)} style={{
-            fontFamily: 'var(--fm)', fontSize: '0.48rem', letterSpacing: '0.08em',
-            textTransform: 'uppercase', padding: '0.2rem 0.65rem',
-            borderRadius: '999px', cursor: 'pointer',
-            border: `1px solid ${activeType === t ? LINK_COLOR[t] ?? 'var(--line2)' : 'var(--line2)'}`,
-            background: activeType === t ? (LINK_COLOR[t] ?? 'transparent') + '22' : 'transparent',
-            color: activeType === t ? (LINK_COLOR[t] ?? 'var(--txt3)') : 'var(--txt3)',
-          }}>
-            {TYPE_LABEL[t] ?? t}
-          </button>
-        ))}
-      </div>
 
       {/* SVG */}
       <div style={{ position: 'relative', flex: 1, overflow: 'hidden' }}>
