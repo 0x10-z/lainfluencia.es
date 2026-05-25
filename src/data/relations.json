@@ -673,6 +673,144 @@
         "vozpopuli-marlaska-udef-2026"
       ],
       "verified": true
+    },
+    {
+      "id": "rel-050",
+      "from": "kreab-iberia",
+      "to": "zapatero",
+      "type": "transfers",
+      "label": "paga 851.180€ en 55 transferencias",
+      "description": "Kreab Iberia (agencia de comunicación y lobby) pagó 851.180€ a José Luis Rodríguez Zapatero en 55 transferencias entre 2020 y 2025 bajo el concepto de conferencias y asesoría de comunicación estratégica.",
+      "cases": ["dp-77-24"],
+      "sources": ["udef-1907-26"],
+      "verified": true,
+      "amount": {
+        "value": 851180,
+        "currency": "EUR",
+        "approximate": false
+      },
+      "period": {"from": "2020-01", "to": "2025-12"}
+    },
+    {
+      "id": "rel-051",
+      "from": "grupo-aldesa",
+      "to": "analisis-relevante",
+      "type": "transfers",
+      "label": "paga 127.050€ por asesoría ficticia",
+      "description": "Grupo Aldesa (constructora española) pagó 127.050€ a Análisis Relevante. La UDEF señala que los servicios de asesoría facturados carecían de contenido real y formaban parte del circuito de retornos a Zapatero.",
+      "cases": ["dp-77-24"],
+      "sources": ["udef-1907-26"],
+      "verified": true,
+      "amount": {
+        "value": 127050,
+        "currency": "EUR",
+        "approximate": false
+      }
+    },
+    {
+      "id": "rel-052",
+      "from": "grupo-aldesa",
+      "to": "idella-consulenza",
+      "type": "transfers",
+      "label": "contrato comisión 3% con Idella",
+      "description": "Grupo Aldesa suscribió un contrato con Idella Consulenza (de Julio Martínez Martínez) por el que pagaba una comisión del 3% sobre las obras adjudicadas, a cambio de intermediación en contratos públicos. Enrique Iranzo firmó el contrato en representación de Aldesa.",
+      "cases": ["dp-77-24"],
+      "sources": ["udef-1907-26"],
+      "verified": true
+    },
+    {
+      "id": "rel-053",
+      "from": "ramon-gordils",
+      "to": "julio-martinez-sola",
+      "type": "coordinates",
+      "label": "introdujo a Plus Ultra en la red de Zapatero",
+      "description": "Ramón Gordils (NIE X4758274B, intermediario venezolano) presentó a Julio Martínez Solá (presidente de Plus Ultra) con la red de Zapatero, actuando como puente entre los accionistas venezolanos de Plus Ultra y la red de influencias.",
+      "cases": ["dp-77-24"],
+      "sources": ["udef-1907-26"],
+      "verified": true
+    },
+    {
+      "id": "rel-054",
+      "from": "plus-ultra",
+      "to": "aerovip",
+      "type": "coordinates",
+      "label": "relación mercantil e intento de pago encubierto a Raif El Arigie",
+      "description": "Plus Ultra mantuvo relación mercantil con Aerovip (aerolínea venezolana). Se detectó un intento de canalizar 40.000€ a través de Aerovip para pagar a Raif El Arigie (consejero de Plus Ultra con NIE Y5251142A) de forma encubierta.",
+      "cases": ["dp-77-24"],
+      "sources": ["udef-1907-26"],
+      "verified": true
+    },
+    {
+      "id": "rel-055",
+      "from": "aerovip",
+      "to": "raif-el-arigie",
+      "type": "transfers",
+      "label": "intento de pago encubierto de 40.000€",
+      "description": "Se detectó que Aerovip intentó canalizar 40.000€ a Raif El Arigie de forma encubierta, presumiblemente como contraprestación por servicios prestados en el entorno de Plus Ultra que no podían facturarse directamente.",
+      "cases": ["dp-77-24"],
+      "sources": ["udef-1907-26"],
+      "verified": "partial",
+      "amount": {
+        "value": 40000,
+        "currency": "EUR",
+        "approximate": false
+      }
+    },
+    {
+      "id": "rel-056",
+      "from": "aurora-lopez-lopez",
+      "to": "summer-wind",
+      "type": "controls",
+      "label": "administradora formal — firma facturas de Summer Wind/Afitta",
+      "description": "Aurora López López (DNI 06593223C, esposa de Rodolfo Reyes) actúa como administradora formal de Summer Wind y Afitta, firmando las facturas que encubren los pagos de Plus Ultra a las sociedades de la red. Su papel es puramente instrumental: ocultar la titularidad real.",
+      "cases": ["dp-77-24"],
+      "sources": ["udef-1907-26"],
+      "verified": true
+    },
+    {
+      "id": "rel-058",
+      "from": "pilar-rodriguez-fernandez",
+      "to": "plus-ultra",
+      "type": "coordinates",
+      "label": "Fiscalía Provincial de Madrid se alinea sistemáticamente con la defensa",
+      "description": "Los chats intervenidos de la trama incluyen referencias a que 'la fiscal jefe es amiga'. La Fiscalía Provincial de Madrid emitió en verano de 2021, durante las vacaciones de la jueza instructora, un dictamen favorable que desbloqueó el segundo tramo de 34M€ del rescate. Miguel Palomero ya había anticipado en mayo 2021 que 'la fiscal jefa es amiga' al intentar influir en el juzgado 15.",
+      "cases": ["dp-77-24"],
+      "sources": ["the-objective-chats-fiscal-2026"],
+      "verified": "partial"
+    },
+    {
+      "id": "rel-059",
+      "from": "maria-luisa-llop",
+      "to": "plus-ultra",
+      "type": "coordinates",
+      "label": "emite dictamen favorable que desbloquea 34M€ durante vacaciones de la jueza",
+      "description": "En verano de 2021, con la jueza instructora de vacaciones, la fiscal Llop emitió un dictamen favorable a Plus Ultra que desbloqueó el segundo tramo de 34M€ del rescate. Posteriormente fue ascendida a la Audiencia Nacional.",
+      "cases": ["dp-77-24"],
+      "sources": ["the-objective-chats-fiscal-2026"],
+      "verified": "partial",
+      "amount": {
+        "value": 34000000,
+        "currency": "EUR",
+        "approximate": false
+      },
+      "period": {"from": "2021-07", "to": "2021-08"}
+    },
+    {
+      "id": "rel-057",
+      "from": "zapatero",
+      "to": "sonsoles-espinosa",
+      "type": "coordinates",
+      "label": "cotitular de cuentas y adquisición inmueble 580.000€",
+      "description": "Sonsoles Espinosa Díaz (esposa de Zapatero) es cotitular de las cuentas bancarias donde se reciben los fondos de la red. El 26/02/2024 ambos adquirieron un inmueble en calle Ramón Crespo (Madrid) por 580.000€; la hipoteca fue cancelada anticipadamente el 16/01/2025.",
+      "cases": ["dp-77-24"],
+      "sources": ["udef-1907-26"],
+      "verified": true,
+      "amount": {
+        "value": 580000,
+        "currency": "EUR",
+        "approximate": false
+      },
+      "period": {"from": "2024-02-26", "to": "2025-01-16"}
     }
   ]
 }

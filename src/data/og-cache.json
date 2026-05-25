@@ -48,13 +48,7 @@
     "siteName": "The Objective",
     "localThumb": "/og-thumbs/the-objective-plus-ultra-koldo-2026.jpg"
   },
-  "el-independiente-conexion-venezolana-2026": {
-    "image": "https://www.elindependiente.com/wp-content/uploads/2026/05/delcy-zapatero-plus-ultra.jpg",
-    "localThumb": null,
-    "title": "La conexión venezolana de Zapatero",
-    "description": "Uno de los nombres que aparece de fondo en esa trama es el de Alex Saab, empresario de origen colombiano afín a Maduro",
-    "siteName": "El Independiente"
-  },
+  "el-independiente-conexion-venezolana-2026": null,
   "infobae-guia-plus-ultra-2026": {
     "image": "https://www.infobae.com/resizer/v2/PVPWHC5QJJBUPMXHCAXZZFYGMM.png?auth=7512ce283f4d4bbaca2b03a9c39429d30d8cdafdac729eb9b6c28ed8ba7960fb&amp;smart=true&amp;width=1200&amp;height=630&amp;quality=85",
     "title": "Guía para entender el ‘caso Plus Ultra’ y la imputación de Zapatero: un rescate aprobado por el Gobierno, conexiones con Venezuela y acercamientos a figuras del PSOE",
@@ -104,6 +98,58 @@
     "siteName": "The Objective",
     "localThumb": "/og-thumbs/the-objective-marlaska-udef-2025.jpg"
   },
+  "estrelladigital-zapatero-senado-2026": {
+    "image": "https://www.estrelladigital.es/media/estrelladigital/images/2026/02/19/2026021919472044117.jpg",
+    "title": "Zapatero comparecerá en la comisión del caso Koldo por el rescate de Plus Ultra",
+    "description": "El Senado ha fijado el 2 de marzo de 2026 para que el expresidente del Gobierno José Luis Rodríguez Zapatero comparezca ante la comisión de investigación del...",
+    "siteName": "Estrella Digital",
+    "localThumb": "/og-thumbs/estrelladigital-zapatero-senado-2026.jpg"
+  },
+  "articulo14-ferraz-2026": null,
+  "eldiario-origen-caso-zapatero-2026": {
+    "image": "https://static.eldiario.es/clip/7cb08cc4-39e9-4237-a9b9-dcb6f734565b_facebook-watermarked-aspect-ratio-1200-675_default_0_x1903y254.jpg",
+    "title": "El origen del caso que implica a Zapatero: una denuncia de Anticorrupción tras alertas de Francia y Suiza",
+    "description": "La Fiscalía se querelló en 2024 contra seis personas, entre las que no estaba el expresidente, después de que ambos países comunicaran que el rescate de Plus Ultra pudo usarse para lavar dinero de Venezuela",
+    "siteName": "elDiario.es",
+    "localThumb": "/og-thumbs/eldiario-origen-caso-zapatero-2026.jpg"
+  },
+  "infobae-magistrada-enlace-2024": {
+    "image": "https://www.infobae.com/assets/images/logos/fallback-promo-image-1200x630.png",
+    "title": "El CGPJ nombra a la jueza Silvia Martínez Cantón como magistrada de enlace en Francia",
+    "description": "El CGPJ nombra a la jueza Silvia Martínez Cantón como magistrada de enlace en Francia",
+    "siteName": "infobae",
+    "localThumb": "/og-thumbs/infobae-magistrada-enlace-2024.jpg"
+  },
+  "infobae-detenciones-plus-ultra-2025": {
+    "image": "https://www.infobae.com/resizer/v2/ILANOQSLZRE5BKBRY2HREVQMCU.jpg?auth=1841e4e59ffd0cbe383672e265c8fdb1e64f1c62b8cc692138784b379f5efb38&amp;smart=true&amp;width=1200&amp;height=630&amp;quality=85",
+    "title": "La Policía detiene al presidente y al CEO de Plus Ultra tras registrar la sede de la aerolínea por presunto blanqueo",
+    "description": "Agentes de la UDEF arrestaron a los máximos responsables de la aerolínea tras una operación judicial bajo secreto de sumario en Madrid, en el marco de una investigación por movimientos sospechosos de fondos, recogió Europa Press",
+    "siteName": "infobae",
+    "localThumb": null
+  },
+  "burgosconecta-cese-enlace-2026": {
+    "image": "https://s3.ppllstatics.com/rc/www/multimedia/2026/05/22/17510493586745-kJtE-RUa46YmL2DQfUaazO9B6OBL-1200x840@RC.jpg",
+    "title": "El Gobierno ciega la vía suiza que ha ayudado a destapar el",
+    "description": "El relevo de la magistrada de enlace con Francia y el país helvético elimina la acreditación que ha estado en el origen de la investigación sobre Plus Ultra",
+    "siteName": "BURGOSconecta",
+    "localThumb": "/og-thumbs/burgosconecta-cese-enlace-2026.jpg"
+  },
+  "libertad-digital-morodo-2024": {
+    "image": "https://s1.staticld.com//2019/05/24/1200/675/raul-morodo.jpg",
+    "title": "La Audiencia Nacional condena a 10 meses de prisión a Raúl Morodo, embajador de Zapatero en Venezuela",
+    "description": "La sentencia, a la que ha tenido acceso LD, señala que Morodo cometió un delito fiscal en 2014 por el que se le impone una multa de 88.355 euros.",
+    "siteName": "Libertad Digital",
+    "localThumb": "/og-thumbs/libertad-digital-morodo-2024.jpg"
+  },
+  "eldiario-empresas-zapatero-2026": {
+    "image": "https://static.eldiario.es/clip/e47b6c38-648d-433a-bbaa-bd41e4ba60bd_facebook-watermarked-aspect-ratio-1200-675_default_0.jpg",
+    "title": "El juez Calama señala a dos venezolanos como &quot;vehículo de pago&quot; a Zapatero por negocios entre Pekín y Caracas",
+    "description": "Antifraude destaca que Inteligencia Prospectiva &quot;carece de actividad real&quot; y al tiempo pagó a la empresa de marketing de las hijas de Zapatero más de medio millón de euros",
+    "siteName": "elDiario.es",
+    "localThumb": "/og-thumbs/eldiario-empresas-zapatero-2026.jpg"
+  },
+  "elindependiente-udef-marlaska-2022": null,
+  "elindependiente-pascual-grasa-2024": null,
   "eldiario-zapatero-imputado-2026": {
     "image": "https://static.eldiario.es/clip/1db87e7b-6092-4838-b90e-97faba760768_facebook-watermarked-aspect-ratio-1200-675_default_0.jpg",
     "title": "Zapatero, imputado por organización criminal, falsedad y tráfico de influencias en el caso Plus Ultra",
@@ -117,5 +163,33 @@
     "description": "La jubilación del actual jefe de Policía Judicial de la Policía dejará una vacante clave en el futuro del",
     "siteName": "Vozpopuli",
     "localThumb": "/og-thumbs/vozpopuli-marlaska-udef-2026.jpg"
+  },
+  "el-mundo-actas-sepi-2026": {
+    "image": "https://e01-phantom-elmundo.uecdn.es/4aeff51bb7df1408481eb834c52fb119/resize/1200/f/webp/assets/multimedia/imagenes/2026/04/06/17755007577954.jpg",
+    "title": "El acta del &quot;animado debate&quot; de altos cargos de cuatro ministerios que encauz� el rescate de 53 millones a Plus Ultra",
+    "description": "El rescate estatal de la aerol�nea Plus Ultra el 9 de marzo de 2021 no tiene un padrino que quiera asumirlo. El entonces ministro de Transportes y &apos;n�mero dos&apos; del...",
+    "siteName": "El Mundo",
+    "localThumb": "/og-thumbs/el-mundo-actas-sepi-2026.jpg"
+  },
+  "vozpopuli-actas-sepi-2026": {
+    "image": "https://cdn.vozpopuli.com/cdn/posts/default/default-320x175.jpg",
+    "title": "Las actas de la SEPI prueban que se rescató Plus Ultra antes de estudiar los informes",
+    "description": "El millonario rescate a Plus Ultra se fraguó en el seno de la SEPI en febrero, aunque no contaron con los informes jurídicos y financieros hasta un mes después. Las",
+    "siteName": "Vozpopuli",
+    "localThumb": "/og-thumbs/vozpopuli-actas-sepi-2026.jpg"
+  },
+  "el-mundo-ico-plus-ultra-2021": {
+    "image": "https://phantom-elmundo.unidadeditorial.es/57b4793368d6395f2bcf753298e716a7/resize/1200/f/jpg/assets/multimedia/imagenes/2021/03/28/16169502945776.jpg",
+    "title": "Plus Ultra pidi� rescate al Estado tras negarle el Santander, BBVA y Bankinter cr�ditos con aval del ICO",
+    "description": "La vicepresidenta econ�mica, Nadia Calvi�o, se apresur� en enero a hacer p�blico el n�mero de empresas que hab�an recibido financiaci�n de la banca con aval estatal. Fueron...",
+    "siteName": "ELMUNDO",
+    "localThumb": "/og-thumbs/el-mundo-ico-plus-ultra-2021.jpg"
+  },
+  "the-objective-chats-fiscal-2026": {
+    "image": "https://theobjective.com/wp-content/uploads/2026/05/luisa-llop-0803.webp",
+    "title": "Los chats de Plus Ultra confirman que la trama controlaba a la fiscal que bloqueó el caso",
+    "description": "El escándalo del rescate de Plus Ultra Líneas Aéreas adquiere una nueva y demoledora dimensión. El último informe de la Brigada Central de Investigación",
+    "siteName": "The Objective",
+    "localThumb": "/og-thumbs/the-objective-chats-fiscal-2026.jpg"
   }
 }

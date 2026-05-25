@@ -801,6 +801,118 @@
       "verified": true
     },
     {
+      "id": "ev-041",
+      "date": "2020-03-23",
+      "date_precision": "day",
+      "title": "Primera conversación Reyes–Palomero: 'Tocamos a Ábalos' — activación de la vía ministerial",
+      "description": "El 23/03/2020, apenas nueve días después del decreto de alarma, Rodolfo Reyes contacta a Miguel Palomero De Juan para acceder a las ayudas públicas. Palomero responde que puede llegar al ministro Ábalos. Es el punto de arranque documentado de la vía de influencia ministerial, tres meses antes de la creación del FASEE.",
+      "cases": ["dp-77-24"],
+      "type": "corruption",
+      "impact": 4,
+      "entities": ["rodolfo-reyes-rojas", "miguel-palomero", "abalos"],
+      "relations": [],
+      "sources": ["udef-1907-26"],
+      "excerpts": [
+        {
+          "source": "udef-1907-26",
+          "page": 11,
+          "text": "A ver que se te ocurre a nivel político. Donde tocar puertas. Tocamos a Abalos. Le llegas? Creo que si."
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-042",
+      "date": "2020-05-25",
+      "date_precision": "day",
+      "title": "Carta a Vicepresidente del Santander 'por instrucciones del Presidente Zapatero'",
+      "description": "Roberto Roselli redacta en el ordenador de Plus Ultra una carta a Juan Manuel Cendoya, Vicepresidente del Banco Santander, solicitando un crédito ICO 'por instrucciones del Presidente José Luis Rodríguez Zapatero'. La carta, hallada en el operativo de diciembre 2025, acredita que la red usó el nombre de Zapatero para presionar directamente a la dirección de una entidad financiera. La reunión con Santander se produjo el 05/06/2020 sin resultado.",
+      "cases": ["dp-77-24"],
+      "type": "corruption",
+      "impact": 3,
+      "entities": ["zapatero", "roberto-roselli", "juan-manuel-cendoya", "plus-ultra"],
+      "relations": [],
+      "sources": ["udef-1907-26"],
+      "excerpts": [
+        {
+          "source": "udef-1907-26",
+          "page": 18,
+          "text": "Siguiendo instrucciones del Presidente José Luis Rodríguez Zapatero, nos ponemos en contacto con usted, solicitando su ayuda para la obtención de un crédito ICO para nuestra compañía, Plus Ultra Líneas Aéreas, S.A."
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-043",
+      "date": "2020-08-20",
+      "date_precision": "day",
+      "title": "Plus Ultra obtiene certificado TGSS pese a tener deuda pendiente con la Seguridad Social",
+      "description": "Plus Ultra presenta ante la SEPI dos certificados de estar al corriente de pago con la Seguridad Social (a fecha 20/08/2020), cuando uno de los requisitos del FASEE era no tener deudas a 31/12/2019. Sin embargo, la TGSS informa a requerimiento judicial que la aerolínea mantenía deuda vigente en ese momento. La UDEF lo califica como uno de los indicios de que Plus Ultra aportó datos falsos a la SEPI.",
+      "cases": ["dp-77-24"],
+      "type": "corruption",
+      "impact": 3,
+      "entities": ["plus-ultra", "fondo-solvencia"],
+      "relations": [],
+      "sources": ["udef-1907-26"],
+      "verified": true
+    },
+    {
+      "id": "ev-044",
+      "date": "2021-07-06",
+      "date_precision": "day",
+      "title": "Zapatero envía a JMM las listas Excel de clientes de Análisis Relevante — prueba del liderazgo",
+      "description": "El 06/07/2021, José Luis Rodríguez Zapatero envió directamente a Julio Martínez Martínez dos archivos Excel: 'LISTA AR OK.xlsx' (23 destinatarios) y 'DIRECCIONES EMAIL JM.xlsx' (39 destinatarios), con el listado de clientes a los que enviar los informes de Análisis Relevante. Entre los destinatarios figuran Julio Martínez Solá (Plus Ultra), Antonio Fernández (Aldesa), Francisco Flores (Softgestor), Domingo Amaro (Inteligencia Prospectiva), Juan Manuel Cendoya (Santander) y Yong Ying (Huawei España). La UDEF considera estos archivos una herramienta de planificación que acredita el liderazgo directo de Zapatero.",
+      "cases": ["dp-77-24"],
+      "type": "corruption",
+      "impact": 4,
+      "entities": ["zapatero", "julio-martinez", "analisis-relevante"],
+      "relations": ["rel-043"],
+      "sources": ["udef-1907-26"],
+      "excerpts": [
+        {
+          "source": "udef-1907-26",
+          "page": 84,
+          "text": "Estos archivos no constituyen un simple listado, sino que reflejan una cierta planificación previa y sirven como herramienta logística."
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-045",
+      "date": "2021-01-26",
+      "date_precision": "day",
+      "title": "Zapatero organiza cena en restaurante Portonovo para constituir Landside Dubai",
+      "description": "Gertrudis Alcázar (secretaria de Zapatero) organiza una reserva en el restaurante Portonovo de Madrid para dos personas a nombre de Julio; el escolta personal de Zapatero acude a formalizarla. Al día siguiente, Tomás Guerrero Blanco envía a Julio Martínez toda la documentación para constituir una sociedad filial al 100% de Idella Consulenza en Dubai: Landside Dubai FZCO. El 03/03/2021 existe ya un business plan con proyección de 3M USD en 5 años. La UDEF concluye que la sociedad se creó para recibir el cobro del 1% del rescate (530.000€) fuera de España.",
+      "cases": ["dp-77-24"],
+      "type": "corruption",
+      "impact": 4,
+      "entities": ["zapatero", "julio-martinez", "maria-alcazar", "idella-consulenza", "landside-dubai", "tomas-guerrero-blanco"],
+      "relations": [],
+      "sources": ["udef-1907-26"],
+      "excerpts": [
+        {
+          "source": "udef-1907-26",
+          "page": 99,
+          "text": "Se apunta a la posibilidad de que esta estructura se hubiera creado al objeto de que el pago acordado entre Plus Ultra e Idella no fuera realizado en España, sino en cuenta bancaria titulada por Landside en territorio extranjero."
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "ev-046",
+      "date": "2024-02-26",
+      "date_precision": "day",
+      "title": "Zapatero y su esposa compran inmueble en Madrid por 580.000€ — hipoteca cancelada en enero 2025",
+      "description": "José Luis Rodríguez Zapatero y María Sonsoles Espinosa Díaz adquieren un inmueble en la calle Ramón Crespo de Madrid por 580.000€. El Banco Santander concede una hipoteca de 500.000€. El 16/01/2025, la hipoteca se cancela anticipadamente mediante una transferencia de 498.000€ desde una cuenta CaixaBank cuya ordenante es María Sonsoles Espinosa Díaz. La UDEF señala esta operación en el contexto del análisis de los beneficiarios finales de los fondos canalizados a través de la red.",
+      "cases": ["dp-77-24"],
+      "type": "money_transfer",
+      "impact": 3,
+      "entities": ["zapatero", "sonsoles-espinosa"],
+      "relations": [],
+      "sources": ["udef-1907-26"],
+      "verified": true
+    },
+    {
       "id": "ev-040",
       "date": "2021-08-10",
       "date_precision": "day",
