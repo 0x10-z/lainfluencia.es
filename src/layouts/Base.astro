@@ -52,6 +52,8 @@ const sources   = sourcesData.sources   as Source[]
 <body>
   <!-- Barra de progreso de lectura -->
   <div id="read-progress" style="position:fixed;top:52px;left:0;height:2px;width:0%;background:var(--red);z-index:850;transition:width 0.1s linear;pointer-events:none;"></div>
+  <!-- Tooltip global (position:fixed para no cortarse con overflow:hidden) -->
+  <div id="tt"></div>
 
   <div class="layout">
     <Navbar />
@@ -118,6 +120,51 @@ const sources   = sourcesData.sources   as Source[]
       { threshold: 0.06, rootMargin: '0px 0px -20px 0px' }
     )
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el))
+  </script>
+
+  <script>
+    // Tooltip global — position:fixed para no cortarse con overflow:hidden
+    const tt = document.getElementById('tt')!
+    const GAP = 10
+    let current: Element | null = null
+
+    function show(el: Element) {
+      const text = el.getAttribute('data-tooltip')
+      if (!text) return
+      current = el
+      tt.textContent = text
+      tt.classList.add('visible')
+      position(el)
+    }
+
+    function hide() {
+      current = null
+      tt.classList.remove('visible')
+    }
+
+    function position(el: Element) {
+      const r = el.getBoundingClientRect()
+      const tw = tt.offsetWidth
+      const th = tt.offsetHeight
+      // Intentar arriba; si no cabe, poner abajo
+      let top = r.top - th - GAP
+      if (top < 8) top = r.bottom + GAP
+      // Centrar horizontalmente, clamped a viewport
+      let left = r.left + r.width / 2 - tw / 2
+      left = Math.max(8, Math.min(left, window.innerWidth - tw - 8))
+      tt.style.top = top + 'px'
+      tt.style.left = left + 'px'
+    }
+
+    document.addEventListener('mouseover', e => {
+      const el = (e.target as Element).closest('[data-tooltip]')
+      if (el && el !== current) show(el)
+    })
+    document.addEventListener('mouseout', e => {
+      const el = (e.target as Element).closest('[data-tooltip]')
+      if (el) hide()
+    })
+    document.addEventListener('scroll', () => { if (current) position(current) }, { passive: true })
   </script>
 </body>
 </html>
