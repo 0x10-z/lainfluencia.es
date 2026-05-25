@@ -196,10 +196,10 @@ const ogDesc = event.description.slice(0, 160)
         style={`font-family:'IBM Plex Mono',monospace;font-size:0.58rem;padding:0.2rem 0.6rem;border-radius:4px;border:1px solid ${verifiedColor};color:${verifiedColor};`}
         data-tooltip={
           event.verified === true
-            ? '✓ Verificado\nRespaldado por al menos dos fuentes primarias independientes (auto judicial, informe UDEF/UCO u oficial). No contradicho por fuente de igual rango.'
+            ? '✓ Verificado\nEl hecho está respaldado por al menos un documento primario: auto judicial, informe UDEF/UCO, BOE u oficial. La fuente documental es directamente consultable.'
             : event.verified === 'partial'
-            ? '~ Verificación parcial\nCuenta con una fuente primaria (auto, informe UDEF/UCO) pero no cruzada con segunda fuente independiente, o parte del relato procede solo de prensa.'
-            : '? Sin verificar\nProcede únicamente de fuentes de prensa o declaraciones no contrastadas con documento primario.'
+            ? '~ Verificación parcial\nNo hay documento primario disponible, pero el hecho está corroborado por ≥2 fuentes de prensa independientes. La prensa puede coincidir en error, por lo que se mantiene como parcial hasta obtener documento oficial.'
+            : '? Sin verificar\nSolo una fuente o sin contrastar. Puede ser correcto pero no ha podido cruzarse con una segunda fuente independiente.'
         }
       >
         {verifiedLabel}

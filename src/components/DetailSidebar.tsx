@@ -241,10 +241,10 @@ function EventPanel({ event, entities, relations, sources, pill, openPanel }: {
         <span
           data-tooltip={
             event.verified === true
-              ? '✓ Verificado\nRespaldado por ≥2 fuentes primarias independientes (auto judicial, informe UDEF/UCO u oficial).'
+              ? '✓ Verificado\nRespaldado por ≥1 documento primario: auto judicial, informe UDEF/UCO, BOE u oficial.'
               : event.verified === 'partial'
-              ? '~ Verificación parcial\nUna fuente primaria confirmada, pendiente de cruzar con segunda fuente independiente.'
-              : '? Sin verificar\nSolo fuentes de prensa, sin documento primario contrastado.'
+              ? '~ Verificación parcial\nSin documento primario, pero corroborado por ≥2 fuentes de prensa independientes.'
+              : '? Sin verificar\nSolo 1 fuente o sin contrastar con segunda fuente independiente.'
           }
           style={{ fontFamily: 'var(--fm)', fontSize: '0.52rem', color: verColor, marginLeft: 'auto', letterSpacing: '0.06em' }}
         >
