@@ -110,6 +110,7 @@ export default function GraphD3({ entities, relations }: Props) {
 
     const zoom = d3.zoom<SVGSVGElement, unknown>()
       .scaleExtent([0.2, 5])
+      .wheelDelta(event => -event.deltaY * (event.deltaMode === 1 ? 0.03 : event.deltaMode ? 1 : 0.003))
       .filter(event => {
         // Rueda: solo con Ctrl. Pan con ratón: siempre.
         if (event.type === 'wheel') return event.ctrlKey || event.metaKey
@@ -127,12 +128,12 @@ export default function GraphD3({ entities, relations }: Props) {
 
     // Simulación
     const sim = d3.forceSimulation<Node>(nodes)
-      .force('link',    d3.forceLink<Node, Link>(links).id(d => d.id).distance(110).strength(0.35))
-      .force('charge',  d3.forceManyBody().strength(-320))
+      .force('link',    d3.forceLink<Node, Link>(links).id(d => d.id).distance(180).strength(0.25))
+      .force('charge',  d3.forceManyBody().strength(-600))
       .force('center',  d3.forceCenter(W / 2, H / 2))
-      .force('collide', d3.forceCollide<Node>().radius(d => nodeRadius(d) + 14))
-      .force('x',       d3.forceX<Node>(W / 2).strength(0.05))
-      .force('y',       d3.forceY<Node>(H / 2).strength(0.04))
+      .force('collide', d3.forceCollide<Node>().radius(d => nodeRadius(d) + 28))
+      .force('x',       d3.forceX<Node>(W / 2).strength(0.03))
+      .force('y',       d3.forceY<Node>(H / 2).strength(0.03))
 
     // Links — grupo por cada relación: línea visible + línea hit invisible
     const linkG = g.append('g').selectAll<SVGGElement, Link>('g')

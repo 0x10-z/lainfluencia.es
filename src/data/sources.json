@@ -474,6 +474,39 @@
       "notes": "Citado en el Informe UDEF 1907/26 (p. 18 nota 16) como fuente abierta que precisa las entidades financieras a las que Plus Ultra solicitó créditos ICO."
     },
     {
+      "id": "sepi-nota-prensa-telefonica-2024",
+      "type": "official",
+      "title": "SEPI reaches a 10% stake in Telefónica's capital",
+      "issuer": "Sociedad Estatal de Participaciones Industriales (SEPI)",
+      "date": "2024-05-01",
+      "cases": ["dp-77-24"],
+      "availability": "public",
+      "url": "https://sepi.es/en/press-room/news/sepi-reaches-10-stake-telefonicas-capital",
+      "notes": "Nota de prensa oficial de SEPI confirmando la adquisición del 10% de Telefónica (567.016.155 acciones, precio medio 4,03€/acción, inversión total 2.285M€). El mandato del Gobierno a la SEPI se produjo el 19/12/2023; la compra se completó en mayo de 2024."
+    },
+    {
+      "id": "elespanol-gertru-secretaria-2026",
+      "type": "press",
+      "title": "'Gertru', de asistenta en Ciudad Real a secretaria de Zapatero en Moncloa y 'pieza operativa esencial' en la trama Plus Ultra",
+      "publisher": "El Español",
+      "date": "2026-05-22",
+      "cases": ["dp-77-24"],
+      "availability": "public",
+      "url": "https://www.elespanol.com/reportajes/20260522/gertru-asistenta-ciudad-real-secretaria-zapatero-moncloa-pieza-operativa-esencial-trama-plus-ultra/1003744253636_0.html",
+      "notes": "Perfil biográfico completo de María Gertrudis Alcázar Jiménez: Daimiel 1967, PSOE desde 1988, secretaria de Zapatero durante y después de su presidencia. El juez la describe como 'nodo central de comunicación' y correa de transmisión entre Zapatero y los investigados. Dispositivos intervenidos el 20/05/2026."
+    },
+    {
+      "id": "elespanol-koldo-chofer-abalos-2024",
+      "type": "press",
+      "title": "Koldo García, el concejal que Ábalos fichó como chófer y acabó de hombre para todo en Transporte",
+      "publisher": "El Español",
+      "date": "2024-02-21",
+      "cases": ["dp-77-24"],
+      "availability": "public",
+      "url": "https://www.elespanol.com/reportajes/20240221/koldo-garcia-concejal-abalos-ficho-chofer-acabo-hombre-transporte/834416788_0.html",
+      "notes": "Perfil biográfico completo de Koldo García: portero de discoteca → escolta → concejal de Huarte → chófer de Ábalos (2017) → asesor todopoderoso del Ministerio de Transportes (2018-2021) → consejero Renfe Mercancías (2019). Antecedentes penales: condena 1991, indulto 1996."
+    },
+    {
       "id": "eldebate-caso-hidrocarburos-2026",
       "type": "press",
       "title": "Caso hidrocarburos: el fraude millonario que conecta a Aldama, Koldo y Ábalos y llega hasta Zapatero",

@@ -249,5 +249,19 @@
     "siteName": "El Español",
     "localThumb": "/og-thumbs/elespanol-zapatero-petroleo-china-2026.jpg"
   },
-  "elindependiente-zapatero-china-2026": null
+  "elindependiente-zapatero-china-2026": null,
+  "elespanol-gertru-secretaria-2026": {
+    "image": "https://s3.elespanol.com/2026/05/22/actualidad/1003744256717_263092702_1706x960.jpg?fmt=jpeg",
+    "title": "&#039;Gertru&#039;, de asistenta en Ciudad Real a secretaria de Zapatero en Moncloa y &quot;pieza operativa esencial&quot; en la trama Plus Ultra",
+    "description": "Mar&iacute;a Gertrudis Alc&aacute;zar Jim&eacute;nez ha trabajado al menos dos d&eacute;cadas junto a Zapatero como su secretaria; durante su etapa en el poder y una vez finaliz&oacute; su cargo. M&aacute;s informaci&oacute;n: Las acusaciones populares, a por Zapatero: piden al juez que le retire el pasaporte y que tenga que &#039;fichar&#039; cada 15 d&iacute;as",
+    "siteName": "El Español",
+    "localThumb": "/og-thumbs/elespanol-gertru-secretaria-2026.jpg"
+  },
+  "elespanol-koldo-chofer-abalos-2024": {
+    "image": "https://s2.elespanol.com/2024/02/21/reportajes/834426989_240141324_1706x960.jpg",
+    "title": "Koldo Garc&iacute;a, el concejal que &Aacute;balos fich&oacute; como ch&oacute;fer y acab&oacute; de hombre para todo en Transporte",
+    "description": "El asesor del exministro ha sido detenido por los&amp;nbsp;delitos de organizaci&oacute;n criminal, cohecho y tr&aacute;fico de influencias.",
+    "siteName": "El Español",
+    "localThumb": "/og-thumbs/elespanol-koldo-chofer-abalos-2024.jpg"
+  }
 }

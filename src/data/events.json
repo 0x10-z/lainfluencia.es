@@ -886,7 +886,7 @@
       "cases": ["dp-77-24"],
       "type": "corruption",
       "impact": 4,
-      "entities": ["zapatero", "julio-martinez", "maria-alcazar", "idella-consulenza", "landside-dubai", "tomas-guerrero-blanco"],
+      "entities": ["zapatero", "julio-martinez", "maria-gertrudis-alcazar", "idella-consulenza", "landside-dubai", "tomas-guerrero-blanco"],
       "relations": [],
       "sources": ["udef-1907-26"],
       "excerpts": [
@@ -1045,7 +1045,7 @@
       "impact": 3,
       "entities": ["telefonica", "javier-de-paz", "marc-murtra", "fondo-solvencia"],
       "relations": [],
-      "sources": ["elindependiente-telefonica-murtra-2025"],
+      "sources": ["sepi-nota-prensa-telefonica-2024", "elindependiente-telefonica-murtra-2025"],
       "verified": true
     }
   ]

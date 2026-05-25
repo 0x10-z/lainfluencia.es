@@ -41,20 +41,16 @@
       "wikipedia": "https://es.wikipedia.org/wiki/Julio_Mart%C3%ADnez_Pr%C3%A1danos"
     },
     {
-      "id": "maria-alcazar",
+      "id": "maria-gertrudis-alcazar",
       "type": "person",
       "name": "María Gertrudis Alcázar Jiménez",
-      "aliases": [],
-      "role": "Encargada de documentación ficticia",
-      "cases": [
-        "dp-77-24"
-      ],
+      "aliases": ["Gertru", "Piluca Navarro"],
+      "role": "Secretaria personal de Zapatero desde 1988. 'Pieza operativa esencial' de la red según el juez Calama",
+      "cases": ["dp-77-24"],
       "status": "investigated",
-      "tags": [
-        "falsedad-documental"
-      ],
-      "notes": "Elabora contratos, facturas e informes para cubrir servicios inexistentes.",
-      "wikipedia": "https://es.wikipedia.org/wiki/La_casa_de_las_dos_palmas"
+      "tags": ["zapatero", "operadora", "ferraz", "falsedad-documental"],
+      "notes": "Natural de Daimiel (Ciudad Real), 59 años. Entró en el PSOE en 1988 (21 años) como secretaria, bajo las órdenes de Ludolfo Paramio y Manuel Chaves. Apodada internamente 'Piluca Navarro' en referencia a la secretaria de Felipe González. Acompañó a Zapatero durante su presidencia y después, en su oficina privada de la calle Ferraz. El juez Calama la describe como 'nodo central de comunicación' y correa de transmisión entre Zapatero y los empresarios investigados, especialmente Julio Martínez Martínez. Sus funciones en la trama: ejecutar instrucciones de Zapatero, gestionar su email, trasladar a Cristóbal Cano instrucciones sobre qué facturas emitir y con qué conceptos, y elaborar contratos, facturas e informes para cubrir servicios inexistentes. La UDEF le intervino el móvil y dispositivos en el registro del 20/05/2026. No está formalmente imputada.",
+      "wikipedia": null
     },
     {
       "id": "cristobal-cano",
@@ -591,11 +587,11 @@
       "type": "person",
       "name": "Koldo García Izaguirre",
       "aliases": ["Koldo"],
-      "role": "Asesor personal del ministro Ábalos. Figura central del 'Caso Koldo'",
+      "role": "Chófer, guardaespaldas y asesor personal del ministro Ábalos (2017–2021). Figura central del caso Koldo",
       "cases": ["dp-77-24"],
       "status": "investigated",
-      "tags": ["psoe", "corrupcion", "caso-koldo"],
-      "notes": "Asistente y asesor del ministro de Transportes Ábalos. Miguel Palomero De Juan era su amigo personal y actuó como intermediario para que Plus Ultra accediera a Ábalos. El 07/09/2020, Rubén López Martínez le envió un mensaje sobre la reunión de Zapatero con el ministro de Inclusión, que Koldo reenvió a Ábalos. La agenda de Koldo acreditaba también una comida confirmada entre Ábalos y Zapatero el 15/03/2021.",
+      "tags": ["psoe", "corrupcion", "caso-koldo", "mascarillas"],
+      "notes": "Trayectoria: portero de discoteca en Pamplona → guardia de seguridad y escolta de políticos del PSN y UPN → concejal socialista en Huarte (Navarra). Condenado en 1991 a 2 años y 4 meses por lesiones; indultado en 1996. Llegó a Ábalos a través de Santos Cerdán. Cuando Ábalos asciende a secretario de Organización del PSOE (jun. 2017) le lleva a Madrid como chófer y guardaespaldas; cuando se convierte en ministro de Fomento (jun. 2018) pasa a asesor todopoderoso del ministerio (cargo oficial: 26/02/2020–12/07/2021). En 2019 es nombrado consejero de Renfe Mercancías pese a no tener perfil técnico. Durante la pandemia coordinó los fletes de aviones para suministros sanitarios, papel desde el que orquestó los contratos de mascarillas. Aldama le pagaba el alquiler de un piso en Atocha usado para fiestas. Detenido el 20/02/2024 en la Operación Delorme. Fiscalía le investiga por organización criminal, cohecho y tráfico de influencias. En el caso Plus Ultra: su amigo Miguel Palomero intermedió para que Plus Ultra 'llegara a Ábalos'. El 07/09/2020 reenvió a Ábalos el mensaje de Rubén López sobre la reunión de Zapatero en el Ministerio de Trabajo. Su agenda acreditaba una comida entre Ábalos y Zapatero el 15/03/2021. Aldama declaró que cobraba 10.000€/mes de Villafuel (caso Hidrocarburos).",
       "wikipedia": "https://es.wikipedia.org/wiki/Koldo_Garc%C3%ADa_Izaguirre"
     },
     {

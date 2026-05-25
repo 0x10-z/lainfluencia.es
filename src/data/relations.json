@@ -3,6 +3,30 @@
   "$comment": "RELACIONES — Vínculos entre entidades. Cada relación referencia dos entidades por su id y declara el tipo de vínculo, la fuente y el período temporal.",
   "relations": [
     {
+      "id": "rel-072",
+      "from": "zapatero",
+      "to": "maria-gertrudis-alcazar",
+      "type": "employs",
+      "label": "secretaria personal desde 1988 — nodo operativo de la red",
+      "description": "Gertru lleva desde 1988 como secretaria de Zapatero, primero en la sede del PSOE y luego durante su presidencia y en su oficina privada de Ferraz. El juez Calama la sitúa como 'pieza operativa esencial' de la red: gestiona el email del expresidente, traslada instrucciones a Cristóbal Cano sobre qué facturas emitir y con qué conceptos, y actúa como correa de transmisión entre Zapatero y Julio Martínez Martínez. La UDEF le intervino el móvil en el registro del 20/05/2026. La oficina oficial de un expresidente, financiada con cargo público, funcionaba como nodo de coordinación contable de la red.",
+      "cases": ["dp-77-24"],
+      "sources": ["elespanol-gertru-secretaria-2026", "udef-1907-26", "auto-imputacion-zapatero-2026"],
+      "verified": true,
+      "period": {"from": "1988-01", "to": null}
+    },
+    {
+      "id": "rel-071",
+      "from": "abalos",
+      "to": "koldo-garcia",
+      "type": "employs",
+      "label": "chófer, guardaespaldas y asesor todopoderoso — 2017 a 2021",
+      "description": "Ábalos fichó a Koldo García como chófer y guardaespaldas cuando ascendió a secretario de Organización del PSOE (jun. 2017). Al convertirse en ministro de Fomento (jun. 2018) lo llevó al ministerio como asesor personal. Cargo oficial en el Ministerio de Transportes: 26/02/2020–12/07/2021. En 2019 lo nombró consejero de Renfe Mercancías. Era su 'hombre para todo': seguridad, contratos, negociaciones sensibles y enlace político. Coordinó los fletes de aviones de material sanitario durante la pandemia, posición desde la que orquestó los contratos de mascarillas del caso Koldo. Aldama declaró que Koldo llamaba a Sánchez por su nombre de pila y que actuaba como puente entre el presidente y los empresarios que financiaban al partido.",
+      "cases": ["dp-77-24"],
+      "sources": ["elespanol-koldo-chofer-abalos-2024", "udef-1908-26"],
+      "verified": true,
+      "period": {"from": "2017-06", "to": "2021-07"}
+    },
+    {
       "id": "rel-001",
       "from": "zapatero",
       "to": "julio-martinez",
@@ -82,7 +106,7 @@
     },
     {
       "id": "rel-005",
-      "from": "maria-alcazar",
+      "from": "maria-gertrudis-alcazar",
       "to": "soc-a",
       "type": "produces_documents",
       "label": "elabora documentación ficticia",
